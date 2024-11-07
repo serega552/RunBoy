@@ -1,0 +1,2 @@
+public class BoostItemFactory : ItemFactory
+{}

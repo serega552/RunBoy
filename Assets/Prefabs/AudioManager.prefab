@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7975609768668920099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7272226295960120611}
+  - component: {fileID: 6789857553729023485}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7272226295960120611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975609768668920099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6789857553729023485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975609768668920099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7a5f1fd96e371478f783cfde251ad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - volume: 0.358
+    pitch: 1
+    source: {fileID: 0}
+    name: ClickOpen
+    clip: {fileID: 8300000, guid: b7e0a5c27b720014380c572678d54290, type: 3}
+    loop: 0
+  - volume: 0.382
+    pitch: 1
+    source: {fileID: 0}
+    name: ClickClose
+    clip: {fileID: 8300000, guid: 4cc4f76d9705bb34a935f0b48f2d60e4, type: 3}
+    loop: 0
+  - volume: 0.13
+    pitch: 1
+    source: {fileID: 0}
+    name: Music
+    clip: {fileID: 8300000, guid: 19dbaac32bc42ed4884d13b628fb6fdc, type: 3}
+    loop: 1
+  - volume: 0.098
+    pitch: 1
+    source: {fileID: 0}
+    name: Crash
+    clip: {fileID: 8300000, guid: eef8074c0925e454ea7c99400a0c86cc, type: 3}
+    loop: 0
+  - volume: 0.114
+    pitch: 1
+    source: {fileID: 0}
+    name: StoneCrash
+    clip: {fileID: 8300000, guid: 9d0df39735ade1e479eeff85e035ed0e, type: 3}
+    loop: 0
+  - volume: 0.398
+    pitch: 1
+    source: {fileID: 0}
+    name: UseBoost
+    clip: {fileID: 8300000, guid: c1379d58f2396014f8d444364e8d7c38, type: 3}
+    loop: 0
+  - volume: 0.195
+    pitch: 1
+    source: {fileID: 0}
+    name: StartGame
+    clip: {fileID: 8300000, guid: 377a1d9d724803f479e69b9f4f50f3ea, type: 3}
+    loop: 0
+  - volume: 0.325
+    pitch: 1
+    source: {fileID: 0}
+    name: UpgradeBoost
+    clip: {fileID: 8300000, guid: 2d3b7e9e123d8524db832dd718032e55, type: 3}
+    loop: 0
+  - volume: 0.325
+    pitch: 1
+    source: {fileID: 0}
+    name: Buy
+    clip: {fileID: 8300000, guid: b1010438e09f41a449ea04f1be27eab2, type: 3}
+    loop: 0

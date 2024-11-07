@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba6b13201bab3f48a1897dbf37b3a8b, type: 3}
+  m_Name: JumpTaskWeekly
+  m_EditorClassIdentifier: 
+  _descritionTranslation: Tasks/Jump
+  _amountMaxCollect: 3000
+  _amountReward: 30
+  _rewardIcon: {fileID: 21300000, guid: c3189121f7e3342a3b2fcc2f495c9e31, type: 3}
+  _resourceType: 2
+  _taskType: 0

@@ -1,7 +1,10 @@
-public class PlayerResurrectWindow : Window
+namespace Windows
 {
-    private void Awake()
+    public class PlayerResurrectWindow : Window
     {
-        CloseWithoutSound();
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
     }
 }

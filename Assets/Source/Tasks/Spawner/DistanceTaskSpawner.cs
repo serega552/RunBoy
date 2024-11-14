@@ -1,19 +1,22 @@
 using YG;
 
-public class DistanceTaskSpawner : TaskSpawner
+namespace Tasks.Spawner
 {
-    public override void Save()
+    public class DistanceTaskSpawner : TaskSpawner
     {
-        if (YandexGame.savesData.AmountDistanceProgreses.Count < ActiveTasks.Count)
+        public override void Save()
         {
-            YandexGame.savesData.AmountDistanceProgreses.Add(0);
-            YandexGame.SaveProgress();
+            if (YandexGame.savesData.AmountDistanceProgreses.Count < ActiveTasks.Count)
+            {
+                YandexGame.savesData.AmountDistanceProgreses.Add(0);
+                YandexGame.SaveProgress();
+            }
         }
-    }
 
-    public override void Load()
-    {
-        _amountProgreses = YandexGame.savesData.AmountDistanceProgreses;
-        base.Load();
+        public override void Load()
+        {
+            AmountProgreses = YandexGame.savesData.AmountDistanceProgreses;
+            base.Load();
+        }
     }
 }

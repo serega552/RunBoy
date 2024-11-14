@@ -1,37 +1,45 @@
-public class StartStateGame
+using Audio;
+using Player;
+using UI;
+using Windows;
+
+namespace StatesGame
 {
-    private readonly Menu _menu;
-    private readonly PlayerPresenter _presenter;
-    private readonly PlayerMoverPresenter _presenterMover;
-    private readonly HudWindow _hudWindow;
-
-    public StartStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, HudWindow hudWindow)
+    public class StartStateGame
     {
-        _menu = menu;
-        _presenter = presenter;
-        _presenterMover = presenterMover;
-        _hudWindow = hudWindow;
-    }
+        private readonly Menu _menu;
+        private readonly PlayerPresenter _presenter;
+        private readonly PlayerMoverPresenter _presenterMover;
+        private readonly HudWindow _hudWindow;
 
-    private void Start()
-    {
-        AudioManager.Instance.Play("StartGame"); 
-        AudioManager.Instance.Play("Music");
-        AudioManager.Instance.Pause("Music2");
-        AudioManager.Instance.Pause("MenuMusic");
+        public StartStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, HudWindow hudWindow)
+        {
+            _menu = menu;
+            _presenter = presenter;
+            _presenterMover = presenterMover;
+            _hudWindow = hudWindow;
+        }
 
-        _hudWindow.OpenWithoutSound();
-        _presenter.StartGame();
-        _presenterMover.StartPlayerMove();
-    }
+        private void Start()
+        {
+            AudioManager.Instance.Play("StartGame");
+            AudioManager.Instance.Play("Music");
+            AudioManager.Instance.Pause("Music2");
+            AudioManager.Instance.Pause("MenuMusic");
 
-    public void Enable()
-    {
-        _menu.OnClickStart += Start;
-    }
+            _hudWindow.OpenWithoutSound();
+            _presenter.StartGame();
+            _presenterMover.StartPlayerMove();
+        }
 
-    public void Disable()
-    {
-        _menu.OnClickStart -= Start;
+        public void Enable()
+        {
+            _menu.OnClickStart += Start;
+        }
+
+        public void Disable()
+        {
+            _menu.OnClickStart -= Start;
+        }
     }
 }

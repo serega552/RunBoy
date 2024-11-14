@@ -1,11 +1,14 @@
 using System;
 
-public static class AwardGiver
+namespace Tasks
 {
-    public static event Action<string, int> OnReward;
-
-    public static void Reward(string name, int amount)
+    public static class AwardGiver
     {
-        OnReward?.Invoke(name, amount);
+        public static event Action<string, int> OnReward;
+
+        public static void Reward(string name, int amount)
+        {
+            OnReward?.Invoke(name, amount);
+        }
     }
 }

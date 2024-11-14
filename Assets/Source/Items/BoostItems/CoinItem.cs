@@ -1,9 +1,14 @@
-public class CoinItem : Item
-{
-    protected int Reward = 2;
+using Player;
 
-    protected override void GetResourses(PlayerView playerView)
+namespace Items.BoostItems
+{
+    public class CoinItem : Item
     {
-        playerView.AddMoney(Reward, false);
+        protected readonly int Reward = 2;
+
+        protected override void GetResourses(PlayerView playerView)
+        {
+            playerView.AddMoney(Reward, false);
+        }
     }
 }

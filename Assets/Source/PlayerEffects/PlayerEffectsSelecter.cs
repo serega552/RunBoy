@@ -1,18 +1,23 @@
+using Player;
 using UnityEngine;
 
-public class PlayerEffectsSelecter : MonoBehaviour
+
+namespace PlayerEffects
 {
-    private PlayerEffectController _playerEffectController;
-    private PlayerView _playerView;
-
-    public PlayerEffectController GetEffects()
+    public class PlayerEffectsSelecter : MonoBehaviour
     {
-        return _playerEffectController;
-    }
+        private PlayerEffectController _playerEffectController;
+        private PlayerView _playerView;
 
-    public void InitPlayer(PlayerView view)
-    {
-        _playerView = view;
-        _playerEffectController = _playerView.GetComponent<PlayerEffectController>();
+        public PlayerEffectController GetEffects()
+        {
+            return _playerEffectController;
+        }
+
+        public void InitPlayer(PlayerView view)
+        {
+            _playerView = view;
+            _playerEffectController = _playerView.GetComponent<PlayerEffectController>();
+        }
     }
 }

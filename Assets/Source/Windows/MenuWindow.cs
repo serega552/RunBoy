@@ -1,7 +1,10 @@
-public class MenuWindow : Window
+namespace Windows
 {
-    private void Awake()
+    public class MenuWindow : Window
     {
-        OpenWithoutSound();
+        private void Awake()
+        {
+            OpenWithoutSound();
+        }
     }
 }

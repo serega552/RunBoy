@@ -1,7 +1,10 @@
-public class HudWindow : Window
+namespace Windows
 {
-    private void Awake()
+    public class HudWindow : Window
     {
-        CloseWithoutSound();
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
     }
 }

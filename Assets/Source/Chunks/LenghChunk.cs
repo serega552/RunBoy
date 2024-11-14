@@ -1,4 +1,6 @@
 using UnityEngine;
 
-public class LenghtChunk : MonoBehaviour { }
-
+namespace Chunks
+{
+    public class LenghtChunk : MonoBehaviour { }
+}

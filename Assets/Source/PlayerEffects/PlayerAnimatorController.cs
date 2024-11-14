@@ -1,92 +1,96 @@
+using Player;
 using UnityEngine;
 
-public class PlayerAnimatorController : MonoBehaviour
+namespace PlayerEffects
 {
-    private readonly int RunState = Animator.StringToHash("RunState");
-    private readonly int CrashState = Animator.StringToHash("CrashState");
-    private readonly int CrashOnCarState = Animator.StringToHash("CrashOnCarState");
-    private readonly int JumpState = Animator.StringToHash("JumpState");
-    private readonly int LoseState = Animator.StringToHash("LoseState");
-    private readonly int KickState = Animator.StringToHash("Kick");
-    private readonly int FlipState = Animator.StringToHash("FlipState");
-    private readonly int IdleState = Animator.StringToHash("IdleState");
-
-    private Animator _animator;
-    private PlayerMoverView _playerMoverView;
-    private int _danceState;
-
-    private void OnDisable()
+    public class PlayerAnimatorController : MonoBehaviour
     {
-        _playerMoverView.OnDance -= Dance;
-        _playerMoverView.OnRestart -= ResetPlayer;
-        _playerMoverView.OnStarted -= Run;
-        _playerMoverView.OnJumped -= Jump;
-        _playerMoverView.OnKicked -= Kick;
-        _playerMoverView.OnChangingSpeedCrash -= Crash;
-        _playerMoverView.OnStoped -= Lose;
-        _playerMoverView.OnSomersault -= Somersault;
-        _playerMoverView.OnCrashed -= CrashOnCar;
-    }
+        private readonly int RunState = Animator.StringToHash("RunState");
+        private readonly int CrashState = Animator.StringToHash("CrashState");
+        private readonly int CrashOnCarState = Animator.StringToHash("CrashOnCarState");
+        private readonly int JumpState = Animator.StringToHash("JumpState");
+        private readonly int LoseState = Animator.StringToHash("LoseState");
+        private readonly int KickState = Animator.StringToHash("Kick");
+        private readonly int FlipState = Animator.StringToHash("FlipState");
+        private readonly int IdleState = Animator.StringToHash("IdleState");
 
-    public void Init(PlayerMoverView playerMoverView, Animator animator)
-    {
-        _playerMoverView = playerMoverView;
-        _animator = animator;
+        private Animator _animator;
+        private PlayerMoverView _playerMoverView;
+        private int _danceState;
 
-        _playerMoverView.OnDance += Dance;
-        _playerMoverView.OnRestart += ResetPlayer;
-        _playerMoverView.OnStarted += Run;
-        _playerMoverView.OnJumped += Jump;
-        _playerMoverView.OnKicked += Kick;
-        _playerMoverView.OnChangingSpeedCrash += Crash;
-        _playerMoverView.OnStoped += Lose;
-        _playerMoverView.OnSomersault += Somersault;
-        _playerMoverView.OnCrashed += CrashOnCar;
-    }
+        private void OnDisable()
+        {
+            _playerMoverView.OnDance -= Dance;
+            _playerMoverView.OnRestart -= ResetPlayer;
+            _playerMoverView.OnStarted -= Run;
+            _playerMoverView.OnJumped -= Jump;
+            _playerMoverView.OnKicked -= Kick;
+            _playerMoverView.OnChangingSpeedCrash -= Crash;
+            _playerMoverView.OnStoped -= Lose;
+            _playerMoverView.OnSomersault -= Somersault;
+            _playerMoverView.OnCrashed -= CrashOnCar;
+        }
 
-    private void Run()
-    {
-        _animator.Play(RunState);
-    }
+        public void Init(PlayerMoverView playerMoverView, Animator animator)
+        {
+            _playerMoverView = playerMoverView;
+            _animator = animator;
 
-    private void Jump()
-    {
-        _animator.Play(JumpState);
-    }
+            _playerMoverView.OnDance += Dance;
+            _playerMoverView.OnRestart += ResetPlayer;
+            _playerMoverView.OnStarted += Run;
+            _playerMoverView.OnJumped += Jump;
+            _playerMoverView.OnKicked += Kick;
+            _playerMoverView.OnChangingSpeedCrash += Crash;
+            _playerMoverView.OnStoped += Lose;
+            _playerMoverView.OnSomersault += Somersault;
+            _playerMoverView.OnCrashed += CrashOnCar;
+        }
 
-    private void Kick()
-    {
-        _animator.Play(KickState);
-    }
+        private void Run()
+        {
+            _animator.Play(RunState);
+        }
 
-    private void Crash(float speed)
-    {
-        _animator.Play(CrashState);
-    }
+        private void Jump()
+        {
+            _animator.Play(JumpState);
+        }
 
-    private void CrashOnCar()
-    {
-        _animator.Play(CrashOnCarState);
-    }
+        private void Kick()
+        {
+            _animator.Play(KickState);
+        }
 
-    private void Somersault()
-    {
-        _animator.Play(FlipState);
-    }
+        private void Crash(float speed)
+        {
+            _animator.Play(CrashState);
+        }
 
-    private void Lose()
-    {
-        _animator.Play(LoseState);
-    }
+        private void CrashOnCar()
+        {
+            _animator.Play(CrashOnCarState);
+        }
 
-    private void Dance()
-    {
-        _danceState = Animator.StringToHash(_playerMoverView.NameDanceAnim);
-        _animator.Play(_danceState);
-    }
+        private void Somersault()
+        {
+            _animator.Play(FlipState);
+        }
 
-    private void ResetPlayer()
-    {
-        _animator.Play(IdleState);
+        private void Lose()
+        {
+            _animator.Play(LoseState);
+        }
+
+        private void Dance()
+        {
+            _danceState = Animator.StringToHash(_playerMoverView.NameDanceAnim);
+            _animator.Play(_danceState);
+        }
+
+        private void ResetPlayer()
+        {
+            _animator.Play(IdleState);
+        }
     }
 }

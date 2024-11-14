@@ -1,49 +1,53 @@
+using Player;
 using UnityEngine;
 
-public abstract class Item : MonoBehaviour
+namespace Items
 {
-    protected ParticleSystem ExplosionParticle;
-    protected float Resourses;
-    protected float Delay = 2f;
-    protected PlayerView PlayerView;
-    protected PlayerMoverView PlayerMoverView;
-
-    private Collider _collider;
-    private MeshRenderer _mesh;
-
-    private void Start()
+    public abstract class Item : MonoBehaviour
     {
-        ExplosionParticle = GetComponentInChildren<ParticleSystem>();
-        _mesh = GetComponentInChildren<MeshRenderer>();
-        _collider = GetComponent<Collider>();
-    }
+        protected float Delay = 2f;
+        protected float Resourses;
+        protected ParticleSystem ExplosionParticle;
+        protected PlayerView PlayerView;
+        protected PlayerMoverView PlayerMoverView;
 
-    protected void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.TryGetComponent(out PlayerView playerView) && collision.gameObject.TryGetComponent(out PlayerMoverView playerMoverView))
+        private Collider _collider;
+        private MeshRenderer _mesh;
+
+        private void Start()
         {
-            PlayerView = playerView;
-            PlayerMoverView = playerMoverView;
-            GetMoverResourses(PlayerMoverView);
-            GetResourses(PlayerView);
-            StartDestroy();
+            ExplosionParticle = GetComponentInChildren<ParticleSystem>();
+            _mesh = GetComponentInChildren<MeshRenderer>();
+            _collider = GetComponent<Collider>();
         }
-    }
 
-    protected virtual void GetResourses(PlayerView playerView) { }
+        protected void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.TryGetComponent(out PlayerView playerView) && collision.gameObject.TryGetComponent(out PlayerMoverView playerMoverView))
+            {
+                PlayerView = playerView;
+                PlayerMoverView = playerMoverView;
+                GetMoverResourses(PlayerMoverView);
+                GetResourses(PlayerView);
+                StartDestroy();
+            }
+        }
 
-    protected virtual void GetMoverResourses(PlayerMoverView playerMoverView) { }
+        protected virtual void GetResourses(PlayerView playerView) { }
 
-    private void StartDestroy()
-    {
-        _mesh.enabled = false;
-        _collider.enabled = false;
-        ExplosionParticle!.Play();
-        Invoke("Destroy", Delay);
-    }
+        protected virtual void GetMoverResourses(PlayerMoverView playerMoverView) { }
 
-    private void Destroy()
-    {
-        Destroy(gameObject);
+        private void StartDestroy()
+        {
+            _mesh.enabled = false;
+            _collider.enabled = false;
+            ExplosionParticle!.Play();
+            Invoke(nameof(Destroy), Delay);
+        }
+
+        private void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

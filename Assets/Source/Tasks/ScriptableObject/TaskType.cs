@@ -1,11 +1,14 @@
-public enum TaskType
+namespace Tasks.SO
 {
-    Jump,
-    CollectMoney,
-    SpendMoney,
-    UseBoost,
-    BuyBoost,
-    UpgradeEnergy,
-    CrashWall,
-    RecordDistance
+    public enum TaskType
+    {
+        Jump,
+        CollectMoney,
+        SpendMoney,
+        UseBoost,
+        BuyBoost,
+        UpgradeEnergy,
+        CrashWall,
+        RecordDistance
+    }
 }

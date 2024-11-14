@@ -1,42 +1,46 @@
+using ShopSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopSkinsWindow : Window
+namespace Windows
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private ShopDancingWindow _shopDancing;
-    [SerializeField] private ShopBoostWindow _shopBoosts;
-
-    private Shop _shop;
-
-    private void OnEnable()
+    public class ShopSkinsWindow : Window
     {
-        _openButton.onClick.AddListener(Open);
-    }
+        [SerializeField] private Button _openButton;
+        [SerializeField] private ShopDancingWindow _shopDancing;
+        [SerializeField] private ShopBoostWindow _shopBoosts;
 
-    private void Awake()
-    {
-        OpenWithoutSound();
-        _shop = GetComponent<Shop>();
-    }
+        private Shop _shop;
 
-    private void OnDisable()
-    {
-        _openButton.onClick.RemoveListener(Open);
-    }
+        private void OnEnable()
+        {
+            _openButton.onClick.AddListener(Open);
+        }
 
-    public override void Open()
-    {
-        base.Open();
-        _shop.TurnOnModel();
+        private void Awake()
+        {
+            OpenWithoutSound();
+            _shop = GetComponent<Shop>();
+        }
 
-        _shopBoosts.CloseWithoutSound();
-        _shopDancing.Close();
-    }
+        private void OnDisable()
+        {
+            _openButton.onClick.RemoveListener(Open);
+        }
 
-    public override void Close()
-    {
-        base.CloseWithoutSound();
-        _shop.TurnOffModel();
+        public override void Open()
+        {
+            base.Open();
+            _shop.TurnOnModel();
+
+            _shopBoosts.CloseWithoutSound();
+            _shopDancing.Close();
+        }
+
+        public override void Close()
+        {
+            base.CloseWithoutSound();
+            _shop.TurnOffModel();
+        }
     }
 }

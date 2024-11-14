@@ -1,4 +1,6 @@
 using UnityEngine;
 
-public class EndPoint : MonoBehaviour
-{ }
+namespace Chunks
+{
+    public class EndPoint : MonoBehaviour { }
+}

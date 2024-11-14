@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
 
-public class Maps : MonoBehaviour
-{}
+namespace UI
+{
+    public class Maps : MonoBehaviour { }
+}

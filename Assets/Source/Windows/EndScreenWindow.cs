@@ -1,7 +1,10 @@
-public class EndScreenWindow : Window
+namespace Windows
 {
-    private void Awake()
+    public class EndScreenWindow : Window
     {
-        CloseWithoutSound();
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
     }
 }

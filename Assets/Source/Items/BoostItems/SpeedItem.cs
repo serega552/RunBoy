@@ -1,11 +1,15 @@
-public class SpeedItem : Item
-{
-    private float _value = 5f;
-    private float _time = 5f;
+using Player;
 
-    protected override void GetMoverResourses(PlayerMoverView playerMoverView)
+namespace Items.BoostItems
+{
+    public class SpeedItem : Item
     {
-        PlayerMoverView.ChangeSpeed(_value, _time);
+        private readonly float _value = 5f;
+        private readonly float _time = 5f;
+
+        protected override void GetMoverResourses(PlayerMoverView playerMoverView)
+        {
+            PlayerMoverView.ChangeSpeed(_value, _time);
+        }
     }
 }
-

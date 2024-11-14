@@ -1,25 +1,32 @@
+using BankSystem;
+using BoostSystem;
+using Tasks;
+using Tasks.SO;
 using UnityEngine;
 
-public class ShopBoosts : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Bank _bank;
-
-    public void Buy(Boost boost, int price)
+    public class ShopBoosts : MonoBehaviour
     {
-        if (_bank.TryTakeMoney(price))
+        [SerializeField] private Bank _bank;
+
+        public void Buy(Boost boost, int price)
         {
-            _bank.TakeMoney(price);
-            boost.Increase();
-            TaskCounter.IncereaseProgress(1, TaskType.BuyBoost.ToString());
+            if (_bank.TryTakeMoney(price))
+            {
+                _bank.TakeMoney(price);
+                boost.Increase();
+                TaskCounter.IncereaseProgress(1, TaskType.BuyBoost.ToString());
+            }
         }
-    }
 
-    public void BuyUpgrade(Boost boost, int price)
-    {
-        if (_bank.TryTakeMoney(price))
+        public void BuyUpgrade(Boost boost, int price)
         {
-            _bank.TakeMoney(price);
-            boost.Upgrade();
+            if (_bank.TryTakeMoney(price))
+            {
+                _bank.TakeMoney(price);
+                boost.Upgrade();
+            }
         }
     }
 }

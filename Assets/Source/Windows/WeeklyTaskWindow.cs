@@ -1,2 +1,4 @@
-﻿class WeeklyTaskWindow : Window
-{}
+﻿namespace Windows
+{
+    class WeeklyTaskWindow : Window { }
+}

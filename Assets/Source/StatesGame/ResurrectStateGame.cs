@@ -1,29 +1,35 @@
-public class ResurrectStateGame
+using Player;
+using UI;
+
+namespace StatesGame
 {
-    private readonly PlayerMoverPresenter _presenterMover;
-    private readonly PlayerPresenter _presenter;
-    private readonly PlayerResurrect _playerResurrect;
-
-    public ResurrectStateGame(PlayerPresenter presenter, PlayerMoverPresenter presenterMover, PlayerResurrect playerResurrect)
+    public class ResurrectStateGame
     {
-        _presenterMover = presenterMover;
-        _presenter = presenter;
-        _playerResurrect = playerResurrect;
-    }
+        private readonly PlayerMoverPresenter _presenterMover;
+        private readonly PlayerPresenter _presenter;
+        private readonly PlayerResurrect _playerResurrect;
 
-    public void Enable()
-    {
-        _playerResurrect.OnResurrected += Resurrect;
-    }
+        public ResurrectStateGame(PlayerPresenter presenter, PlayerMoverPresenter presenterMover, PlayerResurrect playerResurrect)
+        {
+            _presenterMover = presenterMover;
+            _presenter = presenter;
+            _playerResurrect = playerResurrect;
+        }
 
-    public void Disable()
-    {
-        _playerResurrect.OnResurrected -= Resurrect;
-    }
+        public void Enable()
+        {
+            _playerResurrect.OnResurrected += Resurrect;
+        }
 
-    private void Resurrect(float energy)
-    {
-        _presenter.ResurrectPlayer(energy);
-        _presenterMover.StartPlayerMove();
+        public void Disable()
+        {
+            _playerResurrect.OnResurrected -= Resurrect;
+        }
+
+        private void Resurrect(float energy)
+        {
+            _presenter.ResurrectPlayer(energy);
+            _presenterMover.StartPlayerMove();
+        }
     }
 }

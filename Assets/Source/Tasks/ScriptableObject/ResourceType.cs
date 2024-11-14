@@ -1,8 +1,11 @@
-public enum ResourceType
+namespace Tasks.SO
 {
-    Money,
-    Diamond,
-    SpeedBoost,
-    EnergyBoost,
-    MoneyBoost
+    public enum ResourceType
+    {
+        Money,
+        Diamond,
+        SpeedBoost,
+        EnergyBoost,
+        MoneyBoost
+    }
 }

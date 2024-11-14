@@ -1,35 +1,38 @@
 using YG;
 
-public class WeeklyTaskSpawner : TaskSpawner
+namespace Tasks.Spawner
 {
-    private void OnEnable()
+    public class WeeklyTaskSpawner : TaskSpawner
     {
-        TaskInspector.OnGoneWeeklyTime += RefreshTasks;
-    }
-
-    private void OnDisable()
-    {
-        TaskInspector.OnGoneWeeklyTime -= RefreshTasks;
-    }
-
-    public override void Save()
-    {
-        if (YandexGame.savesData.AmountWeeklyProgreses.Count < ActiveTasks.Count)
+        private void OnEnable()
         {
-            YandexGame.savesData.AmountWeeklyProgreses.Add(0);
-            YandexGame.SaveProgress();
+            TaskInspector.OnGoneWeeklyTime += RefreshTasks;
         }
-    }
 
-    public override void RefreshTasks()
-    {
-        YandexGame.savesData.AmountWeeklyProgreses.Clear();
-        base.RefreshTasks();
-    }
+        private void OnDisable()
+        {
+            TaskInspector.OnGoneWeeklyTime -= RefreshTasks;
+        }
 
-    public override void Load()
-    {
-        _amountProgreses = YandexGame.savesData.AmountWeeklyProgreses;
-        base.Load();
+        public override void Save()
+        {
+            if (YandexGame.savesData.AmountWeeklyProgreses.Count < ActiveTasks.Count)
+            {
+                YandexGame.savesData.AmountWeeklyProgreses.Add(0);
+                YandexGame.SaveProgress();
+            }
+        }
+
+        public override void RefreshTasks()
+        {
+            YandexGame.savesData.AmountWeeklyProgreses.Clear();
+            base.RefreshTasks();
+        }
+
+        public override void Load()
+        {
+            AmountProgreses = YandexGame.savesData.AmountWeeklyProgreses;
+            base.Load();
+        }
     }
 }

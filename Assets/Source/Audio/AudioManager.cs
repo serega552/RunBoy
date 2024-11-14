@@ -1,65 +1,68 @@
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Audio
 {
-    public static AudioManager Instance;
-
-    [SerializeField] private Sound[] _sounds;
-
-    private void Start()
+    public class AudioManager : MonoBehaviour
     {
-        if (Instance != null)
+        public static AudioManager Instance;
+
+        [SerializeField] private Sound[] _sounds;
+
+        private void Start()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
+            foreach (Sound sond in _sounds)
+            {
+                sond.Source = gameObject.AddComponent<AudioSource>();
+                sond.Source.playOnAwake = false;
+                sond.Source.clip = sond.Clip;
+                sond.Source.volume = sond.Volume;
+                sond.Source.pitch = sond.Pitch;
+                sond.Source.loop = sond.Loop;
+            }
         }
-        else
+
+        public void Play(string sound)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
+
+            if (s != null)
+                s.Source.Play();
         }
 
-        foreach (Sound sond in _sounds)
+        public void Stop(string sound)
         {
-            sond.source = gameObject.AddComponent<AudioSource>();
-            sond.source.playOnAwake = false;
-            sond.source.clip = sond.clip;
-            sond.source.volume = sond.volume;
-            sond.source.pitch = sond.pitch;
-            sond.source.loop = sond.loop;
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
+
+            if (s != null)
+                s.Source.Stop();
         }
-    }
 
-    public void Play(string sound)
-    {
-        Sound s = Array.Find(_sounds, item => item.name == sound);
+        public void Pause(string sound)
+        {
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
-        if (s != null)
-            s.source.Play();
-    }
+            if (s != null)
+                s.Source.Pause();
+        }
 
-    public void Stop(string sound)
-    {
-        Sound s = Array.Find(_sounds, item => item.name == sound);
+        public void UnPause(string sound)
+        {
+            Sound s = Array.Find(_sounds, item => item.Name == sound);
 
-        if (s != null)
-            s.source.Stop();
-    }
-
-    public void Pause(string sound)
-    {
-        Sound s = Array.Find(_sounds, item => item.name == sound);
-
-        if (s != null)
-            s.source.Pause();
-    }
-    
-    public void UnPause(string sound)
-    {
-        Sound s = Array.Find(_sounds, item => item.name == sound);
-
-        if (s != null)
-            s.source.UnPause();
+            if (s != null)
+                s.Source.UnPause();
+        }
     }
 }

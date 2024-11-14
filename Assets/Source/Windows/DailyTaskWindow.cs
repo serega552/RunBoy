@@ -1,2 +1,4 @@
-﻿class DailyTaskWindow : Window
-{}
+﻿namespace Windows
+{
+    class DailyTaskWindow : Window { }
+}

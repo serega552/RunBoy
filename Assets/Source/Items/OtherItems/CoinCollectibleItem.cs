@@ -1,16 +1,19 @@
-public class CoinCollectibleItem : OtherItem
+namespace Items.OtherItems
 {
-    private int _boostCount = 40;
-    private int _deBoostCount = -5;
-    private bool _isBoost = true;
-
-    public override void Boost()
+    public class CoinCollectibleItem : OtherItem
     {
-        PlayerView.AddMoney(_boostCount, _isBoost);
-    }
+        private readonly int _boostCount = 40;
+        private readonly int _deBoostCount = -5;
+        private readonly bool _isBoost = true;
 
-    public override void DeBoost()
-    {
-        PlayerView.AddMoney(_deBoostCount, _isBoost);
+        public override void Boost()
+        {
+            PlayerView.AddMoney(_boostCount, _isBoost);
+        }
+
+        public override void DeBoost()
+        {
+            PlayerView.AddMoney(_deBoostCount, _isBoost);
+        }
     }
 }

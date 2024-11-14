@@ -2,34 +2,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-public class LeaderboardWindow : Window
+namespace Windows
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private AuthWindow _authWindow;
-
-    private void Awake()
+    public class LeaderboardWindow : Window
     {
-        CloseWithoutSound();
-    }
+        [SerializeField] private Button _openButton;
+        [SerializeField] private Button _closeButton;
+        [SerializeField] private AuthWindow _authWindow;
 
-    private void OnEnable()
-    {
-        _openButton.onClick.AddListener(Open);
-        _closeButton.onClick.AddListener(Close);
-    }
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
 
-    private void OnDisable()
-    {
-        _openButton.onClick.RemoveListener(Open);
-        _closeButton.onClick.RemoveListener(Close);
-    }
+        private void OnEnable()
+        {
+            _openButton.onClick.AddListener(Open);
+            _closeButton.onClick.AddListener(Close);
+        }
 
-    public override void Open()
-    {
-        if (YandexGame.auth)
-            base.Open();
-        else
-            _authWindow.Open();
+        private void OnDisable()
+        {
+            _openButton.onClick.RemoveListener(Open);
+            _closeButton.onClick.RemoveListener(Close);
+        }
+
+        public override void Open()
+        {
+            if (YandexGame.auth)
+                base.Open();
+            else
+                _authWindow.Open();
+        }
     }
 }

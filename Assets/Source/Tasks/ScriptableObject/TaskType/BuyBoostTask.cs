@@ -1,6 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Task", menuName = "Tasks/BuyBoost", order = 51)]
-public class BuyBoostTask : Task
+namespace Tasks.SO.TasksType
 {
+    [CreateAssetMenu(fileName = "new Task", menuName = "Tasks/BuyBoost", order = 51)]
+
+    public class BuyBoostTask : Task { }
 }

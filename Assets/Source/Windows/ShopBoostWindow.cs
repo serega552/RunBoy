@@ -1,32 +1,35 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopBoostWindow : Window
+namespace Windows
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private ShopDancingWindow _shopDancing;
-    [SerializeField] private ShopSkinsWindow _shopSkins;
-
-    private void Awake()
+    public class ShopBoostWindow : Window
     {
-        CloseWithoutSound();
-    }
+        [SerializeField] private Button _openButton;
+        [SerializeField] private ShopDancingWindow _shopDancing;
+        [SerializeField] private ShopSkinsWindow _shopSkins;
 
-    private void OnEnable()
-    {
-        _openButton.onClick.AddListener(Open);
-    }
+        private void Awake()
+        {
+            CloseWithoutSound();
+        }
 
-    private void OnDisable()
-    {
-        _openButton.onClick.RemoveListener(Open);
-    }
+        private void OnEnable()
+        {
+            _openButton.onClick.AddListener(Open);
+        }
 
-    public override void Open()
-    {
-        base.Open();
+        private void OnDisable()
+        {
+            _openButton.onClick.RemoveListener(Open);
+        }
 
-        _shopDancing.Close();
-        _shopSkins.Close();
+        public override void Open()
+        {
+            base.Open();
+
+            _shopDancing.Close();
+            _shopSkins.Close();
+        }
     }
 }

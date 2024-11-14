@@ -1,2 +1,4 @@
-public class DistanceTaskWindow : Window
-{}
+namespace Windows
+{
+    public class DistanceTaskWindow : Window { }
+}

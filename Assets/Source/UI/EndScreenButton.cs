@@ -1,32 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Windows;
 
-public class EndScreenButton : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Window _windowForOpen;
-
-    private EndScreenWindow _endScreenWindow;
-    private Button _openButton;
-
-    private void Awake()
+    public class EndScreenButton : MonoBehaviour
     {
-        _openButton = GetComponent<Button>();
-        _endScreenWindow = GetComponentInParent<EndScreenWindow>(); 
-    }
+        [SerializeField] private Window _windowForOpen;
 
-    private void OnEnable()
-    {
-        _openButton.onClick.AddListener(PressOnButton);
-    }
+        private EndScreenWindow _endScreenWindow;
+        private Button _openButton;
 
-    private void OnDisable()
-    {
-        _openButton.onClick.RemoveListener(PressOnButton);
-    }
+        private void Awake()
+        {
+            _openButton = GetComponent<Button>();
+            _endScreenWindow = GetComponentInParent<EndScreenWindow>();
+        }
 
-    private void PressOnButton()
-    {
-        _endScreenWindow.Close();
-        _windowForOpen.Open();
+        private void OnEnable()
+        {
+            _openButton.onClick.AddListener(PressOnButton);
+        }
+
+        private void OnDisable()
+        {
+            _openButton.onClick.RemoveListener(PressOnButton);
+        }
+
+        private void PressOnButton()
+        {
+            _endScreenWindow.Close();
+            _windowForOpen.Open();
+        }
     }
 }

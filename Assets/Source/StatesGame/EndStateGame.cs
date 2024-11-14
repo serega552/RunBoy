@@ -1,82 +1,89 @@
+using Audio;
+using Player;
 using System;
+using UI;
+using Windows;
 using YG;
 
-public class EndStateGame
+namespace StatesGame
 {
-    private readonly Menu _menu;
-    private readonly EndGameScreen _endScreen;
-    private readonly PlayerMoverPresenter _presenterMover;
-    private readonly PlayerPresenter _presenter;
-    private readonly PlayerResurrect _playerResurrect;
-    private readonly HudWindow _hudWindow;
-    private readonly LeaderboardYG _leaderboard;
-
-    public EndStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, PlayerResurrect playerResurrect, EndGameScreen endScreen, HudWindow hudWindow, LeaderboardYG leaderboard)
+    public class EndStateGame
     {
-        _menu = menu;
-        _presenterMover = presenterMover;
-        _presenter = presenter;
-        _playerResurrect = playerResurrect;
-        _endScreen = endScreen;
-        _hudWindow = hudWindow;
-        _leaderboard = leaderboard;
-    }
+        private readonly Menu _menu;
+        private readonly EndGameScreen _endScreen;
+        private readonly PlayerMoverPresenter _presenterMover;
+        private readonly PlayerPresenter _presenter;
+        private readonly PlayerResurrect _playerResurrect;
+        private readonly HudWindow _hudWindow;
+        private readonly LeaderboardYG _leaderboard;
 
-    public event Action OnEndGame;
+        public EndStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, PlayerResurrect playerResurrect, EndGameScreen endScreen, HudWindow hudWindow, LeaderboardYG leaderboard)
+        {
+            _menu = menu;
+            _presenterMover = presenterMover;
+            _presenter = presenter;
+            _playerResurrect = playerResurrect;
+            _endScreen = endScreen;
+            _hudWindow = hudWindow;
+            _leaderboard = leaderboard;
+        }
 
-    public void Enable()
-    {
-        YandexGame.GetDataEvent += Load;
-        _presenter.OnEndGame += End;
-        _playerResurrect.OnRestarting += OpenWindows;
-    }
+        public event Action OnEndGame;
 
-    public void Disable()
-    {
-        YandexGame.GetDataEvent -= Load;
-        _presenter.OnEndGame -= End;
-        _playerResurrect.OnRestarting -= OpenWindows;
-    }
+        public void Enable()
+        {
+            YandexGame.GetDataEvent += Load;
+            _presenter.OnEndGame += End;
+            _playerResurrect.OnRestarting += OpenWindows;
+        }
 
-    private void End()
-    {
-        AudioManager.Instance.Pause("Music");
+        public void Disable()
+        {
+            YandexGame.GetDataEvent -= Load;
+            _presenter.OnEndGame -= End;
+            _playerResurrect.OnRestarting -= OpenWindows;
+        }
 
-        _presenterMover.EndPlayerMove();
-        _playerResurrect.OpenWindow();
-        _menu.SetDistance(_presenter.TakeTotalDistance());
-        YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(_presenter.TakeTotalDistance()));
-        _leaderboard.NewScore(Convert.ToInt32(_presenter.TakeTotalDistance()));
-        _leaderboard.UpdateLB();
+        private void End()
+        {
+            AudioManager.Instance.Pause("Music");
 
-        Save();
-    }
+            _presenterMover.EndPlayerMove();
+            _playerResurrect.OpenWindow();
+            _menu.SetDistance(_presenter.TakeTotalDistance());
+            YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(_presenter.TakeTotalDistance()));
+            _leaderboard.NewScore(Convert.ToInt32(_presenter.TakeTotalDistance()));
+            _leaderboard.UpdateLB();
 
-    private void OpenWindows()
-    {
-        AudioManager.Instance.Play("GameOver");
-        AudioManager.Instance.Stop("Music");
+            Save();
+        }
 
-        _menu.GetComponent<MenuWindow>().OpenWithoutSound();
-        _hudWindow.CloseWithoutSound();
-        AudioManager.Instance.UnPause("Music2");
+        private void OpenWindows()
+        {
+            AudioManager.Instance.Play("GameOver");
+            AudioManager.Instance.Stop("Music");
 
-        OnEndGame?.Invoke();
-    }
+            _menu.GetComponent<MenuWindow>().OpenWithoutSound();
+            _hudWindow.CloseWithoutSound();
+            AudioManager.Instance.UnPause("Music2");
 
-    private void Save()
-    {
-        YandexGame.savesData.Record = _presenter.TakeTotalDistance();
-        YandexGame.SaveProgress();
-    }
+            OnEndGame?.Invoke();
+        }
 
-    private void Load()
-    {
-        float record = YandexGame.savesData.Record;
+        private void Save()
+        {
+            YandexGame.savesData.Record = _presenter.TakeTotalDistance();
+            YandexGame.SaveProgress();
+        }
 
-        _menu.SetDistance(record);
-        YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(record));
-        _leaderboard.NewScore(Convert.ToInt32(record));
-        _leaderboard.UpdateLB();
+        private void Load()
+        {
+            float record = YandexGame.savesData.Record;
+
+            _menu.SetDistance(record);
+            YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(record));
+            _leaderboard.NewScore(Convert.ToInt32(record));
+            _leaderboard.UpdateLB();
+        }
     }
 }

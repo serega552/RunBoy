@@ -1,15 +1,18 @@
-public class EnergyCollectibleItem : OtherItem
+namespace Items.OtherItems
 {
-    private int _boostCount = 100;
-    private int _deBoostCount = -50;
-
-    public override void Boost()
+    public class EnergyCollectibleItem : OtherItem
     {
-        PlayerView.OnEnergyChanged(_boostCount);
-    }
+        private readonly int _boostCount = 100;
+        private readonly int _deBoostCount = -50;
 
-    public override void DeBoost()
-    {
-        PlayerView.OnEnergyChanged(_deBoostCount);
+        public override void Boost()
+        {
+            PlayerView.OnEnergyChanged(_boostCount);
+        }
+
+        public override void DeBoost()
+        {
+            PlayerView.OnEnergyChanged(_deBoostCount);
+        }
     }
 }

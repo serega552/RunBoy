@@ -1,13 +1,13 @@
 using Player;
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace BlockSystem
 {
     public class Chuchpan : MonoBehaviour
     {
-        private readonly int FallState = Animator.StringToHash("Hit");
+        private readonly int _fallState = Animator.StringToHash("Hit");
         private readonly int _reward = 5;
 
         [SerializeField] private ParticleSystem _fall;
@@ -17,7 +17,7 @@ namespace BlockSystem
         private Collider _collider;
         private Animator _animator;
 
-        public event UnityAction<float> OnHit;
+        public event Action<float> Hiting;
 
         private void Start()
         {
@@ -30,16 +30,16 @@ namespace BlockSystem
             if (collider.gameObject.TryGetComponent(out PlayerView playerView))
             {
                 PlayerMoverView mover = collider.GetComponent<PlayerMoverView>();
-                mover.Kick();
+                mover.OnKick();
                 StartCoroutine(ExecuteActionsSequence(playerView, mover));
             }
         }
 
         private IEnumerator ExecuteActionsSequence(PlayerView playerView, PlayerMoverView mover)
         {
-            OnHit?.Invoke(mover.CurrentSpeed);
+            Hiting?.Invoke(mover.CurrentSpeed);
 
-            _animator.Play(FallState);
+            _animator.Play(_fallState);
             yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
             _collider.enabled = false;
 

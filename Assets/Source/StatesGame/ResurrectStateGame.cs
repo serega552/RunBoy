@@ -18,12 +18,12 @@ namespace StatesGame
 
         public void Enable()
         {
-            _playerResurrect.OnResurrected += Resurrect;
+            _playerResurrect.Resurrected += Resurrect;
         }
 
         public void Disable()
         {
-            _playerResurrect.OnResurrected -= Resurrect;
+            _playerResurrect.Resurrected -= Resurrect;
         }
 
         private void Resurrect(float energy)

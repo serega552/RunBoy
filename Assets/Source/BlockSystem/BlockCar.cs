@@ -11,7 +11,7 @@ namespace BlockSystem
             if (collision.gameObject.TryGetComponent(out PlayerMoverView player))
             {
                 player.CrashOnCar();
-                AudioManager.Instance.Play("CarCrash");
+                SoundSwitcher.Instance.Play("CarCrash");
                 Instantiate(CrashParticle.gameObject, transform.position, transform.rotation);
                 GetComponent<Collider>().enabled = false;
 

@@ -5,23 +5,23 @@ namespace Batching
 {
     public class MeshCombiner : MonoBehaviour
     {
-        [SerializeField] private List<MeshFilter> sourceMeshFilters;
-        [SerializeField] private MeshFilter targetMeshFilter;
+        [SerializeField] private List<MeshFilter> _sourceMeshFilters;
+        [SerializeField] private MeshFilter _targetMeshFilter;
 
         [ContextMenu("Combine Meshes")]
         private void CombineMeshes()
         {
-            var combine = new CombineInstance[sourceMeshFilters.Count];
+            var combine = new CombineInstance[_sourceMeshFilters.Count];
 
-            for (var i = 0; i < sourceMeshFilters.Count; i++)
+            for (var i = 0; i < _sourceMeshFilters.Count; i++)
             {
-                combine[i].mesh = sourceMeshFilters[i].sharedMesh;
-                combine[i].transform = sourceMeshFilters[i].transform.localToWorldMatrix;
+                combine[i].mesh = _sourceMeshFilters[i].sharedMesh;
+                combine[i].transform = _sourceMeshFilters[i].transform.localToWorldMatrix;
             }
 
             var mesh = new Mesh();
             mesh.CombineMeshes(combine);
-            targetMeshFilter.mesh = mesh;
+            _targetMeshFilter.mesh = mesh;
         }
     }
 }

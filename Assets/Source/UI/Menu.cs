@@ -17,11 +17,11 @@ namespace UI
         private float _recordDistance;
         private MenuWindow _menuWindow;
 
-        public event Action OnClickStart;
+        public event Action StartClicking;
 
         private void Start()
         {
-            AudioManager.Instance.Play("Music2");
+            SoundSwitcher.Instance.Play("Music2");
         }
 
         private void Awake()
@@ -51,7 +51,7 @@ namespace UI
 
         private void OnClick()
         {
-            OnClickStart?.Invoke();
+            StartClicking?.Invoke();
             _menuWindow.Close();
         }
     }

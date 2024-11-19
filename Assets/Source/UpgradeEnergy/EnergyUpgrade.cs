@@ -61,7 +61,6 @@ namespace UpgradeEnergy
                     Save();
                     return CurrentEnergy;
                 }
-
             }
             else
             {

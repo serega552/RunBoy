@@ -5,7 +5,7 @@ using YG;
 
 namespace UI
 {
-    public class Settings : MonoBehaviour, IPointerExitHandler
+    public class VolumeAdjustment : MonoBehaviour, IPointerExitHandler
     {
         [SerializeField] private Slider _sound;
 

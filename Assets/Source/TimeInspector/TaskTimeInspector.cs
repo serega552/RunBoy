@@ -16,8 +16,8 @@ namespace TimeInspector
         private int _startWeeklyTime;
         private int _startDailyTime;
 
-        public event Action OnGoneDailyTime;
-        public event Action OnGoneWeeklyTime;
+        public event Action DailyTimeGoned;
+        public event Action WeeklyTimeGoned;
 
         public void Load()
         {
@@ -34,7 +34,7 @@ namespace TimeInspector
             else
             {
                 _startDailyTime = DateTime.Now.Day;
-                OnGoneDailyTime?.Invoke();
+                DailyTimeGoned?.Invoke();
                 Save();
             }
 
@@ -55,7 +55,7 @@ namespace TimeInspector
             else
             {
                 _startWeeklyTime = DateTime.Now.Day;
-                OnGoneWeeklyTime?.Invoke();
+                WeeklyTimeGoned?.Invoke();
                 Save();
             }
         }

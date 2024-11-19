@@ -20,15 +20,15 @@ namespace PlayerEffects
 
         private void OnDisable()
         {
-            _playerMoverView.OnDance -= Dance;
-            _playerMoverView.OnRestart -= ResetPlayer;
-            _playerMoverView.OnStarted -= Run;
-            _playerMoverView.OnJumped -= Jump;
-            _playerMoverView.OnKicked -= Kick;
-            _playerMoverView.OnChangingSpeedCrash -= Crash;
-            _playerMoverView.OnStoped -= Lose;
-            _playerMoverView.OnSomersault -= Somersault;
-            _playerMoverView.OnCrashed -= CrashOnCar;
+            _playerMoverView.Dancing -= Dance;
+            _playerMoverView.Restarting -= ResetPlayer;
+            _playerMoverView.Started -= Run;
+            _playerMoverView.Jumped -= Jump;
+            _playerMoverView.Kicked -= Kick;
+            _playerMoverView.SpeedCrashChanging -= Crash;
+            _playerMoverView.Stoped -= Lose;
+            _playerMoverView.Somersaulting -= Somersault;
+            _playerMoverView.Crashed -= CrashOnCar;
         }
 
         public void Init(PlayerMoverView playerMoverView, Animator animator)
@@ -36,15 +36,15 @@ namespace PlayerEffects
             _playerMoverView = playerMoverView;
             _animator = animator;
 
-            _playerMoverView.OnDance += Dance;
-            _playerMoverView.OnRestart += ResetPlayer;
-            _playerMoverView.OnStarted += Run;
-            _playerMoverView.OnJumped += Jump;
-            _playerMoverView.OnKicked += Kick;
-            _playerMoverView.OnChangingSpeedCrash += Crash;
-            _playerMoverView.OnStoped += Lose;
-            _playerMoverView.OnSomersault += Somersault;
-            _playerMoverView.OnCrashed += CrashOnCar;
+            _playerMoverView.Dancing += Dance;
+            _playerMoverView.Restarting += ResetPlayer;
+            _playerMoverView.Started += Run;
+            _playerMoverView.Jumped += Jump;
+            _playerMoverView.Kicked += Kick;
+            _playerMoverView.SpeedCrashChanging += Crash;
+            _playerMoverView.Stoped += Lose;
+            _playerMoverView.Somersaulting += Somersault;
+            _playerMoverView.Crashed += CrashOnCar;
         }
 
         private void Run()

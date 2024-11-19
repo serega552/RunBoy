@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Initers
 {
-    public class PlayerIniter : MonoBehaviour
+    public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private Menu _viewMenu;
         [SerializeField] private PlayerMoverPresenter _moverPresenter;
@@ -32,7 +32,7 @@ namespace Initers
 
         private void OnEnable()
         {
-            _skinSelecter.OnChangingSkin += Init;
+            _skinSelecter.SkinChanging += LoadPlayer;
         }
 
         private void OnDisable()
@@ -40,10 +40,10 @@ namespace Initers
             _presenter.Disable();
             _moverPresenter.Disable();
 
-            _skinSelecter.OnChangingSkin -= Init;
+            _skinSelecter.SkinChanging -= LoadPlayer;
         }
 
-        public void Init(PlayerView playerView)
+        public void LoadPlayer(PlayerView playerView)
         {
             playerView.gameObject.SetActive(true);
 

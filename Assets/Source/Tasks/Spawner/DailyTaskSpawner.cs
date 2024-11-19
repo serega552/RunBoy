@@ -6,12 +6,12 @@ namespace Tasks.Spawner
     {
         private void OnEnable()
         {
-            TaskInspector.OnGoneDailyTime += RefreshTasks;
+            TaskInspector.DailyTimeGoned += RefreshTasks;
         }
 
         private void OnDisable()
         {
-            TaskInspector.OnGoneDailyTime -= RefreshTasks;
+            TaskInspector.DailyTimeGoned -= RefreshTasks;
         }
 
         public override void Save()

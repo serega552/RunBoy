@@ -14,6 +14,10 @@ namespace UI
         [SerializeField] private Button _rewardButton;
         [SerializeField] private Bank _bank;
 
+        private int _chanceRefresh = 10;
+        private float _timeTurnOn = 0.3f;
+        private float _timeTurnOff = 1.5f;
+
         private void Start()
         {
             RefreshAdButton();
@@ -42,7 +46,7 @@ namespace UI
         {
             int chance = Random.Range(0, 100);
 
-            if (chance <= 10)
+            if (chance <= _chanceRefresh)
                 _rewardButton.gameObject.SetActive(true);
             else
                 _rewardButton.gameObject.SetActive(false);
@@ -52,14 +56,14 @@ namespace UI
         {
             YandexGame.RewVideoShow(_id);
             _rewardButton.interactable = false;
-            Invoke(nameof(TurnOnConfetti), 0.3f);
+            Invoke(nameof(TurnOnConfetti), _timeTurnOn);
         }
 
         private void TurnOnConfetti()
         {
             _rewardButton.GetComponentInChildren<ParticleSystem>().Play();
-            AudioManager.Instance.Play("Confetti");
-            Invoke(nameof(TurnOffObject), 1.5f);
+            SoundSwitcher.Instance.Play("Confetti");
+            Invoke(nameof(TurnOffObject), _timeTurnOff);
         }
 
         private void TurnOffObject()

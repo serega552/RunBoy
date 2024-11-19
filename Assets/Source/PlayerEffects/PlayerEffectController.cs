@@ -16,6 +16,8 @@ namespace PlayerEffects
 
     public class PlayerEffectController : MonoBehaviour
     {
+        private readonly int _minCountBoosts = 3;
+
         [SerializeField] private List<ParticleSystem> _effects;
 
         private PlayerView _view;
@@ -25,18 +27,18 @@ namespace PlayerEffects
 
         private void OnDisable()
         {
-            _viewMover.OnProtected -= ProtectBoostEffect;
-            _view.OnEnergyChanging -= EnergyBoostEffect;
-            _view.OnMoneyChanging -= CoinBoostEffect;
+            _viewMover.Protected -= ProtectBoostEffect;
+            _view.EnergyChanging -= EnergyBoostEffect;
+            _view.MoneyChanging -= CoinBoostEffect;
         }
 
         public void Init(PlayerMoverView playerMoverView, PlayerView playerView)
         {
             _view = playerView;
             _viewMover = playerMoverView;
-            _viewMover.OnProtected += ProtectBoostEffect;
-            _view.OnEnergyChanging += EnergyBoostEffect;
-            _view.OnMoneyChanging += CoinBoostEffect;
+            _viewMover.Protected += ProtectBoostEffect;
+            _view.EnergyChanging += EnergyBoostEffect;
+            _view.MoneyChanging += CoinBoostEffect;
 
             for (int i = 0; i < _effects.Count; i++)
             {
@@ -115,7 +117,7 @@ namespace PlayerEffects
 
         private bool IsBoost(float count)
         {
-            return count > 3;
+            return count > _minCountBoosts;
         }
     }
 }

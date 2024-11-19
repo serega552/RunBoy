@@ -28,7 +28,7 @@ namespace ShopSystem
 
             foreach (var skin in _skinsForSale)
             {
-                skin.OnSelected += ShowInfoProduct;
+                skin.Selected += ShowInfoProduct;
             }
         }
 
@@ -41,7 +41,7 @@ namespace ShopSystem
 
             foreach (var skin in _skinsForSale)
             {
-                skin.OnSelected -= ShowInfoProduct;
+                skin.Selected -= ShowInfoProduct;
             }
         }
 

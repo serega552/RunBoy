@@ -17,7 +17,14 @@ namespace StatesGame
         private readonly HudWindow _hudWindow;
         private readonly LeaderboardYG _leaderboard;
 
-        public EndStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, PlayerResurrect playerResurrect, EndGameScreen endScreen, HudWindow hudWindow, LeaderboardYG leaderboard)
+        public EndStateGame(
+            Menu menu, 
+            PlayerPresenter presenter, 
+            PlayerMoverPresenter presenterMover,
+            PlayerResurrect playerResurrect, 
+            EndGameScreen endScreen,
+            HudWindow hudWindow, 
+            LeaderboardYG leaderboard)
         {
             _menu = menu;
             _presenterMover = presenterMover;
@@ -28,25 +35,25 @@ namespace StatesGame
             _leaderboard = leaderboard;
         }
 
-        public event Action OnEndGame;
+        public event Action GameEnded;
 
         public void Enable()
         {
             YandexGame.GetDataEvent += Load;
-            _presenter.OnEndGame += End;
-            _playerResurrect.OnRestarting += OpenWindows;
+            _presenter.GameEnded += End;
+            _playerResurrect.Restarting += OpenWindows;
         }
 
         public void Disable()
         {
             YandexGame.GetDataEvent -= Load;
-            _presenter.OnEndGame -= End;
-            _playerResurrect.OnRestarting -= OpenWindows;
+            _presenter.GameEnded -= End;
+            _playerResurrect.Restarting -= OpenWindows;
         }
 
         private void End()
         {
-            AudioManager.Instance.Pause("Music");
+            SoundSwitcher.Instance.Pause("Music");
 
             _presenterMover.EndPlayerMove();
             _playerResurrect.OpenWindow();
@@ -60,14 +67,14 @@ namespace StatesGame
 
         private void OpenWindows()
         {
-            AudioManager.Instance.Play("GameOver");
-            AudioManager.Instance.Stop("Music");
+            SoundSwitcher.Instance.Play("GameOver");
+            SoundSwitcher.Instance.Stop("Music");
 
             _menu.GetComponent<MenuWindow>().OpenWithoutSound();
             _hudWindow.CloseWithoutSound();
-            AudioManager.Instance.UnPause("Music2");
+            SoundSwitcher.Instance.UnPause("Music2");
 
-            OnEndGame?.Invoke();
+            GameEnded?.Invoke();
         }
 
         private void Save()

@@ -7,19 +7,18 @@ namespace Windows
 {
     public class PauseWindow : Window
     {
+        [SerializeField] private PlayerInputHandler _inputHandler;
         [SerializeField] private Button _openButton;
         [SerializeField] private Button _closeButton;
 
         private bool _isPause = false;
-        private PlayerInputHandler _inputHandler;
 
         public bool IsPause => _isPause;
 
         private void Start()
         {
             CloseWithoutSound();
-            _inputHandler = PlayerInputHandler.Instance;
-            _inputHandler.OnPauseButtonClick += TogglePause;
+            _inputHandler.PauseButtonClicking += TogglePause;
         }
 
         private void OnEnable()
@@ -32,21 +31,21 @@ namespace Windows
         {
             _openButton.onClick.RemoveListener(TogglePause);
             _closeButton.onClick.RemoveListener(TogglePause);
-            _inputHandler.OnPauseButtonClick -= TogglePause;
+            _inputHandler.PauseButtonClicking -= TogglePause;
         }
 
         public override void Open()
         {
             base.Open();
             Time.timeScale = 0f;
-            AudioManager.Instance.Pause("Music");
+            SoundSwitcher.Instance.Pause("Music");
         }
 
         public override void Close()
         {
             base.Close();
             Time.timeScale = 1f;
-            AudioManager.Instance.UnPause("Music");
+            SoundSwitcher.Instance.UnPause("Music");
         }
 
         private void TogglePause()

@@ -9,6 +9,9 @@ namespace Items.ItemsFactory
 {
     public class ItemSpawner : MonoBehaviour
     {
+        private readonly Dictionary<Chunk, List<GameObject>> _spawnedItems = new Dictionary<Chunk, List<GameObject>>();
+        private readonly int _minItems = 5;
+
         [SerializeField] private int _itemSpawnCount = 7;
         [SerializeField] private List<GameObject> _itemPrefabs;
         [SerializeField] private ChunksPlacer _chunksPlacer;
@@ -18,30 +21,29 @@ namespace Items.ItemsFactory
         [SerializeField] private BlockSpawner _blockSpawner;
 
         private PlayerMoverView _mover;
-        private readonly Dictionary<Chunk, List<GameObject>> _spawnedItems = new Dictionary<Chunk, List<GameObject>>();
 
         private void OnEnable()
         {
             _player = GetComponentInParent<PlayerView>();
             _mover = GetComponentInParent<PlayerMoverView>();
 
-            _mover.OnStarted += SpawnFirstChunk;
+            _mover.Started += SpawnFirstChunk;
 
             foreach (var chunk in _chunksPlacer.Chunks)
             {
-                chunk.OnSpawned += OnChunkSpawned;
-                chunk.OnDeactivated += OnChunkDeactivated;
+                chunk.Spawned += OnChunkSpawned;
+                chunk.Deactivated += OnChunkDeactivated;
             }
         }
 
         private void OnDisable()
         {
-            _mover.OnStarted -= SpawnFirstChunk;
+            _mover.Started -= SpawnFirstChunk;
 
             foreach (var chunk in _chunksPlacer.Chunks)
             {
-                chunk.OnSpawned -= OnChunkSpawned;
-                chunk.OnDeactivated -= OnChunkDeactivated;
+                chunk.Spawned -= OnChunkSpawned;
+                chunk.Deactivated -= OnChunkDeactivated;
             }
         }
 
@@ -53,7 +55,7 @@ namespace Items.ItemsFactory
 
         private void OnChunkSpawned(Chunk chunk)
         {
-            int itemSpawnCount = Random.Range(5, _itemSpawnCount);
+            int itemSpawnCount = Random.Range(_minItems, _itemSpawnCount);
 
             for (int i = 0; i < itemSpawnCount; i++)
             {

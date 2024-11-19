@@ -16,7 +16,7 @@ namespace BlockSystem
         {
             if (collision.gameObject.TryGetComponent(out PlayerMoverView player))
             {
-                player.Somersault();
+                player.OnSomersault();
                 _ceilings.DisableColliders();
             }
         }

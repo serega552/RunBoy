@@ -12,11 +12,15 @@ namespace Player
 {
     public class PlayerMoverView : MonoBehaviour
     {
+        private readonly float _yRaySum = 0.2f;
+        private readonly float _distanceRay = 0.3f;
+
         [SerializeField] private Joystick _joystick;
         [SerializeField] private CameraMover _cameraMover;
         [SerializeField] private Boost _speedBoost;
         [SerializeField] private GameObject _prefabForDanceShop;
         [SerializeField] private Button _jumpButton;
+        [SerializeField] private PlayerInputHandler _inputHandler;
 
         private Vector3 _startPlayerPosition;
         private string _nameDanceAnim;
@@ -25,30 +29,34 @@ namespace Player
         private bool _isProtected;
         private bool _canMove = false;
         private bool _canJump = true;
-        private PlayerInputHandler _inputHandler;
         private PlayerView _playerView;
 
-        public event Action<float> OnMoving;
-        public event Action<float> OnChangingSpeed;
-        public event Action<float> OnChangingSpeedCrash;
-        public event Action<float, float> OnSpeedBoostChanging;
-        public event Action<bool> OnProtected;
-        public event Action OnStarted;
-        public event Action OnStoped;
-        public event Action OnKicked;
-        public event Action OnJumped;
-        public event Action OnJumping;
-        public event Action OnSomersault;
-        public event Action OnCrashed;
-        public event Action OnRestart;
-        public event Action OnDance;
+        public event Action<PlayerInputHandler> InputChanging;
+        public event Action<float> Moving;
+        public event Action<float> SpeedChanging;
+        public event Action<float> SpeedCrashChanging;
+        public event Action<float, float> SpeedBoostChanging;
+        public event Action<bool> Protected;
+        public event Action Started;
+        public event Action Stoped;
+        public event Action Kicked;
+        public event Action Jumped;
+        public event Action Jumping;
+        public event Action Somersaulting;
+        public event Action Crashed;
+        public event Action Restarting;
+        public event Action Dancing;
 
         public string NameDanceAnim => _nameDanceAnim;
         public float CurrentSpeed => _speed;
 
+        private void Start()
+        {
+            InputChanging?.Invoke(_inputHandler);
+        }
+
         private void Awake()
         {
-            _inputHandler = PlayerInputHandler.Instance;
             _startPlayerPosition = transform.position;
             _speedBoostButton = _speedBoost.GetComponent<Button>();
             _playerView = GetComponent<PlayerView>();
@@ -68,14 +76,14 @@ namespace Player
         {
             _cameraMover.GetPlayerTransform(transform);
             _speedBoostButton.onClick.AddListener(UseSpeedBoost);
-            _inputHandler.OnJumpButtonClick += Jump;
+            _inputHandler.JumpButtonClicking += Jump;
             _jumpButton.onClick.AddListener(Jump);
         }
 
         private void OnDisable()
         {
             _speedBoostButton.onClick.RemoveListener(UseSpeedBoost);
-            _inputHandler.OnJumpButtonClick -= Jump;
+            _inputHandler.JumpButtonClicking -= Jump;
             _jumpButton.onClick.RemoveListener(Jump);
         }
 
@@ -84,27 +92,27 @@ namespace Player
             return _prefabForDanceShop;
         }
 
-        public void GetNameDance(string nameDance)
+        public void SetNameDance(string nameDance)
         {
             _nameDanceAnim = nameDance;
         }
 
         public void ChangeSpeed(float count, float time)
         {
-            AudioManager.Instance.Play("UseBoost");
-            OnSpeedBoostChanging?.Invoke(count, time);
+            SoundSwitcher.Instance.Play("UseBoost");
+            SpeedBoostChanging?.Invoke(count, time);
         }
 
         public void ChangeCurrentSpeed(float speed)
         {
             _speed = speed;
-            OnChangingSpeed?.Invoke(speed);
+            SpeedChanging?.Invoke(speed);
         }
 
         public void Protect(bool protect)
         {
             _isProtected = protect;
-            OnProtected?.Invoke(protect);
+            Protected?.Invoke(protect);
         }
 
         public void Crash()
@@ -112,8 +120,8 @@ namespace Player
             if (_isProtected == false)
             {
                 float moveSpeed = 3;
-                AudioManager.Instance.Play("Crash");
-                OnChangingSpeedCrash?.Invoke(moveSpeed);
+                SoundSwitcher.Instance.Play("Crash");
+                SpeedCrashChanging?.Invoke(moveSpeed);
 
                 TaskCounter.IncereaseProgress(1, TaskType.CrashWall.ToString());
             }
@@ -123,7 +131,7 @@ namespace Player
         {
             if (_isProtected == false)
             {
-                OnCrashed?.Invoke();
+                Crashed?.Invoke();
                 _playerView.GameOver();
             }
         }
@@ -132,42 +140,42 @@ namespace Player
         {
             _cameraMover?.StartMove();
             _canMove = true;
-            OnStarted?.Invoke();
+            Started?.Invoke();
         }
 
         public void ResetMove()
         {
             _cameraMover?.ResetCameraPosition();
             transform.position = _startPlayerPosition;
-            OnRestart?.Invoke();
+            Restarting?.Invoke();
         }
 
         public void EndMove()
         {
             _cameraMover?.EndMove();
             _canMove = false;
-            OnStoped?.Invoke();
+            Stoped?.Invoke();
             _isProtected = false;
         }
 
-        public void Kick()
+        public void OnKick()
         {
-            OnKicked?.Invoke();
+            Kicked?.Invoke();
         }
 
-        public void Jumped()
+        public void OnJumped()
         {
-            OnJumped?.Invoke();
+            Jumped?.Invoke();
         }
 
-        public void Somersault()
+        public void OnSomersault()
         {
-            OnSomersault?.Invoke();
+            Somersaulting?.Invoke();
         }
 
-        public void Dance()
+        public void OnDance()
         {
-            OnDance?.Invoke();
+            Dancing?.Invoke();
         }
 
         public void SetSpeedBoostTimer(float time)
@@ -178,9 +186,9 @@ namespace Player
         private void CheckGrounded()
         {
             RaycastHit hit;
-            Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.up * -1);
+            Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y + _yRaySum, transform.position.z), transform.up * -1);
 
-            if (Physics.Raycast(ray, out hit, 0.3f))
+            if (Physics.Raycast(ray, out hit, _distanceRay))
             {
                 if (hit.collider.TryGetComponent(out Chunk chunk))
                     _canJump = true;
@@ -194,27 +202,25 @@ namespace Player
         private void PlayerInputContorol()
         {
             if (_joystick.Horizontal < 0f && _joystick.Horizontal > -1)
-                OnMoving?.Invoke(_joystick.Horizontal);
+                Moving?.Invoke(_joystick.Horizontal);
             else if (_joystick.Horizontal > 0f && _joystick.Horizontal < 1)
-                OnMoving?.Invoke(_joystick.Horizontal);
+                Moving?.Invoke(_joystick.Horizontal);
             else
-                OnMoving?.Invoke(0);
+                Moving?.Invoke(0);
         }
 
         private void Jump()
         {
             if (_canJump && _canMove)
             {
-                OnJumping?.Invoke();
+                Jumping?.Invoke();
             }
         }
 
         private void UseSpeedBoost()
         {
             if (_speedBoost.TryUse())
-                OnSpeedBoostChanging?.Invoke(_speedBoost.Bonus, _speedBoost.Time);
-            else
-                Debug.Log("ErrorUseBoost");
+                SpeedBoostChanging?.Invoke(_speedBoost.Bonus, _speedBoost.Time);
         }
     }
 }

@@ -10,6 +10,10 @@ namespace Player
     {
         private readonly float _maxSpeed = 3f;
         private readonly float _maxTurnSpeed = 1.5f;
+        private readonly float _xPosition = 1.7f;
+        private readonly float _yJumpForce = 2f;
+        private readonly float _maxMoveVariableSpeed = 10;
+        private readonly float _editMoveSpeed = 0.01f;
         private readonly Rigidbody _rigidbody;
 
         private float _turn = 0;
@@ -27,12 +31,11 @@ namespace Player
         public PlayerMoverModel(Rigidbody rigidbody)
         {
             _rigidbody = rigidbody;
-            _inputHandler = PlayerInputHandler.Instance;
         }
 
-        public event Action OnJumped;
-        public event Action<float> OnChangeSpeed;
-        public event Action<float> OnChangingBoostTime;
+        public event Action Jumped;
+        public event Action<float> SpeedChanging;
+        public event Action<float> BoostTimeChanging;
 
         public float MoveSpeed { get; private set; }
 
@@ -50,7 +53,7 @@ namespace Player
                 _turn = DefineTurn();
 
                 float newXPosition = currentPosition.x + _turnSpeed * _turn * Time.deltaTime;
-                newXPosition = Mathf.Clamp(newXPosition, -1.7f, 1.7f);
+                newXPosition = Mathf.Clamp(newXPosition, -_xPosition, _xPosition);
 
                 _rigidbody.position = new Vector3(newXPosition, currentPosition.y, currentPosition.z);
 
@@ -64,10 +67,10 @@ namespace Player
             _moveVariableSpeed = _maxSpeed;
             _isMove = true;
             _turnSpeed = _maxTurnSpeed;
-            OnChangeSpeed?.Invoke(MoveSpeed);
+            SpeedChanging?.Invoke(MoveSpeed);
 
             _isSpeedBoost = false;
-            OnChangingBoostTime?.Invoke(0);
+            BoostTimeChanging?.Invoke(0);
         }
 
         public void ResetMove()
@@ -97,6 +100,11 @@ namespace Player
             _isSpeedBoost = false;
         }
 
+        public void SetInput(PlayerInputHandler inputHandler)
+        {
+            _inputHandler = inputHandler;
+        }
+
         public void TurnOnSpeedBoost(float bonus, float time)
         {
             if (_isSpeedBoost == false)
@@ -107,7 +115,7 @@ namespace Player
 
                 _lastMoveSpeed = _moveVariableSpeed;
                 _moveVariableSpeed += _speedBonus;
-                _moveVariableSpeed = _moveVariableSpeed > 10 ? 10 : _moveVariableSpeed;
+                _moveVariableSpeed = _moveVariableSpeed > _maxMoveVariableSpeed ? _maxMoveVariableSpeed : _moveVariableSpeed;
             }
             else
             {
@@ -117,14 +125,14 @@ namespace Player
 
         public void Jump()
         {
-            OnJumped?.Invoke();
+            Jumped?.Invoke();
             _rigidbody.AddForce(0f, _jumpPower, 0f, ForceMode.Impulse);
             TaskCounter.IncereaseProgress(1, Convert.ToString(TaskType.Jump));
         }
 
         public void Somersault()
         {
-            _rigidbody.AddForce(0, _jumpPower, 2, ForceMode.Impulse);
+            _rigidbody.AddForce(0, _jumpPower, _yJumpForce, ForceMode.Impulse);
         }
 
         private void ChangeSpeed()
@@ -135,7 +143,7 @@ namespace Player
             if (MoveSpeed != _moveVariableSpeed && _isSpeedBoost)
             {
                 _speedTime -= Time.deltaTime;
-                OnChangingBoostTime?.Invoke(_speedTime);
+                BoostTimeChanging?.Invoke(_speedTime);
 
                 if (_speedTime > 0)
                 {
@@ -165,9 +173,9 @@ namespace Player
         {
             float turnMultiplier = 2f;
 
-            MoveSpeed = MoveSpeed < _moveVariableSpeed ? MoveSpeed + 0.01f : MoveSpeed > _moveVariableSpeed ? MoveSpeed - 0.01f : _moveVariableSpeed;
+            MoveSpeed = MoveSpeed < _moveVariableSpeed ? MoveSpeed + _editMoveSpeed : MoveSpeed > _moveVariableSpeed ? MoveSpeed - _editMoveSpeed : _moveVariableSpeed;
             _turnSpeed = MoveSpeed / turnMultiplier;
-            OnChangeSpeed?.Invoke(MoveSpeed);
+            SpeedChanging?.Invoke(MoveSpeed);
         }
     }
 }

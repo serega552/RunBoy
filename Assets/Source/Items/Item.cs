@@ -5,12 +5,11 @@ namespace Items
 {
     public abstract class Item : MonoBehaviour
     {
-        protected float Delay = 2f;
         protected float Resourses;
         protected ParticleSystem ExplosionParticle;
+        protected float Delay = 2f;
         protected PlayerView PlayerView;
         protected PlayerMoverView PlayerMoverView;
-
         private Collider _collider;
         private MeshRenderer _mesh;
 

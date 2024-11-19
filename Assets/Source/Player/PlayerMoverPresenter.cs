@@ -20,26 +20,28 @@ namespace Player
 
         public void Enable()
         {
-            _view.OnMoving += SetDataMove;
-            _view.OnChangingSpeedCrash += ChangeSpeedCrash;
-            _view.OnSpeedBoostChanging += OnSpeedChanging;
-            _view.OnSomersault += Somerslaut;
-            _model.OnChangeSpeed += _view.ChangeCurrentSpeed;
-            _model.OnChangingBoostTime += _view.SetSpeedBoostTimer;
-            _view.OnJumping += Jump;
-            _model.OnJumped += _view.Jumped;
+            _view.Moving += SetDataMove;
+            _view.SpeedCrashChanging += OnChangeSpeedCrash;
+            _view.SpeedBoostChanging += OnSpeedChanging;
+            _view.Somersaulting += OnSomerslaut;
+            _view.InputChanging += _model.SetInput;
+            _model.SpeedChanging += _view.ChangeCurrentSpeed;
+            _model.BoostTimeChanging += _view.SetSpeedBoostTimer;
+            _view.Jumping += OnJump;
+            _model.Jumped += _view.OnJumped;
         }
 
         public void Disable()
         {
-            _view.OnMoving -= SetDataMove;
-            _view.OnChangingSpeedCrash -= ChangeSpeedCrash;
-            _view.OnSpeedBoostChanging -= OnSpeedChanging;
-            _view.OnSomersault -= Somerslaut;
-            _model.OnChangeSpeed -= _view.ChangeCurrentSpeed;
-            _model.OnChangingBoostTime -= _view.SetSpeedBoostTimer;
-            _view.OnJumping -= Jump;
-            _model.OnJumped -= _view.Jumped;
+            _view.Moving -= SetDataMove;
+            _view.SpeedCrashChanging -= OnChangeSpeedCrash;
+            _view.SpeedBoostChanging -= OnSpeedChanging;
+            _view.Somersaulting -= OnSomerslaut;
+            _view.InputChanging -= _model.SetInput;
+            _model.SpeedChanging -= _view.ChangeCurrentSpeed;
+            _model.BoostTimeChanging -= _view.SetSpeedBoostTimer;
+            _view.Jumping -= OnJump;
+            _model.Jumped -= _view.OnJumped;
         }
 
         public void EndPlayerMove()
@@ -65,17 +67,17 @@ namespace Player
             _model.SetDataMove(coefficient);
         }
 
-        private void Jump()
+        private void OnJump()
         {
             _model.Jump();
         }
 
-        private void Somerslaut()
+        private void OnSomerslaut()
         {
             _model.Somersault();
         }
 
-        private void ChangeSpeedCrash(float moveSpeed)
+        private void OnChangeSpeedCrash(float moveSpeed)
         {
             _model.ChangeSpeedCrash(moveSpeed);
         }

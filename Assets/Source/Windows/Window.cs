@@ -18,7 +18,7 @@ namespace Windows
 
         public virtual void Open()
         {
-            AudioManager.Instance.Play("ClickOpen");
+            SoundSwitcher.Instance.Play("ClickOpen");
             _effectButtonClick?.Play();
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;
@@ -27,7 +27,7 @@ namespace Windows
 
         public virtual void Close()
         {
-            AudioManager.Instance.Play("ClickClose");
+            SoundSwitcher.Instance.Play("ClickClose");
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.alpha = 0f;

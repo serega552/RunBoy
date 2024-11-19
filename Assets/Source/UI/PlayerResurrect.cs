@@ -14,6 +14,7 @@ namespace UI
         private readonly float _energyGiftForWatch = 200;
         private readonly float _energyGiftForDiamond = 100;
         private readonly int _id = 6;
+        private readonly int _priceMultiply = 2;
 
         [SerializeField] private TMP_Text _priceDiamondText;
         [SerializeField] private Button _diamondContinue;
@@ -24,8 +25,8 @@ namespace UI
         private int _price = 1;
         private PlayerResurrectWindow _playerResurrectWindow;
 
-        public event Action OnRestarting;
-        public event Action<float> OnResurrected;
+        public event Action Restarting;
+        public event Action<float> Resurrected;
 
         private void Awake()
         {
@@ -54,7 +55,7 @@ namespace UI
 
         public void ResurrectWatch()
         {
-            _price *= 2;
+            _price *= _priceMultiply;
             _priceDiamondText.text = _price.ToString();
             Resurrect(_energyGiftForWatch);
         }
@@ -69,7 +70,7 @@ namespace UI
             if (_bank.TryTakeDiamond(_price))
             {
                 _bank.TakeDiamond(_price);
-                _price *= 2;
+                _price *= _priceMultiply;
                 _priceDiamondText.text = _price.ToString();
                 Resurrect(_energyGiftForDiamond);
             }
@@ -77,11 +78,11 @@ namespace UI
 
         private void Resurrect(float energy)
         {
-            AudioManager.Instance.Play("Ressurect");
-            AudioManager.Instance.UnPause("Music");
+            SoundSwitcher.Instance.Play("Ressurect");
+            SoundSwitcher.Instance.UnPause("Music");
 
             _playerResurrectWindow.CloseWithoutSound();
-            OnResurrected?.Invoke(energy);
+            Resurrected?.Invoke(energy);
         }
 
         private void ExitToMenu()
@@ -89,7 +90,7 @@ namespace UI
             _playerResurrectWindow.CloseWithoutSound();
             _price = 1;
             _priceDiamondText.text = _price.ToString();
-            OnRestarting?.Invoke();
+            Restarting?.Invoke();
             YandexGame.FullscreenShow();
         }
     }

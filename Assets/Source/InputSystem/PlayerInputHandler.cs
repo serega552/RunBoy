@@ -6,20 +6,19 @@ namespace InputSystem
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        public static PlayerInputHandler Instance;
+        [SerializeField] private readonly string _actionMapName = "Player";
+        [SerializeField] private readonly string _turn = "Turn";
+        [SerializeField] private readonly string _jump = "Jump";
+        [SerializeField] private readonly string _pause = "Pause";
 
         [SerializeField] private InputActionAsset _playerControls;
-        [SerializeField] private string _actionMapName = "Player";
-        [SerializeField] private string _turn = "Turn";
-        [SerializeField] private string _jump = "Jump";
-        [SerializeField] private string _pause = "Pause";
 
         private InputAction _turnAction;
         private InputAction _jumpAction;
         private InputAction _pauseAction;
 
-        public event Action OnPauseButtonClick;
-        public event Action OnJumpButtonClick;
+        public event Action PauseButtonClicking;
+        public event Action JumpButtonClicking;
 
         public Vector2 TurnInput { get; private set; }
 
@@ -32,16 +31,6 @@ namespace InputSystem
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
             _turnAction = _playerControls.FindActionMap(_actionMapName).FindAction(_turn);
             _jumpAction = _playerControls.FindActionMap(_actionMapName).FindAction(_jump);
             _pauseAction = _playerControls.FindActionMap(_actionMapName).FindAction(_pause);
@@ -61,9 +50,9 @@ namespace InputSystem
             _turnAction.performed += context => TurnInput = context.ReadValue<Vector2>();
             _turnAction.canceled += context => TurnInput = Vector2.zero;
 
-            _jumpAction.performed += context => OnJumpButtonClick?.Invoke();
+            _jumpAction.performed += context => JumpButtonClicking?.Invoke();
 
-            _pauseAction.performed += context => OnPauseButtonClick?.Invoke();
+            _pauseAction.performed += context => PauseButtonClicking?.Invoke();
         }
     }
 }

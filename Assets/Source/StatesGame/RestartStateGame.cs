@@ -23,12 +23,12 @@ namespace StatesGame
 
         public void Enable()
         {
-            _playerResurrect.OnRestarting += ResetGame;
+            _playerResurrect.Restarting += ResetGame;
         }
 
         public void Disable()
         {
-            _playerResurrect.OnRestarting -= ResetGame;
+            _playerResurrect.Restarting -= ResetGame;
         }
 
         public void ResetGame()

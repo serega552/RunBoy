@@ -5,7 +5,7 @@ namespace BlockSystem
 {
     public class ChuchpanMover : MonoBehaviour
     {
-        public readonly float speed = 0.2f;
+        public readonly float _speed = 0.2f;
         private readonly float _maxX = 1f;
         private readonly float _minX = -0.9f;
 
@@ -18,7 +18,7 @@ namespace BlockSystem
         {
             _targetPosition = new Vector3(_targetX, transform.position.y, transform.position.z);
             _chuchpan = GetComponent<Chuchpan>();
-            _chuchpan.OnHit += Push;
+            _chuchpan.Hiting += Push;
         }
 
         private void Update()
@@ -39,7 +39,7 @@ namespace BlockSystem
 
         private void MoveTowardsTarget()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
         }
 
         private void ChangeDirection()

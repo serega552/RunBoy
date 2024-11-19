@@ -29,11 +29,11 @@ namespace Player
         private bool _isMoneyBoost = false;
         private float _moneyBoostTime;
 
-        public event Action<float> OnEnergyChanging;
-        public event Action<float> OnMaxEnergyChanging;
-        public event Action<float, bool> OnMoneyChanging;
-        public event Action<EnergyBoost> OnDistanceBoostChanging;
-        public event Action OnGameOvered;
+        public event Action<float> EnergyChanging;
+        public event Action<float> MaxEnergyChanging;
+        public event Action<float, bool> MoneyChanging;
+        public event Action<EnergyBoost> DistanceBoostChanging;
+        public event Action GameOvered;
 
         private void Awake()
         {
@@ -60,18 +60,18 @@ namespace Player
 
         public void GameOver()
         {
-            OnGameOvered?.Invoke();
+            GameOvered?.Invoke();
         }
 
         public void OnEnergyChanged(float energyAmount)
         {
-            AudioManager.Instance.Play("UseBoost");
-            OnEnergyChanging?.Invoke(energyAmount);
+            SoundSwitcher.Instance.Play("UseBoost");
+            EnergyChanging?.Invoke(energyAmount);
         }
 
         public void OnChangeMaxEnergy()
         {
-            OnMaxEnergyChanging?.Invoke(_energyUpgrade.Upgrade());
+            MaxEnergyChanging?.Invoke(_energyUpgrade.Upgrade());
         }
 
         public void SetDistance(float distance)
@@ -96,7 +96,7 @@ namespace Player
         {
             if (_isMoneyBoost || isBoost)
             {
-                OnMoneyChanging?.Invoke(count * _moneyBoost.Bonus, isBoost);
+                MoneyChanging?.Invoke(count * _moneyBoost.Bonus, isBoost);
                 _bank.GiveMoneyForGame(count * Convert.ToInt32(_moneyBoost.Bonus));
             }
             else
@@ -125,7 +125,7 @@ namespace Player
         private void UseEnergyBoost()
         {
             if (_energyBoost.TryUse())
-                OnDistanceBoostChanging?.Invoke(_energyBoost);
+                DistanceBoostChanging?.Invoke(_energyBoost);
             else
                 Debug.Log("ErrorUseBoost");
         }

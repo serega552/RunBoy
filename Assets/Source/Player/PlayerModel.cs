@@ -13,9 +13,9 @@ namespace Player
         private bool _isEnergyBoost = false;
 
         public event Action DistanceChanging;
-        public event Action OnEnergyGone;
-        public event Action OnEnergyChanged;
-        public event Action<float> OnTimeChanging;
+        public event Action EnergyGoned;
+        public event Action EnergyChanged;
+        public event Action<float> TimeChanging;
 
         public float TotalDistanceTraveled { get; private set; }
         public float MaxEnergy { get; private set; }
@@ -38,7 +38,7 @@ namespace Player
             _isEnergyGone = false;
 
             _isEnergyBoost = false;
-            OnTimeChanging?.Invoke(0);
+            TimeChanging?.Invoke(0);
         }
 
         public void Resurrect(float energy)
@@ -68,7 +68,7 @@ namespace Player
             else if (_isEnergyBoost)
             {
                 _energyTime -= Time.deltaTime;
-                OnTimeChanging?.Invoke(_energyTime);
+                TimeChanging?.Invoke(_energyTime);
 
                 if (_energyTime > 0)
                 {
@@ -107,14 +107,14 @@ namespace Player
                 _lastPosition = transform.position;
 
                 DistanceChanging?.Invoke();
-                OnEnergyChanged?.Invoke();
+                EnergyChanged?.Invoke();
 
             }
 
             if (CurrentEnergy <= 0 && _isEnergyGone == false)
             {
                 _isEnergyGone = true;
-                OnEnergyGone?.Invoke();
+                EnergyGoned?.Invoke();
             }
         }
 

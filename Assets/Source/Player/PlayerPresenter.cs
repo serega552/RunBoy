@@ -9,7 +9,7 @@ namespace Player
         private PlayerModel _model;
         private PlayerView _view;
 
-        public event Action OnEndGame;
+        public event Action GameEnded;
 
         private void Update()
         {
@@ -47,26 +47,26 @@ namespace Player
         {
             _model?.Init();
 
-            _view.OnMaxEnergyChanging += OnMaxEnergyChanging;
-            _view.OnDistanceBoostChanging += UseDistanceDistanceBoost;
-            _model.OnEnergyChanged += OnEnergyChanging;
-            _model.OnEnergyGone += EndGame;
-            _view.OnGameOvered += EndGame;
-            _view.OnEnergyChanging += OnViewEnergyChanged;
+            _view.MaxEnergyChanging += OnMaxEnergyChanging;
+            _view.DistanceBoostChanging += UseDistanceDistanceBoost;
+            _model.EnergyChanged += OnEnergyChanging;
+            _model.EnergyGoned += EndGame;
+            _view.GameOvered += EndGame;
+            _view.EnergyChanging += OnViewEnergyChanged;
             _model.DistanceChanging += OnDistanceChanging;
-            _model.OnTimeChanging += _view.SetEnergyTime;
+            _model.TimeChanging += _view.SetEnergyTime;
         }
 
         public void Disable()
         {
-            _view.OnMaxEnergyChanging -= OnMaxEnergyChanging;
-            _view.OnDistanceBoostChanging -= UseDistanceDistanceBoost;
-            _model.OnEnergyChanged -= OnEnergyChanging;
-            _model.OnEnergyGone -= EndGame;
-            _view.OnGameOvered -= EndGame;
+            _view.MaxEnergyChanging -= OnMaxEnergyChanging;
+            _view.DistanceBoostChanging -= UseDistanceDistanceBoost;
+            _model.EnergyChanged -= OnEnergyChanging;
+            _model.EnergyGoned -= EndGame;
+            _view.GameOvered -= EndGame;
             _model.DistanceChanging -= OnDistanceChanging;
-            _view.OnEnergyChanging -= OnViewEnergyChanged;
-            _model.OnTimeChanging -= _view.SetEnergyTime;
+            _view.EnergyChanging -= OnViewEnergyChanged;
+            _model.TimeChanging -= _view.SetEnergyTime;
         }
 
         private void UseDistanceDistanceBoost(EnergyBoost energyBoost)
@@ -102,7 +102,7 @@ namespace Player
 
         private void EndGame()
         {
-            OnEndGame?.Invoke();
+            GameEnded?.Invoke();
         }
     }
 }

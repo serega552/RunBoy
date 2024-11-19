@@ -34,14 +34,14 @@ namespace Tasks
             _window = GetComponentInParent<TaskWindow>();
             _startExecution.onClick.AddListener(_window.Close);
             _takeReward.onClick.AddListener(TakeReward);
-            TaskCounter.OnExecute += ExecuteTask;
+            TaskCounter.Exicuted += ExecuteTask;
         }
 
         private void OnDisable()
         {
             _startExecution.onClick.RemoveListener(_window.Close);
             _takeReward.onClick.RemoveListener(TakeReward);
-            TaskCounter.OnExecute -= ExecuteTask;
+            TaskCounter.Exicuted -= ExecuteTask;
         }
 
         public void Init()

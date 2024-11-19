@@ -37,7 +37,7 @@ namespace BlockSystem
             {
                 DisableCelling();
                 player.Crash();
-                AudioManager.Instance.Play("StoneCrash");
+                SoundSwitcher.Instance.Play("StoneCrash");
                 Instantiate(_crashParticle.gameObject, transform.position, transform.rotation);
                 Destroy(gameObject);
             }

@@ -11,6 +11,8 @@ namespace BankSystem
 {
     public class Bank : MonoBehaviour
     {
+        private readonly int _moneyForGameMultiply = 2;
+
         [SerializeField] private List<TMP_Text> _moneyText;
         [SerializeField] private List<TMP_Text> _diamondText;
         [SerializeField] private List<TMP_Text> _moneyForGameText;
@@ -33,13 +35,13 @@ namespace BankSystem
         private void OnEnable()
         {
             YandexGame.GetDataEvent += Load;
-            AwardGiver.OnReward += GiveReward;
+            AwardGiver.Rewarding += GiveReward;
         }
 
         private void OnDisable()
         {
             YandexGame.GetDataEvent -= Load;
-            AwardGiver.OnReward -= GiveReward;
+            AwardGiver.Rewarding -= GiveReward;
         }
 
         public void TakeMoney(int money)
@@ -48,7 +50,7 @@ namespace BankSystem
             {
                 Money -= money;
                 TaskCounter.IncereaseProgress(money, Convert.ToString(TaskType.SpendMoney));
-                AudioManager.Instance.Play("Buy");
+                SoundSwitcher.Instance.Play("Buy");
                 OnBuy?.Invoke();
                 UpdateText();
             }
@@ -114,7 +116,7 @@ namespace BankSystem
         public void MoneyMultiplyAd()
         {
             GiveMoney(_moneyForGame);
-            _moneyForGame *= 2;
+            _moneyForGame *= _moneyForGameMultiply;
         }
 
         public void TakeDiamond(int diamond)

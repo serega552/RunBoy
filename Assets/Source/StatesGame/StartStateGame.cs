@@ -22,10 +22,10 @@ namespace StatesGame
 
         private void Start()
         {
-            AudioManager.Instance.Play("StartGame");
-            AudioManager.Instance.Play("Music");
-            AudioManager.Instance.Pause("Music2");
-            AudioManager.Instance.Pause("MenuMusic");
+            SoundSwitcher.Instance.Play("StartGame");
+            SoundSwitcher.Instance.Play("Music");
+            SoundSwitcher.Instance.Pause("Music2");
+            SoundSwitcher.Instance.Pause("MenuMusic");
 
             _hudWindow.OpenWithoutSound();
             _presenter.StartGame();
@@ -34,12 +34,12 @@ namespace StatesGame
 
         public void Enable()
         {
-            _menu.OnClickStart += Start;
+            _menu.StartClicking += Start;
         }
 
         public void Disable()
         {
-            _menu.OnClickStart -= Start;
+            _menu.StartClicking -= Start;
         }
     }
 }

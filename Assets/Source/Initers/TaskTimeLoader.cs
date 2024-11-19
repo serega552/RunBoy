@@ -4,7 +4,7 @@ using YG;
 
 namespace Initers
 {
-    public class TimeIniter : MonoBehaviour
+    public class TaskTimeLoader : MonoBehaviour
     {
         [SerializeField] private TaskTimeInspector _taskInspector;
 

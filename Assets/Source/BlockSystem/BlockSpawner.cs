@@ -10,7 +10,10 @@ namespace BlockSystem
         private readonly Dictionary<Chunk, List<GameObject>> _spawnedBlocks = new Dictionary<Chunk, List<GameObject>>();
         private readonly Dictionary<Chunk, int> _chunkSpawnCount = new Dictionary<Chunk, int>();
         private readonly int _minCount = 3;
+        private readonly int _maxCountMultiply = 2;
         private readonly int _baseMaxCount = 7;
+        private readonly float _radiusCollider = 0.5f;
+        private readonly float _positionNumber = 5f;
 
         [SerializeField] private List<Block> _blocks;
 
@@ -21,7 +24,7 @@ namespace BlockSystem
                 _chunkSpawnCount[chunk] = _chunkSpawnCount.Count + 1;
             }
 
-            int maxCount = _baseMaxCount + (_chunkSpawnCount[chunk] - 1) * 2;
+            int maxCount = _baseMaxCount + (_chunkSpawnCount[chunk] - 1) * _maxCountMultiply;
             int count = GetCountToSpawn(_minCount, maxCount);
 
             if (_chunkSpawnCount[chunk] == 1)
@@ -65,7 +68,7 @@ namespace BlockSystem
 
         private bool CheckCollision(Vector3 position)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(position, 0.5f);
+            Collider[] hitColliders = Physics.OverlapSphere(position, _radiusCollider);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.gameObject.GetComponent<Item>())
@@ -100,8 +103,8 @@ namespace BlockSystem
             Vector3 chunkCenter = chunk.transform.position;
             Vector3 extents = bounds.extents;
 
-            float minZ = chunkCenter.z - extents.z + 5f;
-            float maxZ = chunkCenter.z + extents.z - 5f;
+            float minZ = chunkCenter.z - extents.z + _positionNumber;
+            float maxZ = chunkCenter.z + extents.z - _positionNumber;
 
             minZ = Mathf.Min(minZ, maxZ);
             maxZ = Mathf.Max(minZ, maxZ);

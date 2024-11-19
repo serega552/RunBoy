@@ -9,12 +9,12 @@ namespace BoostSystem
     {
         private void OnEnable()
         {
-            AwardGiver.OnReward += GiveRewardBoost;
+            AwardGiver.Rewarding += GiveRewardBoost;
         }
 
         private void OnDisable()
         {
-            AwardGiver.OnReward -= GiveRewardBoost;
+            AwardGiver.Rewarding -= GiveRewardBoost;
         }
 
         public override void Save()

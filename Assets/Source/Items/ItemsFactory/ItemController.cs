@@ -9,9 +9,10 @@ namespace Items.ItemsFactory
     public class ItemController : MonoBehaviour
     {
         private readonly List<ItemView> _items = new List<ItemView>();
+        private readonly float _itemsCount = 3;
 
-        public event Action OnItemsClearedDueToMismatch;
-        public event Action OnItemsClearedDueToMatch;
+        public event Action ItemsDueToMismatchCleared;
+        public event Action ItemsDueToMatchCleared;
 
         public void AddItem(ItemView newItem, OtherItem otherItem)
         {
@@ -20,11 +21,11 @@ namespace Items.ItemsFactory
                 ActivationDeboost(otherItem);
             }
 
-            if (!_items.Any() || (_items.All(existingItem => existingItem.Name == newItem.Name) && _items.Count < 3))
+            if (!_items.Any() || (_items.All(existingItem => existingItem.Name == newItem.Name) && _items.Count < _itemsCount))
             {
                 _items.Add(newItem);
 
-                if (_items.Count == 3)
+                if (_items.Count == _itemsCount)
                 {
                     ActivationBoost(otherItem);
                 }
@@ -35,14 +36,14 @@ namespace Items.ItemsFactory
         {
             otherItem.Boost();
             ClearPanel();
-            OnItemsClearedDueToMatch?.Invoke();
+            ItemsDueToMatchCleared?.Invoke();
         }
 
         private void ActivationDeboost(OtherItem otherItem)
         {
             otherItem.DeBoost();
             ClearPanel();
-            OnItemsClearedDueToMismatch?.Invoke();
+            ItemsDueToMismatchCleared?.Invoke();
         }
 
         private void ClearPanel()

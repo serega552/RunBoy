@@ -48,7 +48,7 @@ namespace ShopSystem
         {
             if (_selectedDance != null)
             {
-                _shopDancing.Player.GetNameDance(_selectedDance.NameDanceAnim);
+                _shopDancing.Player.SetNameDance(_selectedDance.NameDanceAnim);
                 Save();
             }
         }

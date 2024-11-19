@@ -9,6 +9,9 @@ namespace UI
     public class BoostBuyButton : MonoBehaviour
     {
         private readonly int _maxUpgradeBoost = 5;
+        private readonly int _minBoosts = 5;
+        private readonly int _maxChance = 20;
+        private readonly int _minChance = 10;
 
         [SerializeField] private Boost _boost;
         [SerializeField] private int _priceBuyBoost;
@@ -61,14 +64,14 @@ namespace UI
             int chanceBuy = Random.Range(0, 100);
             int chanceUpgrade = Random.Range(0, 100);
 
-            if (_boost.Count < 5 && chanceBuy <= 20)
+            if (_boost.Count < _minBoosts && chanceBuy <= _maxChance)
                 _buyForAd.gameObject.SetActive(true);
-            else if (chanceBuy <= 10)
+            else if (chanceBuy <= _minChance)
                 _buyForAd.gameObject.SetActive(true);
             else
                 _buyForAd.gameObject.SetActive(false);
 
-            if (chanceUpgrade <= 10)
+            if (chanceUpgrade <= _minChance)
                 _upgradeForAd.gameObject.SetActive(true);
             else
                 _upgradeForAd.gameObject.SetActive(false);

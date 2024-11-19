@@ -14,7 +14,7 @@ namespace ShopSystem
 
         private Skin _selectedSkin;
 
-        public event Action<PlayerView> OnChangingSkin;
+        public event Action<PlayerView> SkinChanging;
 
         public PlayerView Player { get; private set; }
 
@@ -54,7 +54,7 @@ namespace ShopSystem
             }
 
             Player = _selectedSkin.GetView();
-            OnChangingSkin?.Invoke(Player);
+            SkinChanging?.Invoke(Player);
 
             Save();
         }

@@ -19,7 +19,7 @@ namespace ShopSystem
 
         private Button _showButton;
 
-        public event Action<Product> OnSelected;
+        public event Action<Product> Selected;
 
         public string Description => _descriptionTranslation;
         public bool IsSelected => _isSelected;
@@ -60,7 +60,7 @@ namespace ShopSystem
 
         public void ShowInfo()
         {
-            OnSelected?.Invoke(this);
+            Selected?.Invoke(this);
         }
 
         public void ChangeStatus()

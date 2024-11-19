@@ -6,8 +6,8 @@ namespace FunDanceSystem
 {
     public class FunDance : MonoBehaviour
     {
-        private readonly int DanceCamera = Animator.StringToHash("DanceCamera");
-        private readonly int IdleState = Animator.StringToHash("Idle");
+        private readonly int _danceCameraAnim = Animator.StringToHash("DanceCamera");
+        private readonly int _idleState = Animator.StringToHash("Idle");
 
         [SerializeField] private GameObject _enemyPolice;
         [SerializeField] private Camera _danceCamera;
@@ -31,28 +31,28 @@ namespace FunDanceSystem
 
         public void TurnOnDance()
         {
-            AudioManager.Instance.Play("FunDance");
-            AudioManager.Instance.Pause("Music2");
+            SoundSwitcher.Instance.Play("FunDance");
+            SoundSwitcher.Instance.Pause("Music2");
 
             _info.alpha = 0f;
-            _playerMoverView.Dance();
+            _playerMoverView.OnDance();
             _danceCamera.gameObject.SetActive(true);
 
             _enemyAnimator.Play(_playerMoverView.NameDanceAnim);
-            _danceCameraAnimator.Play(DanceCamera);
+            _danceCameraAnimator.Play(_danceCameraAnim);
         }
 
         public void TurnOffDance()
         {
-            AudioManager.Instance.Stop("FunDance");
-            AudioManager.Instance.UnPause("Music2");
+            SoundSwitcher.Instance.Stop("FunDance");
+            SoundSwitcher.Instance.UnPause("Music2");
 
             _info.alpha = 1f;
             _playerMoverView.ResetMove();
             _danceCamera.gameObject.SetActive(false);
 
-            _enemyAnimator.Play(IdleState);
-            _danceCameraAnimator.Play(IdleState);
+            _enemyAnimator.Play(_idleState);
+            _danceCameraAnimator.Play(_idleState);
         }
     }
 }

@@ -8,7 +8,7 @@ using YG;
 
 namespace Initers
 {
-    public class StatesGameIniter : MonoBehaviour
+    public class GameStatesCreater : MonoBehaviour
     {
         [SerializeField] private PlayerMoverPresenter _playerMoverPresenter;
         [SerializeField] private PlayerPresenter _playerPresenter;
@@ -35,7 +35,7 @@ namespace Initers
 
         private void Awake()
         {
-            Init();
+            CreateStates();
         }
 
         private void OnDisable()
@@ -46,10 +46,22 @@ namespace Initers
             _endStateGame.Disable();
         }
 
-        private void Init()
+        private void CreateStates()
         {
-            _restartStateGame = new RestartStateGame(_playerPresenter, _playerMoverPresenter, _chunksPlacer, _backgroundChunksPlacer, _playerResurrect);
-            _endStateGame = new EndStateGame(_menu, _playerPresenter, _playerMoverPresenter, _playerResurrect, _endGameScreen, _hudWindow, _leaderboard);
+            _restartStateGame = new RestartStateGame(
+                _playerPresenter,
+                _playerMoverPresenter,
+                _chunksPlacer,
+                _backgroundChunksPlacer,
+                _playerResurrect);
+            _endStateGame = new EndStateGame(
+                _menu,
+                _playerPresenter,
+                _playerMoverPresenter,
+                _playerResurrect,
+                _endGameScreen, 
+                _hudWindow,
+                _leaderboard);
             _resurrectStateGame = new ResurrectStateGame(_playerPresenter, _playerMoverPresenter, _playerResurrect);
             _startStateGame = new StartStateGame(_menu, _playerPresenter, _playerMoverPresenter, _hudWindow);
         }

@@ -20,11 +20,11 @@ namespace ShopSystem
         {
             BuyButton.onClick.AddListener(TryBuyProduct);
             SelectButton.onClick.AddListener(SelectProduct);
-            OnChangingSkin += ChooseDance;
+            SKinChanging += ChooseDance;
 
             foreach (var dance in _dancesForSale)
             {
-                dance.OnSelected += ShowInfoProduct;
+                dance.Selected += ShowInfoProduct;
             }
         }
 
@@ -32,11 +32,11 @@ namespace ShopSystem
         {
             BuyButton.onClick.RemoveListener(TryBuyProduct);
             SelectButton.onClick.RemoveListener(SelectProduct);
-            OnChangingSkin -= ChooseDance;
+            SKinChanging -= ChooseDance;
 
             foreach (var dance in _dancesForSale)
             {
-                dance.OnSelected -= ShowInfoProduct;
+                dance.Selected -= ShowInfoProduct;
             }
         }
 
@@ -80,8 +80,6 @@ namespace ShopSystem
                 BankMoney.TakeMoney(_selectedDance.Price);
                 BuyProduct();
             }
-            else
-                ThrowErrorBuySkin();
         }
 
         public override void TurnOnModel()
@@ -94,11 +92,6 @@ namespace ShopSystem
         {
             _selecter.ChooseDance();
             Load();
-        }
-
-        private void ThrowErrorBuySkin()
-        {
-            Debug.Log("ErrorBuy");
         }
 
         private void Load()

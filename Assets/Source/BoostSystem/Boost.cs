@@ -52,7 +52,7 @@ namespace BoostSystem
             if (_canUse)
             {
                 Decrease();
-                AudioManager.Instance.Play("UseBoost");
+                SoundSwitcher.Instance.Play("UseBoost");
                 TaskCounter.IncereaseProgress(1, TaskType.UseBoost.ToString());
             }
 
@@ -71,7 +71,7 @@ namespace BoostSystem
             {
                 CountUpgrade++;
                 _time += _timeIncreaseNumber;
-                AudioManager.Instance.Play("UpgradeBoost");
+                SoundSwitcher.Instance.Play("UpgradeBoost");
 
                 Save();
             }

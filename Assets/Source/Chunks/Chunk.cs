@@ -5,8 +5,8 @@ namespace Chunks
 {
     public class Chunk : MonoBehaviour
     {
-        public event UnityAction<Chunk> OnSpawned;
-        public event UnityAction<Chunk> OnDeactivated;
+        public event UnityAction<Chunk> Spawned;
+        public event UnityAction<Chunk> Deactivated;
 
         public BeginPoint Begin { get; private set; }
         public EndPoint End { get; private set; }
@@ -21,12 +21,12 @@ namespace Chunks
 
         private void OnEnable()
         {
-            OnSpawned?.Invoke(this);
+            Spawned?.Invoke(this);
         }
 
         private void OnDisable()
         {
-            OnDeactivated?.Invoke(this);
+            Deactivated?.Invoke(this);
         }
     }
 }

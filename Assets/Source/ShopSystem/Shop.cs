@@ -15,7 +15,7 @@ namespace ShopSystem
         [SerializeField] private Button _selectButton;
         [SerializeField] private TMP_Text _description;
 
-        public event Action OnChangingSkin;
+        public event Action SKinChanging;
 
         public Bank BankMoney => _bank;
         public Transform PlaceSkin => _placeSkin;
@@ -34,7 +34,7 @@ namespace ShopSystem
         public void GetView(PlayerMoverView view)
         {
             Player = view;
-            OnChangingSkin?.Invoke();
+            SKinChanging?.Invoke();
         }
 
         public void TurnOffModel()

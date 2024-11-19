@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Audio
 {
-    public class AudioManager : MonoBehaviour
+    public class SoundSwitcher : MonoBehaviour
     {
-        public static AudioManager Instance;
+        public static SoundSwitcher Instance;
 
         [SerializeField] private Sound[] _sounds;
 
@@ -36,33 +36,25 @@ namespace Audio
         public void Play(string sound)
         {
             Sound s = Array.Find(_sounds, item => item.Name == sound);
-
-            if (s != null)
-                s.Source.Play();
+            s?.Source.Play();
         }
 
         public void Stop(string sound)
         {
             Sound s = Array.Find(_sounds, item => item.Name == sound);
-
-            if (s != null)
-                s.Source.Stop();
+            s?.Source.Stop();
         }
 
         public void Pause(string sound)
         {
             Sound s = Array.Find(_sounds, item => item.Name == sound);
-
-            if (s != null)
-                s.Source.Pause();
+            s?.Source.Pause();
         }
 
         public void UnPause(string sound)
         {
             Sound s = Array.Find(_sounds, item => item.Name == sound);
-
-            if (s != null)
-                s.Source.UnPause();
+            s?.Source.UnPause();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Tasks
 {
     public static class TaskCounter
     {
-        public static event Action<float, string> OnExecute;
+        public static event Action<float, string> Exicuted;
 
         private static Dictionary<string, bool> _tasks = new Dictionary<string, bool>();
         private static string[] _tasksArray = Enum.GetNames(typeof(TaskType));
@@ -34,7 +34,7 @@ namespace Tasks
 
         public static void IncereaseProgress(int amount, string name)
         {
-            OnExecute?.Invoke(amount, name);
+            Exicuted?.Invoke(amount, name);
         }
     }
 }

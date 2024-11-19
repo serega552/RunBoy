@@ -69,6 +69,7 @@ namespace BlockSystem
         private bool CheckCollision(Vector3 position)
         {
             Collider[] hitColliders = Physics.OverlapSphere(position, _radiusCollider);
+
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.gameObject.GetComponent<Item>())

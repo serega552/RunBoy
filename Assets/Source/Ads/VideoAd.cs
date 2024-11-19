@@ -11,14 +11,13 @@ namespace Ads
         private readonly int _minRewardMultiply = 3;
         private readonly int _midleRewardMultiply = 5;
         private readonly int _maxRewardMultiply = 8;
-        
+
         [SerializeField] private Bank _bank;
         [SerializeField] private PlayerResurrect _resurrect;
         [SerializeField] private BoostBuyButton _energyBoost;
         [SerializeField] private BoostBuyButton _speedBoost;
         [SerializeField] private BoostBuyButton _moneyBoost;
         [SerializeField] private AdRewarder _moneyReward;
-
 
         private void OnEnable()
         {

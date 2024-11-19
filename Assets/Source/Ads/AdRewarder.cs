@@ -77,7 +77,6 @@ namespace Ads
             _rewardButton.gameObject.SetActive(true);
         }
 
-
         private void OnButtonClick()
         {
             YandexGame.RewVideoShow(_id);

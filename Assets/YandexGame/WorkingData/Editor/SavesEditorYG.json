@@ -1,9 +1,9 @@
 {
-    "idSave": 751,
+    "idSave": 805,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
-    "Money": 44609,
+    "Money": 44616,
     "Diamond": 0,
     "MaxEnergy": 50.0,
     "Record": 87.31844329833985,
@@ -30,15 +30,15 @@
         0.0,
         0.0,
         0.0,
-        12.0,
+        19.0,
         350.0,
-        7.0
+        8.0
     ],
     "AmountWeeklyProgreses": [
         7.0,
-        29.0,
+        36.0,
         0.0,
-        10.0,
+        11.0,
         350.0,
         0.0
     ],

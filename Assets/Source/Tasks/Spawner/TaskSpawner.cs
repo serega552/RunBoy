@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using Tasks.SO;
 using TimeInspector;
+using Tasks.SO;
 using UnityEngine;
+using Tasks.Factory;
 
 namespace Tasks.Spawner
 {
     public abstract class TaskSpawner : MonoBehaviour
     {
         private readonly List<TaskView> _activeTasks = new List<TaskView>();
-        private readonly Dictionary<int, float> _activeDailyId = new Dictionary<int, float>();
+        private TaskFactory _taskFactory;
 
         [SerializeField] private GameObject _prefabTask;
         [SerializeField] private Transform _contentTasks;
@@ -23,6 +24,9 @@ namespace Tasks.Spawner
         private void Awake()
         {
             TaskCounter.Init();
+
+            _taskFactory = new TaskFactory(_prefabTask, _contentTasks);
+
             SpawnTasks();
         }
 
@@ -38,15 +42,8 @@ namespace Tasks.Spawner
         {
             for (int i = 0; i < _tasks.Count; i++)
             {
-                GameObject gameObject = Instantiate(_prefabTask, _contentTasks, false);
-                TaskView taskView = gameObject.GetComponent<TaskView>();
-                taskView.transform.SetParent(_contentTasks);
-                taskView.GetTask(_tasks[i]);
-                taskView.Init();
-                taskView.InitId(i);
-                taskView.gameObject.SetActive(true);
+                TaskView taskView = _taskFactory.CreateTask(_tasks[i], i);
                 _activeTasks.Add(taskView);
-                Save();
             }
 
             foreach (var task in _activeTasks)
@@ -54,13 +51,12 @@ namespace Tasks.Spawner
                 task.OnComplete += DestroyTask;
             }
 
+            Save();
             Load();
         }
 
         public virtual void RefreshTasks()
         {
-            _activeDailyId.Clear();
-
             foreach (var task in _activeTasks)
             {
                 Destroy(task.gameObject);

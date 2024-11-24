@@ -1,4 +1,5 @@
 using BankSystem;
+using IdNumbers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,7 @@ namespace Ads
 
         private int _amountReward;
         private int _id;
-        private int _minChance = 20;
-        private int _maxChance = 30;
+        private int _chance = 30;
         private int _minRewardMultiply = 3;
         private int _midleRewardMultiply = 5;
         private int _maxRewardMultiply = 8;
@@ -44,25 +44,28 @@ namespace Ads
         {
             int chance = Random.Range(0, 100);
 
-            if (_bank.Money <= _moneyTight && chance <= _maxChance)
+            if (chance <= _chance)
             {
-                RefreshAmountPrice(1);
-                _id = 1;
-            }
-            else if (_bank.Money <= _moneyNormal && chance <= _minChance)
-            {
-                RefreshAmountPrice(_minRewardMultiply);
-                _id = 2;
-            }
-            else if (_bank.Money <= _muchMoney && chance <= _minChance)
-            {
-                RefreshAmountPrice(_midleRewardMultiply);
-                _id = 3;
-            }
-            else if (_bank.Money >= _muchMoney && chance <= _minChance)
-            {
-                RefreshAmountPrice(_maxRewardMultiply);
-                _id = 4;
+                if (_bank.Money <= _moneyTight)
+                {
+                    RefreshAmountPrice(1);
+                    _id = (int)Ids.One;
+                }
+                else if (_bank.Money <= _moneyNormal)
+                {
+                    RefreshAmountPrice(_minRewardMultiply);
+                    _id = (int)Ids.Two;
+                }
+                else if (_bank.Money <= _muchMoney)
+                {
+                    RefreshAmountPrice(_midleRewardMultiply);
+                    _id = (int)Ids.Three;
+                }
+                else if (_bank.Money >= _muchMoney)
+                {
+                    RefreshAmountPrice(_maxRewardMultiply);
+                    _id = (int)Ids.Four;
+                }
             }
             else
             {

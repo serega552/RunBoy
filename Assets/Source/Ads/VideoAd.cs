@@ -1,4 +1,5 @@
 using BankSystem;
+using IdNumbers;
 using UI;
 using UnityEngine;
 using YG;
@@ -35,40 +36,40 @@ namespace Ads
         {
             switch (id)
             {
-                case 1:
+                case (int)Ids.One:
                     _bank.GiveMoney(_countMoneyReward);
                     break;
-                case 2:
+                case (int)Ids.Two:
                     _bank.GiveMoney(_countMoneyReward * _minRewardMultiply);
                     break;
-                case 3:
+                case (int)Ids.Three:
                     _bank.GiveMoney(_countMoneyReward * _midleRewardMultiply);
                     break;
-                case 4:
+                case (int)Ids.Four:
                     _bank.GiveMoney(_countMoneyReward * _maxRewardMultiply);
                     break;
-                case 5:
+                case (int)Ids.Five:
                     _bank.MoneyMultiplyAd();
                     break;
-                case 6:
+                case (int)Ids.Six:
                     _resurrect.ResurrectWatch();
                     break;
-                case 7:
+                case (int)Ids.Seven:
                     _energyBoost.RewardBoost();
                     break;
-                case 8:
+                case (int)Ids.Eight:
                     _moneyBoost.RewardBoost();
                     break;
-                case 9:
+                case (int)Ids.Nine:
                     _speedBoost.RewardBoost();
                     break;
-                case 10:
+                case (int)Ids.Ten:
                     _energyBoost.RewardUpgradeBoost();
                     break;
-                case 11:
+                case (int)Ids.Eleven:
                     _moneyBoost.RewardUpgradeBoost();
                     break;
-                case 12:
+                case (int)Ids.Twelve:
                     _speedBoost.RewardUpgradeBoost();
                     break;
             }

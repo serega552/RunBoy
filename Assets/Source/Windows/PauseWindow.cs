@@ -38,14 +38,14 @@ namespace Windows
         {
             base.Open();
             Time.timeScale = 0f;
-            SoundSwitcher.Instance.Pause("Music");
+            SoundSwitcher.Pause("Music");
         }
 
         public override void Close()
         {
             base.Close();
             Time.timeScale = 1f;
-            SoundSwitcher.Instance.UnPause("Music");
+            SoundSwitcher.UnPause("Music");
         }
 
         private void TogglePause()

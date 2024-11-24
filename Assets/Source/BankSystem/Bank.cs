@@ -16,6 +16,7 @@ namespace BankSystem
         [SerializeField] private List<TMP_Text> _moneyText;
         [SerializeField] private List<TMP_Text> _diamondText;
         [SerializeField] private List<TMP_Text> _moneyForGameText;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private int _diamond = 0;
         private int _moneyForGame;
@@ -50,7 +51,7 @@ namespace BankSystem
             {
                 Money -= money;
                 TaskCounter.IncereaseProgress(money, Convert.ToString(TaskType.SpendMoney));
-                SoundSwitcher.Instance.Play("Buy");
+                _soundSwitcher.Play("Buy");
                 OnBuy?.Invoke();
                 UpdateText();
             }
@@ -78,18 +79,12 @@ namespace BankSystem
 
         public bool TryTakeMoney(int value)
         {
-            if (Money >= value)
-                return true;
-            else
-                return false;
+            return Money >= value;
         }
 
         public bool TryTakeDiamond(int value)
         {
-            if (_diamond >= value)
-                return true;
-            else
-                return false;
+            return _diamond >= value;
         }
 
         public void GiveMoney(int money)

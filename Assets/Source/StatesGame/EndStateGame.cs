@@ -16,6 +16,7 @@ namespace StatesGame
         private readonly PlayerResurrect _playerResurrect;
         private readonly HudWindow _hudWindow;
         private readonly LeaderboardYG _leaderboard;
+        private readonly SoundSwitcher _soundSwitcher;
 
         public EndStateGame(
             Menu menu, 
@@ -24,7 +25,8 @@ namespace StatesGame
             PlayerResurrect playerResurrect, 
             EndGameScreen endScreen,
             HudWindow hudWindow, 
-            LeaderboardYG leaderboard)
+            LeaderboardYG leaderboard,
+            SoundSwitcher soundSwitcher)
         {
             _menu = menu;
             _presenterMover = presenterMover;
@@ -33,6 +35,7 @@ namespace StatesGame
             _endScreen = endScreen;
             _hudWindow = hudWindow;
             _leaderboard = leaderboard;
+            _soundSwitcher = soundSwitcher;
         }
 
         public event Action GameEnded;
@@ -53,7 +56,7 @@ namespace StatesGame
 
         private void End()
         {
-            SoundSwitcher.Instance.Pause("Music");
+            _soundSwitcher.Pause("Music");
 
             _presenterMover.EndPlayerMove();
             _playerResurrect.OpenWindow();
@@ -67,12 +70,12 @@ namespace StatesGame
 
         private void OpenWindows()
         {
-            SoundSwitcher.Instance.Play("GameOver");
-            SoundSwitcher.Instance.Stop("Music");
+            _soundSwitcher.Play("GameOver");
+            _soundSwitcher.Stop("Music");
 
             _menu.GetComponent<MenuWindow>().OpenWithoutSound();
             _hudWindow.CloseWithoutSound();
-            SoundSwitcher.Instance.UnPause("Music2");
+            _soundSwitcher.UnPause("Music2");
 
             GameEnded?.Invoke();
         }

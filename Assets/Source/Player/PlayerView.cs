@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] private MoneyBoost _moneyBoost;
         [SerializeField] private EnergyUpgrade _energyUpgrade;
         [SerializeField] private Bank _bank;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private Button _energyBoostButton;
         private Button _moneyBoostButton;
@@ -65,7 +66,7 @@ namespace Player
 
         public void OnEnergyChanged(float energyAmount)
         {
-            SoundSwitcher.Instance.Play("UseBoost");
+            _soundSwitcher.Play("UseBoost");
             EnergyChanging?.Invoke(energyAmount);
         }
 

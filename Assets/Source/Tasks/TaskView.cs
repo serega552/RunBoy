@@ -26,7 +26,6 @@ namespace Tasks
 
         public event Action<TaskView> OnComplete;
 
-        public float AmountProgress => _amountProgress;
         public int Id { get; private set; }
 
         private void OnEnable()
@@ -112,7 +111,8 @@ namespace Tasks
         {
             _amountRewardText.text = $"{_task.AmountReward}";
             _rewardIcon.sprite = _task.RewardIcon;
-            _descriptionText.text = $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
+            _descriptionText.text = 
+                $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
             _amountCompleted.value = _amountProgress;
             _amountCompleted.value = _amountProgress;
         }

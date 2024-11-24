@@ -21,6 +21,7 @@ namespace Player
         [SerializeField] private GameObject _prefabForDanceShop;
         [SerializeField] private Button _jumpButton;
         [SerializeField] private PlayerInputHandler _inputHandler;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private Vector3 _startPlayerPosition;
         private string _nameDanceAnim;
@@ -99,7 +100,7 @@ namespace Player
 
         public void ChangeSpeed(float count, float time)
         {
-            SoundSwitcher.Instance.Play("UseBoost");
+            _soundSwitcher.Play("UseBoost");
             SpeedBoostChanging?.Invoke(count, time);
         }
 
@@ -120,7 +121,7 @@ namespace Player
             if (_isProtected == false)
             {
                 float moveSpeed = 3;
-                SoundSwitcher.Instance.Play("Crash");
+                _soundSwitcher.Play("Crash");
                 SpeedCrashChanging?.Invoke(moveSpeed);
 
                 TaskCounter.IncereaseProgress(1, TaskType.CrashWall.ToString());

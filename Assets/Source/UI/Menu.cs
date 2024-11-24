@@ -12,7 +12,8 @@ namespace UI
     public class Menu : MonoBehaviour
     {
         [SerializeField] private Button _startButton;
-        [SerializeField] private TMP_Text _recordDistanceText;
+        [SerializeField] private TMP_Text _recordDistanceText; 
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private float _recordDistance;
         private MenuWindow _menuWindow;
@@ -21,7 +22,7 @@ namespace UI
 
         private void Start()
         {
-            SoundSwitcher.Instance.Play("Music2");
+            _soundSwitcher.Play("Music2");
         }
 
         private void Awake()

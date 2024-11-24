@@ -12,6 +12,7 @@ namespace FunDanceSystem
         [SerializeField] private GameObject _enemyPolice;
         [SerializeField] private Camera _danceCamera;
         [SerializeField] private CanvasGroup _info;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private Animator _danceCameraAnimator;
         private Animator _enemyAnimator;
@@ -31,8 +32,8 @@ namespace FunDanceSystem
 
         public void TurnOnDance()
         {
-            SoundSwitcher.Instance.Play("FunDance");
-            SoundSwitcher.Instance.Pause("Music2");
+            _soundSwitcher.Play("FunDance");
+            _soundSwitcher.Pause("Music2");
 
             _info.alpha = 0f;
             _playerMoverView.OnDance();
@@ -44,8 +45,8 @@ namespace FunDanceSystem
 
         public void TurnOffDance()
         {
-            SoundSwitcher.Instance.Stop("FunDance");
-            SoundSwitcher.Instance.UnPause("Music2");
+            _soundSwitcher.Stop("FunDance");
+            _soundSwitcher.UnPause("Music2");
 
             _info.alpha = 1f;
             _playerMoverView.ResetMove();

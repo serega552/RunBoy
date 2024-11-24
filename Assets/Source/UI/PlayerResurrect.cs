@@ -20,6 +20,7 @@ namespace UI
         [SerializeField] private Button _diamondContinue;
         [SerializeField] private Button _watchContinue;
         [SerializeField] private Bank _bank;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
         [SerializeField] private Button _exitButton;
 
         private int _price = 1;
@@ -78,8 +79,8 @@ namespace UI
 
         private void Resurrect(float energy)
         {
-            SoundSwitcher.Instance.Play("Ressurect");
-            SoundSwitcher.Instance.UnPause("Music");
+            _soundSwitcher.Play("Ressurect");
+            _soundSwitcher.UnPause("Music");
 
             _playerResurrectWindow.CloseWithoutSound();
             Resurrected?.Invoke(energy);

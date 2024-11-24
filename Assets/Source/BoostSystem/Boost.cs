@@ -15,6 +15,7 @@ namespace BoostSystem
 
         [SerializeField] private float _bonus;
         [SerializeField] private TMP_Text _timeText;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private float _time = 5;
 
@@ -52,7 +53,7 @@ namespace BoostSystem
             if (_canUse)
             {
                 Decrease();
-                SoundSwitcher.Instance.Play("UseBoost");
+                _soundSwitcher.Play("UseBoost");
                 TaskCounter.IncereaseProgress(1, TaskType.UseBoost.ToString());
             }
 
@@ -71,7 +72,7 @@ namespace BoostSystem
             {
                 CountUpgrade++;
                 _time += _timeIncreaseNumber;
-                SoundSwitcher.Instance.Play("UpgradeBoost");
+                _soundSwitcher.Play("UpgradeBoost");
 
                 Save();
             }

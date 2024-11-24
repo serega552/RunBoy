@@ -11,21 +11,23 @@ namespace StatesGame
         private readonly PlayerPresenter _presenter;
         private readonly PlayerMoverPresenter _presenterMover;
         private readonly HudWindow _hudWindow;
+        private readonly SoundSwitcher _soundSwitcher;
 
-        public StartStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, HudWindow hudWindow)
+        public StartStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, HudWindow hudWindow, SoundSwitcher soundSwitcher)
         {
             _menu = menu;
             _presenter = presenter;
             _presenterMover = presenterMover;
             _hudWindow = hudWindow;
+            _soundSwitcher = soundSwitcher;
         }
 
         private void Start()
         {
-            SoundSwitcher.Instance.Play("StartGame");
-            SoundSwitcher.Instance.Play("Music");
-            SoundSwitcher.Instance.Pause("Music2");
-            SoundSwitcher.Instance.Pause("MenuMusic");
+            _soundSwitcher.Play("StartGame");
+            _soundSwitcher.Play("Music");
+            _soundSwitcher.Pause("Music2");
+            _soundSwitcher.Pause("MenuMusic");
 
             _hudWindow.OpenWithoutSound();
             _presenter.StartGame();

@@ -5,23 +5,10 @@ namespace Audio
 {
     public class SoundSwitcher : MonoBehaviour
     {
-        public static SoundSwitcher Instance;
-
         [SerializeField] private Sound[] _sounds;
 
         private void Start()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            else
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-
             foreach (Sound sond in _sounds)
             {
                 sond.Source = gameObject.AddComponent<AudioSource>();
@@ -35,26 +22,31 @@ namespace Audio
 
         public void Play(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
             s?.Source.Play();
         }
 
         public void Stop(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
             s?.Source.Stop();
         }
 
         public void Pause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
             s?.Source.Pause();
         }
 
         public void UnPause(string sound)
         {
-            Sound s = Array.Find(_sounds, item => item.Name == sound);
+            Sound s = FindSound(sound);
             s?.Source.UnPause();
+        }
+
+        private Sound FindSound(string soundName)
+        {
+            return Array.Find(_sounds, item => item.Name == soundName);
         }
     }
 }

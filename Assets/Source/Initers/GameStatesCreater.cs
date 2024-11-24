@@ -1,3 +1,4 @@
+using Audio;
 using Chunks;
 using Player;
 using StatesGame;
@@ -19,6 +20,7 @@ namespace Initers
         [SerializeField] private HudWindow _hudWindow;
         [SerializeField] private PlayerResurrect _playerResurrect;
         [SerializeField] private LeaderboardYG _leaderboard;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private ResurrectStateGame _resurrectStateGame;
         private RestartStateGame _restartStateGame;
@@ -54,16 +56,28 @@ namespace Initers
                 _chunksPlacer,
                 _backgroundChunksPlacer,
                 _playerResurrect);
+
             _endStateGame = new EndStateGame(
                 _menu,
                 _playerPresenter,
                 _playerMoverPresenter,
                 _playerResurrect,
-                _endGameScreen, 
+                _endGameScreen,
                 _hudWindow,
-                _leaderboard);
-            _resurrectStateGame = new ResurrectStateGame(_playerPresenter, _playerMoverPresenter, _playerResurrect);
-            _startStateGame = new StartStateGame(_menu, _playerPresenter, _playerMoverPresenter, _hudWindow);
+                _leaderboard,
+                _soundSwitcher);
+
+            _resurrectStateGame = new ResurrectStateGame(
+                _playerPresenter,
+                _playerMoverPresenter,
+                _playerResurrect);
+
+            _startStateGame = new StartStateGame(
+                _menu,
+                _playerPresenter,
+                _playerMoverPresenter,
+                _hudWindow,
+                _soundSwitcher);
         }
     }
 }

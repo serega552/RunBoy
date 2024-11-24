@@ -12,7 +12,8 @@ namespace UI
 
         [SerializeField] private Button _exitButton;
         [SerializeField] private Button _rewardButton;
-        [SerializeField] private Bank _bank;
+        [SerializeField] private Bank _bank; 
+        [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private int _chanceRefresh = 10;
         private float _timeTurnOn = 0.3f;
@@ -62,7 +63,7 @@ namespace UI
         private void TurnOnConfetti()
         {
             _rewardButton.GetComponentInChildren<ParticleSystem>().Play();
-            SoundSwitcher.Instance.Play("Confetti");
+            _soundSwitcher.Play("Confetti");
             Invoke(nameof(TurnOffObject), _timeTurnOff);
         }
 

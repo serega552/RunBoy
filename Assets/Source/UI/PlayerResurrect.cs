@@ -1,6 +1,6 @@
+using System;
 using Audio;
 using BankSystem;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +27,7 @@ namespace UI
         private PlayerResurrectWindow _playerResurrectWindow;
 
         public event Action Restarting;
+
         public event Action<float> Resurrected;
 
         private void Awake()

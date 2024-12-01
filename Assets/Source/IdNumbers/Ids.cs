@@ -13,6 +13,6 @@ namespace IdNumbers
         Nine,
         Ten,
         Eleven,
-        Twelve
+        Twelve,
     }
 }

@@ -11,7 +11,7 @@ namespace ShopSystem
     {
         [SerializeField] private int _price;
         [SerializeField] private Image _buyFlag;
-        [SerializeField] private Image _SelectFlag;
+        [SerializeField] private Image _selectFlag;
         [SerializeField] private int _id;
         [SerializeField] private string _descriptionTranslation;
         [SerializeField] private bool _isSelected;
@@ -22,9 +22,13 @@ namespace ShopSystem
         public event Action<Product> Selected;
 
         public string Description => _descriptionTranslation;
+
         public bool IsSelected => _isSelected;
+
         public int Price => _price;
+
         public int Id => _id;
+
         public bool IsBought { get; private set; } = false;
 
         private void Awake()
@@ -66,7 +70,7 @@ namespace ShopSystem
         public void ChangeStatus()
         {
             _isSelected = !_isSelected;
-            _SelectFlag.gameObject.SetActive(_isSelected);
+            _selectFlag.gameObject.SetActive(_isSelected);
         }
 
         public void LoadProgress(bool IsSelect, bool IsBought)

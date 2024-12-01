@@ -20,6 +20,7 @@ namespace UpgradeEnergy
         private int _count;
 
         public int CurrentPrice { get; private set; } = 10;
+
         public float CurrentEnergy { get; private set; } = 0;
 
         private void OnEnable() => YandexGame.GetDataEvent += Load;

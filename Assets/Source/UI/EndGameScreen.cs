@@ -12,7 +12,7 @@ namespace UI
 
         [SerializeField] private Button _exitButton;
         [SerializeField] private Button _rewardButton;
-        [SerializeField] private Bank _bank; 
+        [SerializeField] private Bank _bank;
         [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private int _chanceRefresh = 10;

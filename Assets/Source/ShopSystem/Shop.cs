@@ -1,6 +1,6 @@
+using System;
 using BankSystem;
 using Player;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,11 +18,17 @@ namespace ShopSystem
         public event Action SKinChanging;
 
         public Bank BankMoney => _bank;
+
         public Transform PlaceSkin => _placeSkin;
+
         public Button BuyButton => _buyButton;
+
         public Button SelectButton => _selectButton;
+
         public TMP_Text Description => _description;
+
         public PlayerMoverView Player { get; private set; }
+
         public GameObject ModelSkin { get; private set; }
 
         private void Start()

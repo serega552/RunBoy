@@ -1,6 +1,6 @@
+using System;
 using Audio;
 using Player;
-using System;
 using UI;
 using Windows;
 using YG;
@@ -19,12 +19,12 @@ namespace StatesGame
         private readonly SoundSwitcher _soundSwitcher;
 
         public EndStateGame(
-            Menu menu, 
-            PlayerPresenter presenter, 
+            Menu menu,
+            PlayerPresenter presenter,
             PlayerMoverPresenter presenterMover,
-            PlayerResurrect playerResurrect, 
+            PlayerResurrect playerResurrect,
             EndGameScreen endScreen,
-            HudWindow hudWindow, 
+            HudWindow hudWindow,
             LeaderboardYG leaderboard,
             SoundSwitcher soundSwitcher)
         {

@@ -4,11 +4,11 @@ namespace Items.BoostItems
 {
     public class CoinItem : Item
     {
-        protected readonly int Reward = 2;
+     private readonly int _reward = 2;
 
         protected override void GetResourses(PlayerView playerView)
         {
-            playerView.AddMoney(Reward, false);
+            playerView.AddMoney(_reward, false);
         }
     }
 }

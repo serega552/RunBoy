@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Chunks;
 using Items;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BlockSystem
@@ -16,6 +16,8 @@ namespace BlockSystem
         private readonly float _positionNumber = 5f;
 
         [SerializeField] private List<Block> _blocks;
+
+        private Collider[] _colliderBuffer = new Collider[10];
 
         public void SpawnBlocks(Chunk chunk)
         {
@@ -68,18 +70,18 @@ namespace BlockSystem
 
         private bool CheckCollision(Vector3 position)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(position, _radiusCollider);
+            int colliderCount = Physics.OverlapSphereNonAlloc(position, _radiusCollider, _colliderBuffer);
 
-            foreach (var hitCollider in hitColliders)
+            for (int i = 0; i < colliderCount; i++)
             {
-                if (hitCollider.gameObject.GetComponent<Item>())
-                {
-                    return true;
-                }
-
-                if (hitCollider.gameObject.GetComponent<Block>())
+                if (_colliderBuffer[i].GetComponent<Block>())
                 {
                     return false;
+                }
+
+                if (_colliderBuffer[i].GetComponent<Item>())
+                {
+                    return true;
                 }
             }
 

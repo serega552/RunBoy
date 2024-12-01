@@ -1,6 +1,5 @@
-using Player;
 using UnityEngine;
-
+using Player;
 
 namespace PlayerEffects
 {

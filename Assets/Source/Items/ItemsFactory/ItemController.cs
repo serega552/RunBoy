@@ -1,7 +1,7 @@
-using Items.OtherItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Items.OtherItems;
 using UnityEngine;
 
 namespace Items.ItemsFactory
@@ -12,6 +12,7 @@ namespace Items.ItemsFactory
         private readonly float _itemsCount = 3;
 
         public event Action ItemsDueToMismatchCleared;
+
         public event Action ItemsDueToMatchCleared;
 
         public void AddItem(ItemView newItem, OtherItem otherItem)

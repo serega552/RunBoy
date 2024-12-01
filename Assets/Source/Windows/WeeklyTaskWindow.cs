@@ -1,4 +1,6 @@
 ﻿namespace Windows
 {
-    class WeeklyTaskWindow : Window { }
+    public class WeeklyTaskWindow : Window
+    {
+    }
 }

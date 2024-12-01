@@ -39,7 +39,7 @@ namespace Windows
 
         public override void Close()
         {
-            base.CloseWithoutSound();
+            CloseWithoutSound();
             _shop.TurnOffModel();
         }
     }

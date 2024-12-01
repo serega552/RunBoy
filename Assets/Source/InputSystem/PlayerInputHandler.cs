@@ -6,10 +6,10 @@ namespace InputSystem
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        [SerializeField] private readonly string _actionMapName = "Player";
-        [SerializeField] private readonly string _turn = "Turn";
-        [SerializeField] private readonly string _jump = "Jump";
-        [SerializeField] private readonly string _pause = "Pause";
+        private readonly string _actionMapName = "Player";
+        private readonly string _turn = "Turn";
+        private readonly string _jump = "Jump";
+        private readonly string _pause = "Pause";
 
         [SerializeField] private InputActionAsset _playerControls;
 
@@ -18,6 +18,7 @@ namespace InputSystem
         private InputAction _pauseAction;
 
         public event Action PauseButtonClicking;
+
         public event Action JumpButtonClicking;
 
         public Vector2 TurnInput { get; private set; }

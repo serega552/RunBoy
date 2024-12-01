@@ -1,5 +1,5 @@
-using BoostSystem;
 using System;
+using BoostSystem;
 using UnityEngine;
 
 namespace Player

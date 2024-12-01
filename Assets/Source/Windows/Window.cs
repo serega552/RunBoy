@@ -7,7 +7,7 @@ namespace Windows
 
     public class Window : MonoBehaviour
     {
-        [SerializeField] protected SoundSwitcher SoundSwitcher;
+        [SerializeField] private SoundSwitcher _soundSwitcher;
         [SerializeField] private CanvasGroup _canvasGroup;
 
         private ParticleSystem _effectButtonClick;
@@ -19,7 +19,7 @@ namespace Windows
 
         public virtual void Open()
         {
-            SoundSwitcher.Play("ClickOpen");
+            _soundSwitcher.Play("ClickOpen");
             _effectButtonClick?.Play();
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;
@@ -28,7 +28,7 @@ namespace Windows
 
         public virtual void Close()
         {
-            SoundSwitcher.Play("ClickClose");
+            _soundSwitcher.Play("ClickClose");
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.alpha = 0f;

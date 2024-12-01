@@ -10,6 +10,7 @@ namespace Items
         protected float Delay = 2f;
         protected PlayerView PlayerView;
         protected PlayerMoverView PlayerMoverView;
+
         private Collider _collider;
         private MeshRenderer _mesh;
 
@@ -32,9 +33,13 @@ namespace Items
             }
         }
 
-        protected virtual void GetResourses(PlayerView playerView) { }
+        protected virtual void GetResourses(PlayerView playerView)
+        {
+        }
 
-        protected virtual void GetMoverResourses(PlayerMoverView playerMoverView) { }
+        protected virtual void GetMoverResourses(PlayerMoverView playerMoverView)
+        {
+        }
 
         private void StartDestroy()
         {

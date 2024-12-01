@@ -75,7 +75,6 @@ namespace UI
                 _upgradeForAd.gameObject.SetActive(true);
             else
                 _upgradeForAd.gameObject.SetActive(false);
-
         }
 
         public void RewardBoost()

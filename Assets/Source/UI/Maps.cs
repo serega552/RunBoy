@@ -2,5 +2,7 @@
 
 namespace UI
 {
-    public class Maps : MonoBehaviour { }
+    public class Maps : MonoBehaviour
+    {
+    }
 }

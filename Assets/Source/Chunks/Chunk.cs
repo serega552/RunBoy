@@ -9,7 +9,9 @@ namespace Chunks
         public event UnityAction<Chunk> Deactivated;
 
         public BeginPoint Begin { get; private set; }
+
         public EndPoint End { get; private set; }
+
         public LenghtChunk LenghChunk { get; private set; }
 
         private void Awake()

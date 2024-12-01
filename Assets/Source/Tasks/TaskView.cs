@@ -111,8 +111,7 @@ namespace Tasks
         {
             _amountRewardText.text = $"{_task.AmountReward}";
             _rewardIcon.sprite = _task.RewardIcon;
-            _descriptionText.text = 
-                $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
+            _descriptionText.text = $"{Lean.Localization.LeanLocalization.GetTranslationText(_task.Description)}: {_task.AmountMaxCollect}";
             _amountCompleted.value = _amountProgress;
             _amountCompleted.value = _amountProgress;
         }

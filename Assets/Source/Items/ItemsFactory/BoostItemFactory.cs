@@ -1,4 +1,6 @@
 namespace Items.ItemsFactory
 {
-    public class BoostItemFactory : ItemFactory { }
+    public class BoostItemFactory : ItemFactory
+    {
+    }
 }

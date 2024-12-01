@@ -13,12 +13,17 @@ namespace Player
         private bool _isEnergyBoost = false;
 
         public event Action DistanceChanging;
+
         public event Action EnergyGoned;
+
         public event Action EnergyChanged;
+
         public event Action<float> TimeChanging;
 
         public float TotalDistanceTraveled { get; private set; }
+
         public float MaxEnergy { get; private set; }
+
         public float CurrentEnergy { get; private set; }
 
         public void Init()
@@ -108,7 +113,6 @@ namespace Player
 
                 DistanceChanging?.Invoke();
                 EnergyChanged?.Invoke();
-
             }
 
             if (CurrentEnergy <= 0 && _isEnergyGone == false)

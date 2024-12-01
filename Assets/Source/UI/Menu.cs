@@ -1,5 +1,5 @@
-using Audio;
 using System;
+using Audio;
 using Tasks;
 using Tasks.SO;
 using TMPro;
@@ -12,7 +12,7 @@ namespace UI
     public class Menu : MonoBehaviour
     {
         [SerializeField] private Button _startButton;
-        [SerializeField] private TMP_Text _recordDistanceText; 
+        [SerializeField] private TMP_Text _recordDistanceText;
         [SerializeField] private SoundSwitcher _soundSwitcher;
 
         private float _recordDistance;

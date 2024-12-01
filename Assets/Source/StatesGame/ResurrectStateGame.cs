@@ -10,7 +10,7 @@ namespace StatesGame
         private readonly PlayerResurrect _playerResurrect;
 
         public ResurrectStateGame(
-            PlayerPresenter presenter, 
+            PlayerPresenter presenter,
             PlayerMoverPresenter presenterMover,
             PlayerResurrect playerResurrect)
         {

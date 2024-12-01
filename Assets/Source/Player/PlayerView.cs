@@ -1,7 +1,7 @@
+using System;
 using Audio;
 using BankSystem;
 using BoostSystem;
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -31,9 +31,13 @@ namespace Player
         private float _moneyBoostTime;
 
         public event Action<float> EnergyChanging;
+
         public event Action<float> MaxEnergyChanging;
+
         public event Action<float, bool> MoneyChanging;
+
         public event Action<EnergyBoost> DistanceBoostChanging;
+
         public event Action GameOvered;
 
         private void Awake()
@@ -120,7 +124,9 @@ namespace Player
                 StartCoroutine(TimeChanging());
             }
             else
+            {
                 Debug.Log("ErrorUseBoost");
+            }
         }
 
         private void UseEnergyBoost()

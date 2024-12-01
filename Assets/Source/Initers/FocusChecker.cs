@@ -1,5 +1,5 @@
-using UnityEngine;
 using Agava.WebUtility;
+using UnityEngine;
 using Windows;
 
 namespace Initers
@@ -13,6 +13,7 @@ namespace Initers
             Application.focusChanged += OnInBackgroundChangeApp;
             WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
         }
+
         private void OnDisable()
         {
             Application.focusChanged -= OnInBackgroundChangeApp;

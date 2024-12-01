@@ -9,12 +9,11 @@ namespace Items.ItemsFactory
     {
         [SerializeField] private ItemViewSpawner _itemViewSpawner;
 
-        public override GameObject CreateItem(GameObject prefab, Chunk chunk, PlayerView player)
+        public override GameObject CreateItem(GameObject prefab, Chunk chunk)
         {
-            GameObject itemObject = base.CreateItem(prefab, chunk, player);
-            OtherItem otherItemComponent = itemObject.GetComponent<OtherItem>();
+            GameObject itemObject = base.CreateItem(prefab, chunk);
 
-            if (otherItemComponent != null)
+            if (itemObject.TryGetComponent(out OtherItem otherItemComponent))
             {
                 otherItemComponent.Init(_itemViewSpawner);
             }

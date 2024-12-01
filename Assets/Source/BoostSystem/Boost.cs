@@ -1,5 +1,5 @@
-using Audio;
 using System;
+using Audio;
 using Tasks;
 using Tasks.SO;
 using TMPro;
@@ -23,6 +23,7 @@ namespace BoostSystem
 
         public float Bonus => _bonus;
         public float Time => _time;
+
         public int CountUpgrade { get; protected set; }
         public int Count { get; protected set; }
 
@@ -48,16 +49,16 @@ namespace BoostSystem
 
         public bool TryUse()
         {
-            bool _canUse = Count > 0;
+            bool isCanUse = Count > 0;
 
-            if (_canUse)
+            if (isCanUse)
             {
                 Decrease();
                 _soundSwitcher.Play("UseBoost");
                 TaskCounter.IncereaseProgress(1, TaskType.UseBoost.ToString());
             }
 
-            return _canUse;
+            return isCanUse;
         }
 
         public void Increase()

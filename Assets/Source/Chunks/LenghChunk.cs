@@ -2,5 +2,7 @@ using UnityEngine;
 
 namespace Chunks
 {
-    public class LenghtChunk : MonoBehaviour { }
+    public class LenghtChunk : MonoBehaviour
+    {
+    }
 }

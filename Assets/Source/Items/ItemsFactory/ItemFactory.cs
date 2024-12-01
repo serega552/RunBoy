@@ -6,9 +6,9 @@ namespace Items.ItemsFactory
 {
     public abstract class ItemFactory : MonoBehaviour
     {
-        public virtual GameObject CreateItem(GameObject prefab, Chunk chunk, PlayerView player)
+        public virtual GameObject CreateItem(GameObject prefab, Chunk chunk)
         {
-            Vector3 spawnPosition = GetRandomSpawnPosition(chunk, player);
+            Vector3 spawnPosition = GetRandomSpawnPosition(chunk);
             return InstantiateItem(prefab, spawnPosition);
         }
 
@@ -17,7 +17,7 @@ namespace Items.ItemsFactory
             return Instantiate(prefab, spawnPosition, Quaternion.Euler(0, 90, 0));
         }
 
-        protected Vector3 GetRandomSpawnPosition(Chunk chunk, PlayerView player)
+        protected Vector3 GetRandomSpawnPosition(Chunk chunk)
         {
             Collider chunkCollider = chunk.GetComponent<Collider>();
             Bounds bounds = chunkCollider.bounds;

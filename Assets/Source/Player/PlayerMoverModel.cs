@@ -1,5 +1,5 @@
-using InputSystem;
 using System;
+using InputSystem;
 using Tasks;
 using Tasks.SO;
 using UnityEngine;
@@ -34,7 +34,9 @@ namespace Player
         }
 
         public event Action Jumped;
+
         public event Action<float> SpeedChanging;
+
         public event Action<float> BoostTimeChanging;
 
         public float MoveSpeed { get; private set; }

@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using BlockSystem;
 using Chunks;
 using Items.OtherItems;
 using Player;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Items.ItemsFactory
@@ -61,7 +61,7 @@ namespace Items.ItemsFactory
             {
                 GameObject randomItemPrefab = _itemPrefabs[Random.Range(0, _itemPrefabs.Count)];
                 ItemFactory factory = ChooseFactory(randomItemPrefab);
-                GameObject spawnedItem = factory.CreateItem(randomItemPrefab, chunk, _player);
+                GameObject spawnedItem = factory.CreateItem(randomItemPrefab, chunk);
 
                 if (!_spawnedItems.ContainsKey(chunk))
                     _spawnedItems[chunk] = new List<GameObject>();
@@ -72,10 +72,10 @@ namespace Items.ItemsFactory
             _blockSpawner.SpawnBlocks(chunk);
         }
 
-
         private void OnChunkDeactivated(Chunk chunk)
         {
-            if (!_spawnedItems.ContainsKey(chunk)) return;
+            if (!_spawnedItems.ContainsKey(chunk))
+                return;
 
             foreach (var item in _spawnedItems[chunk])
                 Destroy(item);

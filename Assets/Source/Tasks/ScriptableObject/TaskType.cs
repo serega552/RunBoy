@@ -9,6 +9,6 @@ namespace Tasks.SO
         BuyBoost,
         UpgradeEnergy,
         CrashWall,
-        RecordDistance
+        RecordDistance,
     }
 }

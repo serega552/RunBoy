@@ -1,6 +1,6 @@
-using UnityEngine;
 using DG.Tweening;
 using Player;
+using UnityEngine;
 
 namespace Enemy
 {
@@ -47,7 +47,7 @@ namespace Enemy
         {
             Vector3 endPosition = new Vector3(
                 _player.transform.position.x - _endPositionNumber,
-                _player.transform.position.y, 
+                _player.transform.position.y,
                 _player.transform.position.z - _endPositionNumber);
 
             _enemy.transform.DOMove(endPosition, _enemyDuration).SetEase(Ease.Linear).OnComplete(HitPlayer);

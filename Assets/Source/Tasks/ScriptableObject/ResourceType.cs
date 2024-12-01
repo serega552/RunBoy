@@ -6,6 +6,6 @@ namespace Tasks.SO
         Diamond,
         SpeedBoost,
         EnergyBoost,
-        MoneyBoost
+        MoneyBoost,
     }
 }

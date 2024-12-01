@@ -1,8 +1,8 @@
+using System;
 using Audio;
 using BoostSystem;
 using Chunks;
 using InputSystem;
-using System;
 using Tasks;
 using Tasks.SO;
 using UnityEngine;
@@ -33,19 +33,33 @@ namespace Player
         private PlayerView _playerView;
 
         public event Action<PlayerInputHandler> InputChanging;
+
         public event Action<float> Moving;
+
         public event Action<float> SpeedChanging;
+
         public event Action<float> SpeedCrashChanging;
+
         public event Action<float, float> SpeedBoostChanging;
+
         public event Action<bool> Protected;
+
         public event Action Started;
+
         public event Action Stoped;
+
         public event Action Kicked;
+
         public event Action Jumped;
+
         public event Action Jumping;
+
         public event Action Somersaulting;
+
         public event Action Crashed;
+
         public event Action Restarting;
+
         public event Action Dancing;
 
         public string NameDanceAnim => _nameDanceAnim;

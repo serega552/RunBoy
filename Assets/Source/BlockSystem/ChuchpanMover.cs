@@ -5,7 +5,7 @@ namespace BlockSystem
 {
     public class ChuchpanMover : MonoBehaviour
     {
-        public readonly float _speed = 0.2f;
+        private readonly float _speed = 0.2f;
         private readonly float _maxX = 1f;
         private readonly float _minX = -0.9f;
 

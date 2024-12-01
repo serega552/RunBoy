@@ -5,13 +5,15 @@ namespace Items.OtherItems
 {
     public class OtherItem : Item
     {
-        public string ItemType;
-
         private ItemViewSpawner _spawner;
 
-        public virtual void Boost() { }
+        public virtual void Boost()
+        {
+        }
 
-        public virtual void DeBoost() { }
+        public virtual void DeBoost()
+        {
+        }
 
         public void Init(ItemViewSpawner spawner)
         {

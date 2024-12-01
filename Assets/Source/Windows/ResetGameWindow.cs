@@ -14,7 +14,7 @@ namespace Windows
         private void Start()
         {
             CloseWithoutSound();
-            _restartGameWindow.gameObject.SetActive(false);
+            _restartGameWindow.SetActive(false);
         }
 
         private void OnEnable()
@@ -35,7 +35,7 @@ namespace Windows
         {
             YandexGame.ResetSaveProgress();
             YandexGame.SaveProgress();
-            _restartGameWindow.gameObject.SetActive(true);
+            _restartGameWindow.SetActive(true);
         }
     }
 }

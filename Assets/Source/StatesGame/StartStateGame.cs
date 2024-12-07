@@ -13,7 +13,12 @@ namespace StatesGame
         private readonly HudWindow _hudWindow;
         private readonly SoundSwitcher _soundSwitcher;
 
-        public StartStateGame(Menu menu, PlayerPresenter presenter, PlayerMoverPresenter presenterMover, HudWindow hudWindow, SoundSwitcher soundSwitcher)
+        public StartStateGame(
+            Menu menu,
+            PlayerPresenter presenter,
+            PlayerMoverPresenter presenterMover,
+            HudWindow hudWindow,
+            SoundSwitcher soundSwitcher)
         {
             _menu = menu;
             _presenter = presenter;

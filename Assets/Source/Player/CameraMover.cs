@@ -16,7 +16,6 @@ namespace Player
         private void Awake()
         {
             _startPosition = transform.position;
-
             SetStartPosition();
         }
 
@@ -40,7 +39,7 @@ namespace Player
             _isMove = false;
         }
 
-        public void GetPlayerTransform(Transform transform)
+        public void AddPlayerTransform(Transform transform)
         {
             _player = transform;
         }

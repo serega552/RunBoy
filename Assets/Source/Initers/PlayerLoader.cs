@@ -51,8 +51,8 @@ namespace Initers
             _viewMover = playerView.GetComponent<PlayerMoverView>();
             _animator = playerView.GetComponent<Animator>();
             _rigidbody = playerView.GetComponent<Rigidbody>();
-            _chunksPlacer.GetPlayerTransform(playerView.transform);
-            _backChunksPlacer.GetPlayerTransform(playerView.transform);
+            _chunksPlacer.AddPlayerTransform(playerView.transform);
+            _backChunksPlacer.AddPlayerTransform(playerView.transform);
 
             _model = new PlayerModel();
             _moverModel = new PlayerMoverModel(_rigidbody);
@@ -63,10 +63,10 @@ namespace Initers
             _playerEffectsSelecter.InitPlayer(_view);
             _playerEffects = _playerEffectsSelecter.GetEffects();
             _playerEffects.Init(_viewMover, _view);
-            _chunksPlacer.GetPlayerTransform(playerView.transform);
+            _chunksPlacer.AddPlayerTransform(playerView.transform);
 
-            _danceShop.GetView(_viewMover);
-            _skinShop.GetView(_viewMover);
+            _danceShop.AddView(_viewMover);
+            _skinShop.AddView(_viewMover);
 
             _moverPresenter?.Enable();
             _presenter?.Enable();

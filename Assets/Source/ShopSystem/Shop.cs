@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using BankSystem;
 using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 
 namespace ShopSystem
 {
@@ -18,17 +20,12 @@ namespace ShopSystem
         public event Action SKinChanging;
 
         public Bank BankMoney => _bank;
-
         public Transform PlaceSkin => _placeSkin;
-
         public Button BuyButton => _buyButton;
-
         public Button SelectButton => _selectButton;
-
         public TMP_Text Description => _description;
 
         public PlayerMoverView Player { get; private set; }
-
         public GameObject ModelSkin { get; private set; }
 
         private void Start()
@@ -37,7 +34,7 @@ namespace ShopSystem
             _selectButton.gameObject.SetActive(false);
         }
 
-        public void GetView(PlayerMoverView view)
+        public void AddView(PlayerMoverView view)
         {
             Player = view;
             SKinChanging?.Invoke();
@@ -79,6 +76,7 @@ namespace ShopSystem
             SetPositionModel();
         }
 
+        public abstract void Load();
         public abstract void ShowInfoProduct(Product skin);
 
         public abstract void SelectProduct();

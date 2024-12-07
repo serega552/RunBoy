@@ -1,4 +1,3 @@
-using Audio;
 using Player;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ namespace BlockSystem
 
         protected void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out Chuchpan chuchpan))
+            if (other.gameObject.TryGetComponent(out DynamicBLock chuchpan))
             {
                 Instantiate(_crashParticle.gameObject, transform.position, transform.rotation);
                 Destroy(gameObject);

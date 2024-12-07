@@ -6,7 +6,7 @@ namespace Items.BoostItems
     {
         private float _energy = 50;
 
-        protected override void GetResourses(PlayerView playerView)
+        protected override void AddResourses(PlayerView playerView)
         {
             PlayerView.OnEnergyChanged(_energy);
         }

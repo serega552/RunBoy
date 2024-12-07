@@ -17,7 +17,6 @@ namespace TimeInspector
         private int _startDailyTime;
 
         public event Action DailyTimeGoned;
-
         public event Action WeeklyTimeGoned;
 
         public void Load()

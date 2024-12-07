@@ -1,5 +1,4 @@
 using System;
-using Tasks;
 using Tasks.SO;
 using YG;
 
@@ -7,16 +6,6 @@ namespace BoostSystem
 {
     public class MoneyBoost : Boost
     {
-        private void OnEnable()
-        {
-            AwardGiver.Rewarding += GiveRewardBoost;
-        }
-
-        private void OnDisable()
-        {
-            AwardGiver.Rewarding -= GiveRewardBoost;
-        }
-
         public override void Save()
         {
             YandexGame.savesData.CountMoneyBoost = Count;
@@ -28,18 +17,14 @@ namespace BoostSystem
         {
             Count = YandexGame.savesData.CountMoneyBoost;
             CountUpgrade = YandexGame.savesData.CountUpgradeMoneyBoost;
-            LoadTimer();
-            Invoke(nameof(UpdateText), 0.3f);
+            base.Load();
         }
 
-        private void GiveRewardBoost(string name, int amount)
+        public override void AddRewardBoost(string name, int amount)
         {
             if (name == Convert.ToString(ResourceType.MoneyBoost))
             {
-                for (int i = 0; i < amount; i++)
-                {
-                    Increase();
-                }
+                base.AddRewardBoost(name, amount);
             }
         }
     }

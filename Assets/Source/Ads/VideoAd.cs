@@ -1,5 +1,7 @@
 using BankSystem;
 using IdNumbers;
+using System;
+using Tasks.SO;
 using UI;
 using UnityEngine;
 using YG;
@@ -37,16 +39,16 @@ namespace Ads
             switch (id)
             {
                 case (int)Ids.One:
-                    _bank.GiveMoney(_countMoneyReward);
+                    _bank.AddCurrency(_countMoneyReward, Convert.ToString(ResourceType.Money));
                     break;
                 case (int)Ids.Two:
-                    _bank.GiveMoney(_countMoneyReward * _minRewardMultiply);
+                    _bank.AddCurrency(_countMoneyReward * _minRewardMultiply, Convert.ToString(ResourceType.Money));
                     break;
                 case (int)Ids.Three:
-                    _bank.GiveMoney(_countMoneyReward * _midleRewardMultiply);
+                    _bank.AddCurrency(_countMoneyReward * _midleRewardMultiply, Convert.ToString(ResourceType.Money));
                     break;
                 case (int)Ids.Four:
-                    _bank.GiveMoney(_countMoneyReward * _maxRewardMultiply);
+                    _bank.AddCurrency(_countMoneyReward * _maxRewardMultiply, Convert.ToString(ResourceType.Money));
                     break;
                 case (int)Ids.Five:
                     _bank.MoneyMultiplyAd();

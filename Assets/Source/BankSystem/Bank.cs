@@ -18,11 +18,13 @@ namespace BankSystem
         [SerializeField] private List<TMP_Text> _moneyForGameText;
         [SerializeField] private SoundSwitcher _soundSwitcher;
 
-        private int _diamond = 0;
         private int _moneyForGame;
+        private string _moneyName = "Money";
+        private string _diamondName = "Diamond";
 
-        public event Action OnBuy;
+        public event Action Bought;
 
+        public int Diamond { get; private set; } = 0;
         public int Money { get; private set; } = 0;
 
         private void Awake()
@@ -45,18 +47,6 @@ namespace BankSystem
             AwardGiver.Rewarding -= GiveReward;
         }
 
-        public void TakeMoney(int money)
-        {
-            if (TryTakeMoney(money))
-            {
-                Money -= money;
-                TaskCounter.IncereaseProgress(money, Convert.ToString(TaskType.SpendMoney));
-                _soundSwitcher.Play("Buy");
-                OnBuy?.Invoke();
-                UpdateText();
-            }
-        }
-
         public void UpdateText()
         {
             foreach (TMP_Text money in _moneyText)
@@ -66,7 +56,7 @@ namespace BankSystem
 
             foreach (TMP_Text diamond in _diamondText)
             {
-                diamond.text = _diamond.ToString();
+                diamond.text = Diamond.ToString();
             }
 
             foreach (TMP_Text money in _moneyForGameText)
@@ -77,29 +67,18 @@ namespace BankSystem
             Save();
         }
 
-        public bool TryTakeMoney(int value)
+        public void AddCurrency(int currency, string name)
         {
-            return Money >= value;
-        }
+            if(name == _moneyName)
+                Money += currency;
 
-        public bool TryTakeDiamond(int value)
-        {
-            return _diamond >= value;
-        }
+            if (name == _diamondName)
+                Diamond += currency;
 
-        public void GiveMoney(int money)
-        {
-            Money += money;
             UpdateText();
         }
 
-        public void GiveDiamond(int diamond)
-        {
-            _diamond += diamond;
-            UpdateText();
-        }
-
-        public void GiveMoneyForGame(int money)
+        public void AddMoneyForGame(int money)
         {
             _moneyForGame += money;
             Money += money;
@@ -110,17 +89,8 @@ namespace BankSystem
 
         public void MoneyMultiplyAd()
         {
-            GiveMoney(_moneyForGame);
+            AddCurrency(_moneyForGame, Convert.ToString(ResourceType.Money));
             _moneyForGame *= _moneyForGameMultiply;
-        }
-
-        public void TakeDiamond(int diamond)
-        {
-            if (TryTakeDiamond(diamond))
-            {
-                _diamond -= diamond;
-                UpdateText();
-            }
         }
 
         public void ResetValueForGame()
@@ -129,29 +99,55 @@ namespace BankSystem
             UpdateText();
         }
 
+        public bool CanTakeCurrency(int currency, int price)
+        {
+            return currency >= price;
+        }
+
+        public void TryTakeDiamond(int diamond)
+        {
+            if (CanTakeCurrency(Diamond, diamond))
+            {
+                Diamond -= diamond;
+                UpdateText();
+            }
+        }
+
+        public void TryTakeMoney(int money)
+        {
+            if (CanTakeCurrency(Money, money))
+            {
+                Money -= money;
+                TaskCounter.IncereaseProgress(money, Convert.ToString(TaskType.SpendMoney));
+                _soundSwitcher.Play("Buy");
+                Bought?.Invoke();
+                UpdateText();
+            }
+        }
+
         private void GiveReward(string name, int amount)
         {
             if (name == Convert.ToString(ResourceType.Money))
             {
-                GiveMoney(amount);
+                AddCurrency(amount, Convert.ToString(ResourceType.Money));
             }
             else if (name == Convert.ToString(ResourceType.Diamond))
             {
-                GiveDiamond(amount);
+                AddCurrency(amount, Convert.ToString(ResourceType.Money));
             }
         }
 
         private void Save()
         {
             YandexGame.savesData.Money = Money;
-            YandexGame.savesData.Diamond = _diamond;
+            YandexGame.savesData.Diamond = Diamond;
             YandexGame.SaveProgress();
         }
 
         private void Load()
         {
             Money = YandexGame.savesData.Money;
-            _diamond = YandexGame.savesData.Diamond;
+            Diamond = YandexGame.savesData.Diamond;
 
             UpdateText();
         }

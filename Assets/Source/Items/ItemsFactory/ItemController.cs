@@ -11,10 +11,6 @@ namespace Items.ItemsFactory
         private readonly List<ItemView> _items = new List<ItemView>();
         private readonly float _itemsCount = 3;
 
-        public event Action ItemsDueToMismatchCleared;
-
-        public event Action ItemsDueToMatchCleared;
-
         public void AddItem(ItemView newItem, OtherItem otherItem)
         {
             if (_items.Any() && _items.Any(existingItem => existingItem.Name != newItem.Name))
@@ -37,14 +33,12 @@ namespace Items.ItemsFactory
         {
             otherItem.Boost();
             ClearPanel();
-            ItemsDueToMatchCleared?.Invoke();
         }
 
         private void ActivationDeboost(OtherItem otherItem)
         {
             otherItem.DeBoost();
             ClearPanel();
-            ItemsDueToMismatchCleared?.Invoke();
         }
 
         private void ClearPanel()

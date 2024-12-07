@@ -20,7 +20,7 @@ namespace Tasks.Factory
 
             TaskView taskView = taskObject.GetComponent<TaskView>();
 
-            taskView.GetTask(taskData);
+            taskView.AddTask(taskData);
             taskView.Init();
             taskView.InitId(id);
 

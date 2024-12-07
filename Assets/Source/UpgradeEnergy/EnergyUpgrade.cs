@@ -1,4 +1,5 @@
 using BankSystem;
+using System.Diagnostics;
 using Tasks;
 using Tasks.SO;
 using TMPro;
@@ -20,7 +21,6 @@ namespace UpgradeEnergy
         private int _count;
 
         public int CurrentPrice { get; private set; } = 10;
-
         public float CurrentEnergy { get; private set; } = 0;
 
         private void OnEnable() => YandexGame.GetDataEvent += Load;
@@ -35,9 +35,9 @@ namespace UpgradeEnergy
 
         public float Upgrade()
         {
-            if (_bank.TryTakeMoney(CurrentPrice))
+            if (_bank.CanTakeCurrency(_bank.Money, CurrentPrice))
             {
-                _bank.TakeMoney(CurrentPrice);
+                _bank.TryTakeMoney(CurrentPrice);
 
                 if (CurrentPrice < _maxPrice)
                     CurrentPrice += _encreaceMoney;

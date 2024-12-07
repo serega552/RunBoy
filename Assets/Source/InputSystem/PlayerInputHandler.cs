@@ -18,7 +18,6 @@ namespace InputSystem
         private InputAction _pauseAction;
 
         public event Action PauseButtonClicking;
-
         public event Action JumpButtonClicking;
 
         public Vector2 TurnInput { get; private set; }

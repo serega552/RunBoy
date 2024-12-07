@@ -9,6 +9,7 @@ namespace Tasks.Spawner
     public abstract class TaskSpawner : MonoBehaviour
     {
         private readonly List<TaskView> _activeTasks = new List<TaskView>();
+
         private TaskFactory _taskFactory;
 
         [SerializeField] private GameObject _prefabTask;
@@ -16,10 +17,9 @@ namespace Tasks.Spawner
         [SerializeField] private List<Task> _tasks = new List<Task>();
         [SerializeField] private TaskTimeInspector _timeInspector;
 
-        private List<float> _amountProgreses = new List<float>();
+        protected List<float> AmountProgreses = new List<float>();
 
         public List<TaskView> ActiveTasks => _activeTasks;
-
         public TaskTimeInspector TaskInspector => _timeInspector;
 
         private void Awake()
@@ -74,12 +74,12 @@ namespace Tasks.Spawner
         {
             for (int i = 0; i < _activeTasks.Count; i++)
             {
-                _activeTasks[i].InitProgress(_amountProgreses[i]);
+                _activeTasks[i].InitProgress(AmountProgreses[i]);
             }
 
             for (int i = 0; i < _activeTasks.Count; i++)
             {
-                if (_amountProgreses[i] == -1)
+                if (AmountProgreses[i] == -1)
                 {
                     _activeTasks[i].gameObject.SetActive(false);
                 }

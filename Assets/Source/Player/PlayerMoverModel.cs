@@ -34,9 +34,7 @@ namespace Player
         }
 
         public event Action Jumped;
-
         public event Action<float> SpeedChanging;
-
         public event Action<float> BoostTimeChanging;
 
         public float MoveSpeed { get; private set; }

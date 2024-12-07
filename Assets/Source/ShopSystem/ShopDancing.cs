@@ -75,9 +75,9 @@ namespace ShopSystem
 
         public override void TryBuyProduct()
         {
-            if (BankMoney.TryTakeMoney(_selectedDance.Price))
+            if (BankMoney.CanTakeCurrency(BankMoney.Money, _selectedDance.Price))
             {
-                BankMoney.TakeMoney(_selectedDance.Price);
+                BankMoney.TryTakeMoney(_selectedDance.Price);
                 BuyProduct();
             }
         }
@@ -94,7 +94,7 @@ namespace ShopSystem
             Load();
         }
 
-        private void Load()
+        public override void Load()
         {
             List<int> boughtDancesId = YandexGame.savesData.BoughtDances;
             int selectedDanceId = YandexGame.savesData.SelectedDance;

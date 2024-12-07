@@ -85,14 +85,14 @@ namespace ShopSystem
 
         public override void TryBuyProduct()
         {
-            if (BankMoney.TryTakeMoney(_selectedSkin.Price))
+            if (BankMoney.CanTakeCurrency(BankMoney.Money, _selectedSkin.Price))
             {
-                BankMoney.TakeMoney(_selectedSkin.Price);
+                BankMoney.TryTakeMoney(_selectedSkin.Price);
                 BuyProduct();
             }
         }
 
-        private void Load()
+        public override void Load()
         {
             List<int> boughtSkinsId = YandexGame.savesData.BoughtSkins;
             int selectedSkinId = YandexGame.savesData.SelectedSkin;

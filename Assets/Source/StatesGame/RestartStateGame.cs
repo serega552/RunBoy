@@ -12,7 +12,12 @@ namespace StatesGame
         private readonly ChunksPlacer _backgroundChunksPlacer;
         private readonly PlayerResurrect _playerResurrect;
 
-        public RestartStateGame(PlayerPresenter playerPresenter, PlayerMoverPresenter playerMoverPresenter, ChunksPlacer chunksPlacer, ChunksPlacer backgroundChunksPlacer, PlayerResurrect playerResurrect)
+        public RestartStateGame(
+            PlayerPresenter playerPresenter,
+            PlayerMoverPresenter playerMoverPresenter,
+            ChunksPlacer chunksPlacer,
+            ChunksPlacer backgroundChunksPlacer,
+            PlayerResurrect playerResurrect)
         {
             _playerPresenter = playerPresenter;
             _playerMoverPresenter = playerMoverPresenter;

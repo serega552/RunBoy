@@ -13,17 +13,12 @@ namespace Player
         private bool _isEnergyBoost = false;
 
         public event Action DistanceChanging;
-
         public event Action EnergyGoned;
-
         public event Action EnergyChanged;
-
         public event Action<float> TimeChanging;
 
         public float TotalDistanceTraveled { get; private set; }
-
         public float MaxEnergy { get; private set; }
-
         public float CurrentEnergy { get; private set; }
 
         public void Init()
@@ -61,7 +56,7 @@ namespace Player
 
         public void Update(Transform transform)
         {
-            GiveEnergy(transform);
+            AddEnergy(transform);
         }
 
         public void ChangingEnergy(float distanceMoved)
@@ -100,7 +95,7 @@ namespace Player
             Save();
         }
 
-        private void GiveEnergy(Transform transform)
+        private void AddEnergy(Transform transform)
         {
             if (CurrentEnergy > 0 && _isEnergyGone == false)
             {

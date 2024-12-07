@@ -7,25 +7,21 @@ namespace Items.OtherItems
     {
         private ItemViewSpawner _spawner;
 
-        public virtual void Boost()
-        {
-        }
+        public virtual void Boost() { }
 
-        public virtual void DeBoost()
-        {
-        }
+        public virtual void DeBoost() { }
 
         public void Init(ItemViewSpawner spawner)
         {
             _spawner = spawner;
         }
 
-        protected override void GetResourses(PlayerView playerView)
+        protected override void AddResourses(PlayerView playerView)
         {
             _spawner.Spawn(this);
         }
 
-        protected override void GetMoverResourses(PlayerMoverView playerMoverView)
+        protected override void AddMoverResourses(PlayerMoverView playerMoverView)
         {
             PlayerMoverView = playerMoverView;
         }

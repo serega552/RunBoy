@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BlockSystem
 {
-    public class ChuchpanMover : MonoBehaviour
+    public class DynamicBLockMover : MonoBehaviour
     {
         private readonly float _speed = 0.2f;
         private readonly float _maxX = 1f;
@@ -12,12 +12,12 @@ namespace BlockSystem
         private float _targetX = 1f;
         private bool _isPushed = false;
         private Vector3 _targetPosition;
-        private Chuchpan _chuchpan;
+        private DynamicBLock _chuchpan;
 
         private void Start()
         {
             _targetPosition = new Vector3(_targetX, transform.position.y, transform.position.z);
-            _chuchpan = GetComponent<Chuchpan>();
+            _chuchpan = GetComponent<DynamicBLock>();
             _chuchpan.Hiting += Push;
         }
 

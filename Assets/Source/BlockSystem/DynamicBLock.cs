@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BlockSystem
 {
-    public class Chuchpan : MonoBehaviour
+    public class DynamicBLock : MonoBehaviour
     {
         private readonly int _fallState = Animator.StringToHash("Hit");
         private readonly int _reward = 5;

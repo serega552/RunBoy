@@ -102,11 +102,11 @@ namespace Player
             if (_isMoneyBoost || isBoost)
             {
                 MoneyChanging?.Invoke(count * _moneyBoost.Bonus, isBoost);
-                _bank.GiveMoneyForGame(count * Convert.ToInt32(_moneyBoost.Bonus));
+                _bank.AddMoneyForGame(count * Convert.ToInt32(_moneyBoost.Bonus));
             }
             else
             {
-                _bank.GiveMoneyForGame(count);
+                _bank.AddMoneyForGame(count);
             }
         }
 

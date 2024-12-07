@@ -4,9 +4,9 @@ namespace Items.BoostItems
 {
     public class CoinItem : Item
     {
-     private readonly int _reward = 2;
+        private readonly int _reward = 2;
 
-        protected override void GetResourses(PlayerView playerView)
+        protected override void AddResourses(PlayerView playerView)
         {
             playerView.AddMoney(_reward, false);
         }

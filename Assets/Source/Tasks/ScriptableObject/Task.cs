@@ -13,15 +13,10 @@ namespace Tasks.SO
         [SerializeField] private TaskType _taskType;
 
         public string TaskType => Convert.ToString(_taskType);
-
         public int AmountMaxCollect => _amountMaxCollect;
-
         public string Description => _descritionTranslation;
-
         public Sprite RewardIcon => _rewardIcon;
-
         public int AmountReward => _amountReward;
-
         public TaskType Type => _taskType;
 
         public void TurnOnTask()

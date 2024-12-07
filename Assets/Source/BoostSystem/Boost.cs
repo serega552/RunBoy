@@ -35,17 +35,31 @@ namespace BoostSystem
 
         private void OnEnable()
         {
+            AwardGiver.Rewarding += AddRewardBoost;
             YandexGame.GetDataEvent += Load;
         }
 
         private void OnDisable()
         {
+            AwardGiver.Rewarding -= AddRewardBoost;
             YandexGame.GetDataEvent -= Load;
         }
 
         public abstract void Save();
 
-        public abstract void Load();
+        public virtual void Load()
+        {
+            LoadTimer();
+            Invoke(nameof(UpdateText), 0.3f);
+        }
+
+        public virtual void AddRewardBoost(string name, int amount)
+        {
+            for (int i = 0; i <= amount; i++)
+            {
+                Increase();
+            }
+        }
 
         public bool TryUse()
         {

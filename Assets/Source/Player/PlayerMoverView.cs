@@ -89,7 +89,7 @@ namespace Player
 
         private void OnEnable()
         {
-            _cameraMover.GetPlayerTransform(transform);
+            _cameraMover.AddPlayerTransform(transform);
             _speedBoostButton.onClick.AddListener(UseSpeedBoost);
             _inputHandler.JumpButtonClicking += Jump;
             _jumpButton.onClick.AddListener(Jump);

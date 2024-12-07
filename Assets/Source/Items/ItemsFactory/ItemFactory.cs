@@ -1,5 +1,4 @@
 using Chunks;
-using Player;
 using UnityEngine;
 
 namespace Items.ItemsFactory

@@ -2,6 +2,7 @@ using System;
 using Tasks.SO;
 using Tasks.Spawner;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Windows;
@@ -20,6 +21,7 @@ namespace Tasks
         [SerializeField] private TMP_Text _amountRewardText;
 
         private float _amountProgress;
+        private float _destroyProgressAmount = -1;
         private Task _task;
         private Slider _amountCompleted;
         private TaskWindow _window;
@@ -67,15 +69,10 @@ namespace Tasks
                 CompleteTask();
         }
 
-        public void GetTask(Task task)
+        public void AddTask(Task task)
         {
             _task = task;
             _task.TurnOnTask();
-        }
-
-        public Task TakeTask()
-        {
-            return _task;
         }
 
         private void CompleteTask()
@@ -88,24 +85,17 @@ namespace Tasks
         private void ExecuteTask(float amount, string name)
         {
             if (_task.TaskType == name && _task.Type != TaskType.RecordDistance)
-            {
                 _amountProgress += amount;
-                Save();
-                UpdateUI();
-
-                if (_amountCompleted.value >= _task.AmountMaxCollect)
-                    CompleteTask();
-            }
-            else if (_task.TaskType == name && _task.Type == TaskType.RecordDistance)
-            {
+            else if(_task.TaskType == name && _task.Type == TaskType.RecordDistance)
                 _amountProgress = amount;
-                Save();
-                UpdateUI();
 
-                if (_amountCompleted.value >= _task.AmountMaxCollect)
-                    CompleteTask();
-            }
+            Save(_amountProgress);
+            UpdateUI();
+
+            if (_amountCompleted.value >= _task.AmountMaxCollect)
+                CompleteTask();
         }
+
 
         private void UpdateUI()
         {
@@ -123,7 +113,7 @@ namespace Tasks
             _takeRewardParticle?.Play();
             Invoke(nameof(Destroy), 1f);
 
-            SaveDestroyTask();
+            Save(_destroyProgressAmount);
         }
 
         public void Destroy()
@@ -132,26 +122,14 @@ namespace Tasks
             Destroy(gameObject);
         }
 
-        private void SaveDestroyTask()
+        private void Save(float amount)
         {
             if (GetComponentInParent<DailyTaskSpawner>())
-                YandexGame.savesData.AmountDailyProgreses[Id] = -1;
+                YandexGame.savesData.AmountDailyProgreses[Id] = amount;
             else if (GetComponentInParent<WeeklyTaskSpawner>())
-                YandexGame.savesData.AmountWeeklyProgreses[Id] = -1;
+                YandexGame.savesData.AmountWeeklyProgreses[Id] = amount;
             else if (GetComponentInParent<DistanceTaskSpawner>())
-                YandexGame.savesData.AmountDistanceProgreses[Id] = -1;
-
-            YandexGame.SaveProgress();
-        }
-
-        private void Save()
-        {
-            if (GetComponentInParent<DailyTaskSpawner>())
-                YandexGame.savesData.AmountDailyProgreses[Id] = _amountProgress;
-            else if (GetComponentInParent<WeeklyTaskSpawner>())
-                YandexGame.savesData.AmountWeeklyProgreses[Id] = _amountProgress;
-            else if (GetComponentInParent<DistanceTaskSpawner>())
-                YandexGame.savesData.AmountDistanceProgreses[Id] = _amountProgress;
+                YandexGame.savesData.AmountDistanceProgreses[Id] = amount;
 
             YandexGame.SaveProgress();
         }

@@ -1,4 +1,3 @@
-using Audio;
 using InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,14 +37,12 @@ namespace Windows
         {
             base.Open();
             Time.timeScale = 0f;
-            SoundSwitcher.Pause("Music");
         }
 
         public override void Close()
         {
             base.Close();
             Time.timeScale = 1f;
-            SoundSwitcher.UnPause("Music");
         }
 
         private void TogglePause()

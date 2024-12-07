@@ -37,7 +37,7 @@ namespace Chunks
             }
         }
 
-        public void GetPlayerTransform(Transform player)
+        public void AddPlayerTransform(Transform player)
         {
             _player = player;
         }

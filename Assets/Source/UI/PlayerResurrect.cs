@@ -27,7 +27,6 @@ namespace UI
         private PlayerResurrectWindow _playerResurrectWindow;
 
         public event Action Restarting;
-
         public event Action<float> Resurrected;
 
         private void Awake()
@@ -69,9 +68,9 @@ namespace UI
 
         private void DiamondResurrect()
         {
-            if (_bank.TryTakeDiamond(_price))
+            if (_bank.CanTakeCurrency(_bank.Diamond, _price))
             {
-                _bank.TakeDiamond(_price);
+                _bank.TryTakeDiamond(_price);
                 _price *= _priceMultiply;
                 _priceDiamondText.text = _price.ToString();
                 Resurrect(_energyGiftForDiamond);

@@ -7,7 +7,7 @@ namespace Items.BoostItems
         private readonly float _value = 5f;
         private readonly float _time = 5f;
 
-        protected override void GetMoverResourses(PlayerMoverView playerMoverView)
+        protected override void AddMoverResourses(PlayerMoverView playerMoverView)
         {
             PlayerMoverView.ChangeSpeed(_value, _time);
         }

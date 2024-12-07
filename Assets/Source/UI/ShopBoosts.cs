@@ -12,9 +12,9 @@ namespace UI
 
         public void Buy(Boost boost, int price)
         {
-            if (_bank.TryTakeMoney(price))
+            if (_bank.CanTakeCurrency(_bank.Money, price))
             {
-                _bank.TakeMoney(price);
+                _bank.TryTakeMoney(price);
                 boost.Increase();
                 TaskCounter.IncereaseProgress(1, TaskType.BuyBoost.ToString());
             }
@@ -22,9 +22,9 @@ namespace UI
 
         public void BuyUpgrade(Boost boost, int price)
         {
-            if (_bank.TryTakeMoney(price))
+            if (_bank.CanTakeCurrency(_bank.Money, price))
             {
-                _bank.TakeMoney(price);
+                _bank.TryTakeMoney(price);
                 boost.Upgrade();
             }
         }

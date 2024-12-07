@@ -31,7 +31,7 @@ namespace Tasks.Spawner
 
         public override void Load()
         {
-            _amountProgreses = YandexGame.savesData.AmountWeeklyProgreses;
+            AmountProgreses = YandexGame.savesData.AmountWeeklyProgreses;
             base.Load();
         }
     }

@@ -5,7 +5,6 @@ namespace Items
 {
     public abstract class Item : MonoBehaviour
     {
-        protected float Resourses;
         protected ParticleSystem ExplosionParticle;
         protected float Delay = 2f;
         protected PlayerView PlayerView;
@@ -27,19 +26,15 @@ namespace Items
             {
                 PlayerView = playerView;
                 PlayerMoverView = playerMoverView;
-                GetMoverResourses(PlayerMoverView);
-                GetResourses(PlayerView);
+                AddMoverResourses(PlayerMoverView);
+                AddResourses(PlayerView);
                 StartDestroy();
             }
         }
 
-        protected virtual void GetResourses(PlayerView playerView)
-        {
-        }
+        protected virtual void AddResourses(PlayerView playerView) { }
 
-        protected virtual void GetMoverResourses(PlayerMoverView playerMoverView)
-        {
-        }
+        protected virtual void AddMoverResourses(PlayerMoverView playerMoverView) { }
 
         private void StartDestroy()
         {

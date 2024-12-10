@@ -1,4 +1,3 @@
-using Audio;
 using UnityEngine;
 
 namespace Windows
@@ -7,20 +6,10 @@ namespace Windows
 
     public class Window : MonoBehaviour
     {
-        [SerializeField] private SoundSwitcher _soundSwitcher;
         [SerializeField] private CanvasGroup _canvasGroup;
-
-        private ParticleSystem _effectButtonClick;
-
-        private void Start()
-        {
-            _effectButtonClick = GetComponentInChildren<ParticleSystem>();
-        }
 
         public virtual void Open()
         {
-            _soundSwitcher.Play("ClickOpen");
-            _effectButtonClick?.Play();
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;
             _canvasGroup.alpha = 1f;
@@ -28,7 +17,6 @@ namespace Windows
 
         public virtual void Close()
         {
-            _soundSwitcher.Play("ClickClose");
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
             _canvasGroup.alpha = 0f;

@@ -6,21 +6,22 @@ namespace StatesGame
 {
     public class RestartStateGame
     {
-        private readonly PlayerPresenter _playerPresenter;
-        private readonly PlayerMoverPresenter _playerMoverPresenter;
         private readonly ChunksPlacer _chunksPlacer;
         private readonly ChunksPlacer _backgroundChunksPlacer;
         private readonly PlayerResurrect _playerResurrect;
 
+        private PlayerView _player;
+        private PlayerMoverView _playerMover;
+
         public RestartStateGame(
-            PlayerPresenter playerPresenter,
-            PlayerMoverPresenter playerMoverPresenter,
+            PlayerView player,
+            PlayerMoverView playerMover,
             ChunksPlacer chunksPlacer,
             ChunksPlacer backgroundChunksPlacer,
             PlayerResurrect playerResurrect)
         {
-            _playerPresenter = playerPresenter;
-            _playerMoverPresenter = playerMoverPresenter;
+            _player = player;
+            _playerMover = playerMover;
             _chunksPlacer = chunksPlacer;
             _backgroundChunksPlacer = backgroundChunksPlacer;
             _playerResurrect = playerResurrect;
@@ -36,12 +37,18 @@ namespace StatesGame
             _playerResurrect.Restarting -= ResetGame;
         }
 
+        public void AddPlayer(PlayerView player, PlayerMoverView playerMover)
+        {
+            _player = player;
+            _playerMover = playerMover;
+        }
+
         public void ResetGame()
         {
             _chunksPlacer.ResetFirstChunk();
             _backgroundChunksPlacer.ResetFirstChunk();
-            _playerMoverPresenter.ResetPlayerMove();
-            _playerPresenter.ResetPlayer();
+            _playerMover.ResetMove();
+            _player.ResetPlayer();
         }
     }
 }

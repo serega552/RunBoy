@@ -121,6 +121,7 @@ namespace ShopSystem
             }
             else
             {
+                Debug.Log(1);
                 _selecter.InitFirstSkin();
             }
         }

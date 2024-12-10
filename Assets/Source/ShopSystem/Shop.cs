@@ -77,6 +77,7 @@ namespace ShopSystem
         }
 
         public abstract void Load();
+
         public abstract void ShowInfoProduct(Product skin);
 
         public abstract void SelectProduct();

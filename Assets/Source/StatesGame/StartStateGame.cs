@@ -8,35 +8,30 @@ namespace StatesGame
     public class StartStateGame
     {
         private readonly Menu _menu;
-        private readonly PlayerPresenter _presenter;
-        private readonly PlayerMoverPresenter _presenterMover;
         private readonly HudWindow _hudWindow;
         private readonly SoundSwitcher _soundSwitcher;
 
+        private PlayerView _player;
+        private PlayerMoverView _playerMover;
+
         public StartStateGame(
             Menu menu,
-            PlayerPresenter presenter,
-            PlayerMoverPresenter presenterMover,
+            PlayerView player,
+            PlayerMoverView playerMover,
             HudWindow hudWindow,
             SoundSwitcher soundSwitcher)
         {
             _menu = menu;
-            _presenter = presenter;
-            _presenterMover = presenterMover;
+            _player = player;
+            _playerMover = playerMover;
             _hudWindow = hudWindow;
             _soundSwitcher = soundSwitcher;
         }
 
-        private void Start()
+        public void AddPlayer(PlayerView player, PlayerMoverView playerMover)
         {
-            _soundSwitcher.Play("StartGame");
-            _soundSwitcher.Play("Music");
-            _soundSwitcher.Pause("Music2");
-            _soundSwitcher.Pause("MenuMusic");
-
-            _hudWindow.OpenWithoutSound();
-            _presenter.StartGame();
-            _presenterMover.StartPlayerMove();
+            _player = player;
+            _playerMover = playerMover;
         }
 
         public void Enable()
@@ -47,6 +42,18 @@ namespace StatesGame
         public void Disable()
         {
             _menu.StartClicking -= Start;
+        }
+
+        private void Start()
+        {
+            _soundSwitcher.Play("StartGame");
+            _soundSwitcher.Play("Music");
+            _soundSwitcher.Pause("Music2");
+            _soundSwitcher.Pause("MenuMusic");
+
+            _hudWindow.OpenWithoutSound();
+            _player.StartMove();
+            _playerMover.StartMove();
         }
     }
 }

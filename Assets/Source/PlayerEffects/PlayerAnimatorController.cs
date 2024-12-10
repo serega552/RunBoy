@@ -25,9 +25,7 @@ namespace PlayerEffects
             _playerMoverView.Started -= Run;
             _playerMoverView.Jumped -= Jump;
             _playerMoverView.Kicked -= Kick;
-            _playerMoverView.SpeedCrashChanging -= Crash;
             _playerMoverView.Stoped -= Lose;
-            _playerMoverView.Somersaulting -= Somersault;
             _playerMoverView.Crashed -= CrashOnCar;
         }
 
@@ -41,9 +39,7 @@ namespace PlayerEffects
             _playerMoverView.Started += Run;
             _playerMoverView.Jumped += Jump;
             _playerMoverView.Kicked += Kick;
-            _playerMoverView.SpeedCrashChanging += Crash;
             _playerMoverView.Stoped += Lose;
-            _playerMoverView.Somersaulting += Somersault;
             _playerMoverView.Crashed += CrashOnCar;
         }
 

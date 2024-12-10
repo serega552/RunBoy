@@ -2,6 +2,7 @@ using System;
 using Audio;
 using Player;
 using UI;
+using UnityEngine;
 using Windows;
 using YG;
 
@@ -11,17 +12,18 @@ namespace StatesGame
     {
         private readonly Menu _menu;
         private readonly EndGameScreen _endScreen;
-        private readonly PlayerMoverPresenter _presenterMover;
-        private readonly PlayerPresenter _presenter;
         private readonly PlayerResurrect _playerResurrect;
         private readonly HudWindow _hudWindow;
         private readonly LeaderboardYG _leaderboard;
         private readonly SoundSwitcher _soundSwitcher;
 
+        private PlayerMoverView _playerMover;
+        private PlayerView _player;
+
         public EndStateGame(
             Menu menu,
-            PlayerPresenter presenter,
-            PlayerMoverPresenter presenterMover,
+            PlayerView player,
+            PlayerMoverView playerMover,
             PlayerResurrect playerResurrect,
             EndGameScreen endScreen,
             HudWindow hudWindow,
@@ -29,8 +31,8 @@ namespace StatesGame
             SoundSwitcher soundSwitcher)
         {
             _menu = menu;
-            _presenterMover = presenterMover;
-            _presenter = presenter;
+            _playerMover = playerMover;
+            _player = player;
             _playerResurrect = playerResurrect;
             _endScreen = endScreen;
             _hudWindow = hudWindow;
@@ -38,31 +40,41 @@ namespace StatesGame
             _soundSwitcher = soundSwitcher;
         }
 
-        public event Action GameEnded;
-
         public void Enable()
         {
             YandexGame.GetDataEvent += Load;
-            _presenter.GameEnded += End;
+            _player.GameEnded += End;
             _playerResurrect.Restarting += OpenWindows;
         }
 
         public void Disable()
         {
             YandexGame.GetDataEvent -= Load;
-            _presenter.GameEnded -= End;
+            _player.GameEnded -= End;
             _playerResurrect.Restarting -= OpenWindows;
+        }
+
+        public void AddPlayer(PlayerView player, PlayerMoverView playerMover)
+        {
+            _player.GameEnded -= End;
+
+            _player = player;
+            _playerMover = playerMover;
+
+            _player.GameEnded += End;
         }
 
         private void End()
         {
+            Debug.Log("End");
+
             _soundSwitcher.Pause("Music");
 
-            _presenterMover.EndPlayerMove();
+            _playerMover.EndMove();
             _playerResurrect.OpenWindow();
-            _menu.SetDistance(_presenter.TakeTotalDistance());
-            YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(_presenter.TakeTotalDistance()));
-            _leaderboard.NewScore(Convert.ToInt32(_presenter.TakeTotalDistance()));
+            _menu.SetDistance(_player.TakeTotalDistance());
+            YandexGame.NewLeaderboardScores("Leaderboard", Convert.ToInt32(_player.TakeTotalDistance()));
+            _leaderboard.NewScore(Convert.ToInt32(_player.TakeTotalDistance()));
             _leaderboard.UpdateLB();
 
             Save();
@@ -76,13 +88,11 @@ namespace StatesGame
             _menu.GetComponent<MenuWindow>().OpenWithoutSound();
             _hudWindow.CloseWithoutSound();
             _soundSwitcher.UnPause("Music2");
-
-            GameEnded?.Invoke();
         }
 
         private void Save()
         {
-            YandexGame.savesData.Record = _presenter.TakeTotalDistance();
+            YandexGame.savesData.Record = _player.TakeTotalDistance();
             YandexGame.SaveProgress();
         }
 

@@ -6,15 +6,16 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerMoverModel
+    public class PlayerMoverModel : MonoBehaviour
     {
+        [SerializeField] private PlayerMoverView _player;
+
         private readonly float _maxSpeed = 3f;
         private readonly float _maxTurnSpeed = 1.5f;
         private readonly float _xPosition = 1.7f;
         private readonly float _yJumpForce = 2f;
         private readonly float _maxMoveVariableSpeed = 10;
         private readonly float _editMoveSpeed = 0.01f;
-        private readonly Rigidbody _rigidbody;
 
         private float _turn = 0;
         private float _turnSpeed;
@@ -27,17 +28,20 @@ namespace Player
         private bool _isMove = false;
         private bool _isSpeedBoost;
         private PlayerInputHandler _inputHandler;
-
-        public PlayerMoverModel(Rigidbody rigidbody)
-        {
-            _rigidbody = rigidbody;
-        }
-
-        public event Action Jumped;
-        public event Action<float> SpeedChanging;
-        public event Action<float> BoostTimeChanging;
+        private Rigidbody _rigidbody;
 
         public float MoveSpeed { get; private set; }
+
+        private void Start()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void Update()
+        {
+            ChangeSpeed();
+            Move();
+        }
 
         public void SetDataMove(float coefficient)
         {
@@ -67,10 +71,10 @@ namespace Player
             _moveVariableSpeed = _maxSpeed;
             _isMove = true;
             _turnSpeed = _maxTurnSpeed;
-            SpeedChanging?.Invoke(MoveSpeed);
+            _player.ChangeCurrentSpeed(MoveSpeed);
 
             _isSpeedBoost = false;
-            BoostTimeChanging?.Invoke(0);
+            _player.SetSpeedBoostTimer(0);
         }
 
         public void ResetMove()
@@ -86,12 +90,6 @@ namespace Player
         {
             _isMove = false;
             _rigidbody.velocity = Vector3.zero;
-        }
-
-        public void Update()
-        {
-            ChangeSpeed();
-            Move();
         }
 
         public void ChangeSpeedCrash(float moveSpeed)
@@ -125,7 +123,7 @@ namespace Player
 
         public void Jump()
         {
-            Jumped?.Invoke();
+            _player.OnJumped();
             _rigidbody.AddForce(0f, _jumpPower, 0f, ForceMode.Impulse);
             TaskCounter.IncereaseProgress(1, Convert.ToString(TaskType.Jump));
         }
@@ -143,7 +141,7 @@ namespace Player
             if (MoveSpeed != _moveVariableSpeed && _isSpeedBoost)
             {
                 _speedTime -= Time.deltaTime;
-                BoostTimeChanging?.Invoke(_speedTime);
+                _player.SetSpeedBoostTimer(_speedTime);
 
                 if (_speedTime > 0)
                 {
@@ -175,7 +173,7 @@ namespace Player
 
             MoveSpeed = MoveSpeed < _moveVariableSpeed ? MoveSpeed + _editMoveSpeed : MoveSpeed > _moveVariableSpeed ? MoveSpeed - _editMoveSpeed : _moveVariableSpeed;
             _turnSpeed = MoveSpeed / turnMultiplier;
-            SpeedChanging?.Invoke(MoveSpeed);
+            _player.ChangeCurrentSpeed(MoveSpeed);
         }
     }
 }

@@ -5,17 +5,18 @@ namespace StatesGame
 {
     public class ResurrectStateGame
     {
-        private readonly PlayerMoverPresenter _presenterMover;
-        private readonly PlayerPresenter _presenter;
         private readonly PlayerResurrect _playerResurrect;
 
+        private PlayerMoverView _playerMover;
+        private PlayerView _player;
+
         public ResurrectStateGame(
-            PlayerPresenter presenter,
-            PlayerMoverPresenter presenterMover,
+            PlayerView player,
+            PlayerMoverView playerMover,
             PlayerResurrect playerResurrect)
         {
-            _presenterMover = presenterMover;
-            _presenter = presenter;
+            _playerMover = playerMover;
+            _player = player;
             _playerResurrect = playerResurrect;
         }
 
@@ -29,10 +30,16 @@ namespace StatesGame
             _playerResurrect.Resurrected -= Resurrect;
         }
 
+        public void AddPlayer(PlayerView player, PlayerMoverView playerMover)
+        {
+            _player = player;
+            _playerMover = playerMover;
+        }
+
         private void Resurrect(float energy)
         {
-            _presenter.ResurrectPlayer(energy);
-            _presenterMover.StartPlayerMove();
+            _player.ResurrectPlayer(energy);
+            _playerMover.StartMove();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] private Button _jumpButton;
         [SerializeField] private PlayerInputHandler _inputHandler;
         [SerializeField] private SoundSwitcher _soundSwitcher;
+        [SerializeField] private PlayerMoverModel _model;
 
         private Vector3 _startPlayerPosition;
         private string _nameDanceAnim;
@@ -31,14 +32,6 @@ namespace Player
         private bool _canMove = false;
         private bool _canJump = true;
         private PlayerView _playerView;
-
-        public event Action<PlayerInputHandler> InputChanging;
-
-        public event Action<float> Moving;
-
-        public event Action<float> SpeedChanging;
-
-        public event Action<float> SpeedCrashChanging;
 
         public event Action<float, float> SpeedBoostChanging;
 
@@ -52,10 +45,6 @@ namespace Player
 
         public event Action Jumped;
 
-        public event Action Jumping;
-
-        public event Action Somersaulting;
-
         public event Action Crashed;
 
         public event Action Restarting;
@@ -67,7 +56,7 @@ namespace Player
 
         private void Start()
         {
-            InputChanging?.Invoke(_inputHandler);
+            _model.SetInput(_inputHandler);
         }
 
         private void Awake()
@@ -115,13 +104,12 @@ namespace Player
         public void ChangeSpeed(float count, float time)
         {
             _soundSwitcher.Play("UseBoost");
-            SpeedBoostChanging?.Invoke(count, time);
+            _model.TurnOnSpeedBoost(count, time);
         }
 
         public void ChangeCurrentSpeed(float speed)
         {
             _speed = speed;
-            SpeedChanging?.Invoke(speed);
         }
 
         public void Protect(bool protect)
@@ -136,7 +124,7 @@ namespace Player
             {
                 float moveSpeed = 3;
                 _soundSwitcher.Play("Crash");
-                SpeedCrashChanging?.Invoke(moveSpeed);
+                _model.ChangeSpeedCrash(moveSpeed);
 
                 TaskCounter.IncereaseProgress(1, TaskType.CrashWall.ToString());
             }
@@ -147,12 +135,13 @@ namespace Player
             if (_isProtected == false)
             {
                 Crashed?.Invoke();
-                _playerView.GameOver();
+                _playerView.EndMove();
             }
         }
 
         public void StartMove()
         {
+            _model.StartMove();
             _cameraMover?.StartMove();
             _canMove = true;
             Started?.Invoke();
@@ -160,6 +149,7 @@ namespace Player
 
         public void ResetMove()
         {
+            _model.ResetMove();
             _cameraMover?.ResetCameraPosition();
             transform.position = _startPlayerPosition;
             Restarting?.Invoke();
@@ -167,6 +157,7 @@ namespace Player
 
         public void EndMove()
         {
+            _model.EndMove();
             _cameraMover?.EndMove();
             _canMove = false;
             Stoped?.Invoke();
@@ -185,7 +176,7 @@ namespace Player
 
         public void OnSomersault()
         {
-            Somersaulting?.Invoke();
+            _model.Somersault();
         }
 
         public void OnDance()
@@ -217,18 +208,18 @@ namespace Player
         private void PlayerInputContorol()
         {
             if (_joystick.Horizontal < 0f && _joystick.Horizontal > -1)
-                Moving?.Invoke(_joystick.Horizontal);
+                _model.SetDataMove(_joystick.Horizontal);
             else if (_joystick.Horizontal > 0f && _joystick.Horizontal < 1)
-                Moving?.Invoke(_joystick.Horizontal);
+                _model.SetDataMove(_joystick.Horizontal);
             else
-                Moving?.Invoke(0);
+                _model.SetDataMove(0);
         }
 
         private void Jump()
         {
             if (_canJump && _canMove)
             {
-                Jumping?.Invoke();
+                _model.Jump();
             }
         }
 

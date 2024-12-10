@@ -4,24 +4,26 @@ using YG;
 
 namespace Player
 {
-    public class PlayerModel
+    public class PlayerModel : MonoBehaviour
     {
+        [SerializeField] private PlayerView _playerView;
+        
         private Vector3 _lastPosition;
         private bool _isEnergyGone = false;
         private float _energyBonus;
         private float _energyTime;
         private bool _isEnergyBoost = false;
 
-        public event Action DistanceChanging;
-        public event Action EnergyGoned;
-        public event Action EnergyChanged;
-        public event Action<float> TimeChanging;
-
         public float TotalDistanceTraveled { get; private set; }
         public float MaxEnergy { get; private set; }
         public float CurrentEnergy { get; private set; }
 
-        public void Init()
+        private void Update()
+        {
+            AddEnergy(_playerView.transform);
+        }
+
+        public void Awake()
         {
             if (YandexGame.SDKEnabled)
                 Load();
@@ -38,7 +40,7 @@ namespace Player
             _isEnergyGone = false;
 
             _isEnergyBoost = false;
-            TimeChanging?.Invoke(0);
+            _playerView.SetEnergyTime(0);
         }
 
         public void Resurrect(float energy)
@@ -54,11 +56,6 @@ namespace Player
             TotalDistanceTraveled = 0;
         }
 
-        public void Update(Transform transform)
-        {
-            AddEnergy(transform);
-        }
-
         public void ChangingEnergy(float distanceMoved)
         {
             if (_isEnergyBoost == false)
@@ -68,7 +65,7 @@ namespace Player
             else if (_isEnergyBoost)
             {
                 _energyTime -= Time.deltaTime;
-                TimeChanging?.Invoke(_energyTime);
+                _playerView.SetEnergyTime(_energyTime);
 
                 if (_energyTime > 0)
                 {
@@ -106,14 +103,14 @@ namespace Player
 
                 _lastPosition = transform.position;
 
-                DistanceChanging?.Invoke();
-                EnergyChanged?.Invoke();
+                _playerView.SetDistance(TotalDistanceTraveled);
+                _playerView.SetEnergy(CurrentEnergy);
             }
 
             if (CurrentEnergy <= 0 && _isEnergyGone == false)
             {
                 _isEnergyGone = true;
-                EnergyGoned?.Invoke();
+                _playerView.EndMove();
             }
         }
 

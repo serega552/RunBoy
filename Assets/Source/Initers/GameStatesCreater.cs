@@ -1,6 +1,7 @@
 using Audio;
 using Chunks;
 using Player;
+using ShopSystem;
 using StatesGame;
 using UI;
 using UnityEngine;
@@ -11,8 +12,8 @@ namespace Initers
 {
     public class GameStatesCreater : MonoBehaviour
     {
-        [SerializeField] private PlayerMoverPresenter _playerMoverPresenter;
-        [SerializeField] private PlayerPresenter _playerPresenter;
+        [SerializeField] private PlayerMoverView _playerMover;
+        [SerializeField] private PlayerView _player;
         [SerializeField] private Menu _menu;
         [SerializeField] private EndGameScreen _endGameScreen;
         [SerializeField] private ChunksPlacer _chunksPlacer;
@@ -21,6 +22,7 @@ namespace Initers
         [SerializeField] private PlayerResurrect _playerResurrect;
         [SerializeField] private LeaderboardYG _leaderboard;
         [SerializeField] private SoundSwitcher _soundSwitcher;
+        [SerializeField] private SkinSelecter _skinSelecter;
 
         private ResurrectStateGame _resurrectStateGame;
         private RestartStateGame _restartStateGame;
@@ -33,6 +35,8 @@ namespace Initers
             _restartStateGame.Enable();
             _startStateGame.Enable();
             _endStateGame.Enable();
+
+            _skinSelecter.SkinChanging += RefreshStates;
         }
 
         private void Awake()
@@ -46,21 +50,34 @@ namespace Initers
             _restartStateGame.Disable();
             _startStateGame.Disable();
             _endStateGame.Disable();
+
+            _skinSelecter.SkinChanging -= RefreshStates;
+        }
+
+        private void RefreshStates(PlayerView player)
+        {
+            _player = player;
+            _playerMover = player.GetComponent<PlayerMoverView>();
+
+            _restartStateGame.AddPlayer(_player,_playerMover);
+            _endStateGame.AddPlayer(_player,_playerMover);
+            _resurrectStateGame.AddPlayer(_player,_playerMover);
+            _startStateGame.AddPlayer(_player,_playerMover);
         }
 
         private void CreateStates()
         {
             _restartStateGame = new RestartStateGame(
-                _playerPresenter,
-                _playerMoverPresenter,
+                _player,
+                _playerMover,
                 _chunksPlacer,
                 _backgroundChunksPlacer,
                 _playerResurrect);
 
             _endStateGame = new EndStateGame(
                 _menu,
-                _playerPresenter,
-                _playerMoverPresenter,
+                _player,
+                _playerMover,
                 _playerResurrect,
                 _endGameScreen,
                 _hudWindow,
@@ -68,14 +85,14 @@ namespace Initers
                 _soundSwitcher);
 
             _resurrectStateGame = new ResurrectStateGame(
-                _playerPresenter,
-                _playerMoverPresenter,
+                _player,
+                _playerMover,
                 _playerResurrect);
 
             _startStateGame = new StartStateGame(
                 _menu,
-                _playerPresenter,
-                _playerMoverPresenter,
+                _player,
+                _playerMover,
                 _hudWindow,
                 _soundSwitcher);
         }

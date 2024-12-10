@@ -11,8 +11,6 @@ namespace Initers
     public class PlayerLoader : MonoBehaviour
     {
         [SerializeField] private Menu _viewMenu;
-        [SerializeField] private PlayerMoverPresenter _moverPresenter;
-        [SerializeField] private PlayerPresenter _presenter;
         [SerializeField] private SkinSelecter _skinSelecter;
         [SerializeField] private Shop _danceShop;
         [SerializeField] private Shop _skinShop;
@@ -26,8 +24,6 @@ namespace Initers
         private Rigidbody _rigidbody;
         private PlayerView _view;
         private PlayerMoverView _viewMover;
-        private PlayerModel _model;
-        private PlayerMoverModel _moverModel;
         private Animator _animator;
 
         private void OnEnable()
@@ -37,9 +33,6 @@ namespace Initers
 
         private void OnDisable()
         {
-            _presenter.Disable();
-            _moverPresenter.Disable();
-
             _skinSelecter.SkinChanging -= LoadPlayer;
         }
 
@@ -54,12 +47,8 @@ namespace Initers
             _chunksPlacer.AddPlayerTransform(playerView.transform);
             _backChunksPlacer.AddPlayerTransform(playerView.transform);
 
-            _model = new PlayerModel();
-            _moverModel = new PlayerMoverModel(_rigidbody);
             _funDance.Init(_viewMover);
             _playerAnimatorController.Init(_viewMover, _animator);
-            _presenter.Init(_model, _view);
-            _moverPresenter.Init(_moverModel, _viewMover);
             _playerEffectsSelecter.InitPlayer(_view);
             _playerEffects = _playerEffectsSelecter.GetEffects();
             _playerEffects.Init(_viewMover, _view);
@@ -67,9 +56,6 @@ namespace Initers
 
             _danceShop.AddView(_viewMover);
             _skinShop.AddView(_viewMover);
-
-            _moverPresenter?.Enable();
-            _presenter?.Enable();
         }
     }
 }

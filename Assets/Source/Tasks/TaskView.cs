@@ -85,15 +85,21 @@ namespace Tasks
         private void ExecuteTask(float amount, string name)
         {
             if (_task.TaskType == name && _task.Type != TaskType.RecordDistance)
+            {
                 _amountProgress += amount;
-            else if(_task.TaskType == name && _task.Type == TaskType.RecordDistance)
+                UpdateUI();
+
+                if (_amountCompleted.value >= _task.AmountMaxCollect)
+                    CompleteTask();
+            }
+            else if (_task.TaskType == name && _task.Type == TaskType.RecordDistance)
+            {
                 _amountProgress = amount;
+                UpdateUI();
 
-            Save(_amountProgress);
-            UpdateUI();
-
-            if (_amountCompleted.value >= _task.AmountMaxCollect)
-                CompleteTask();
+                if (_amountCompleted.value >= _task.AmountMaxCollect)
+                    CompleteTask();
+            }
         }
 
 
@@ -112,26 +118,12 @@ namespace Tasks
             _takeReward.interactable = false;
             _takeRewardParticle?.Play();
             Invoke(nameof(Destroy), 1f);
-
-            Save(_destroyProgressAmount);
         }
 
         public void Destroy()
         {
             OnComplete?.Invoke(this);
             Destroy(gameObject);
-        }
-
-        private void Save(float amount)
-        {
-            if (GetComponentInParent<DailyTaskSpawner>())
-                YandexGame.savesData.AmountDailyProgreses[Id] = amount;
-            else if (GetComponentInParent<WeeklyTaskSpawner>())
-                YandexGame.savesData.AmountWeeklyProgreses[Id] = amount;
-            else if (GetComponentInParent<DistanceTaskSpawner>())
-                YandexGame.savesData.AmountDistanceProgreses[Id] = amount;
-
-            YandexGame.SaveProgress();
         }
     }
 }

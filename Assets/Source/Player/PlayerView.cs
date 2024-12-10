@@ -23,6 +23,7 @@ namespace Player
         [SerializeField] private EnergyUpgrade _energyUpgrade;
         [SerializeField] private Bank _bank;
         [SerializeField] private SoundSwitcher _soundSwitcher;
+        [SerializeField] private PlayerModel _model;
 
         private Button _energyBoostButton;
         private Button _moneyBoostButton;
@@ -30,15 +31,9 @@ namespace Player
         private bool _isMoneyBoost = false;
         private float _moneyBoostTime;
 
+        public event Action GameEnded;
         public event Action<float> EnergyChanging;
-
-        public event Action<float> MaxEnergyChanging;
-
         public event Action<float, bool> MoneyChanging;
-
-        public event Action<EnergyBoost> DistanceBoostChanging;
-
-        public event Action GameOvered;
 
         private void Awake()
         {
@@ -63,20 +58,39 @@ namespace Player
             _energyUpgradeButton.onClick.RemoveListener(OnChangeMaxEnergy);
         }
 
-        public void GameOver()
+        public void StartMove()
         {
-            GameOvered?.Invoke();
+            _model.StartGame();
+        }
+        public void ResurrectPlayer(float energy)
+        {
+            _model.Resurrect(energy);
+        }
+
+        public float TakeTotalDistance()
+        {
+            return _model.TotalDistanceTraveled;
+        }
+
+        public void ResetPlayer()
+        {
+            _model.ResetGame(transform);
+        }
+
+        public void EndMove()
+        {
+            GameEnded?.Invoke();
         }
 
         public void OnEnergyChanged(float energyAmount)
         {
             _soundSwitcher.Play("UseBoost");
-            EnergyChanging?.Invoke(energyAmount);
+            _model.ChangingEnergy(energyAmount);
         }
 
         public void OnChangeMaxEnergy()
         {
-            MaxEnergyChanging?.Invoke(_energyUpgrade.Upgrade());
+            _model.ChangeMaxEnergy(_energyUpgrade.Upgrade());
         }
 
         public void SetDistance(float distance)
@@ -123,18 +137,12 @@ namespace Player
                 _moneyBoostTime = _moneyBoost.Time;
                 StartCoroutine(TimeChanging());
             }
-            else
-            {
-                Debug.Log("ErrorUseBoost");
-            }
         }
 
         private void UseEnergyBoost()
         {
             if (_energyBoost.TryUse())
-                DistanceBoostChanging?.Invoke(_energyBoost);
-            else
-                Debug.Log("ErrorUseBoost");
+                _model.TurnOnEnergyBoost(_energyBoost.Bonus, _energyBoost.Time);
         }
 
         private IEnumerator TimeChanging()

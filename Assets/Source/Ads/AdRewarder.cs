@@ -18,7 +18,7 @@ namespace Ads
         [SerializeField] private TMP_Text _amountRewardText;
         [SerializeField] private Button _rewardButton;
 
-        private int _amountReward;
+        private int _amountReward = 0;
         private int _id;
         private int _chance = 30;
         private int _minRewardMultiply = 3;

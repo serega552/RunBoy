@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerMoverModel : MonoBehaviour
+    public class PlayerMover : MonoBehaviour
     {
         [SerializeField] private PlayerMoverView _player;
 

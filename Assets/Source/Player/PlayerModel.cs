@@ -1,13 +1,12 @@
-using System;
 using UnityEngine;
 using YG;
 
 namespace Player
 {
-    public class PlayerModel : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         [SerializeField] private PlayerView _playerView;
-        
+
         private Vector3 _lastPosition;
         private bool _isEnergyGone = false;
         private float _energyBonus;
@@ -38,7 +37,6 @@ namespace Player
         {
             CurrentEnergy = MaxEnergy;
             _isEnergyGone = false;
-
             _isEnergyBoost = false;
             _playerView.SetEnergyTime(0);
         }

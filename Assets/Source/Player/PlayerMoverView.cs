@@ -22,7 +22,7 @@ namespace Player
         [SerializeField] private Button _jumpButton;
         [SerializeField] private PlayerInputHandler _inputHandler;
         [SerializeField] private SoundSwitcher _soundSwitcher;
-        [SerializeField] private PlayerMoverModel _model;
+        [SerializeField] private PlayerMover _model;
 
         private Vector3 _startPlayerPosition;
         private string _nameDanceAnim;

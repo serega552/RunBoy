@@ -23,7 +23,7 @@ namespace Player
         [SerializeField] private EnergyUpgrade _energyUpgrade;
         [SerializeField] private Bank _bank;
         [SerializeField] private SoundSwitcher _soundSwitcher;
-        [SerializeField] private PlayerModel _model;
+        [SerializeField] private Player _model;
 
         private Button _energyBoostButton;
         private Button _moneyBoostButton;
@@ -62,6 +62,7 @@ namespace Player
         {
             _model.StartGame();
         }
+
         public void ResurrectPlayer(float energy)
         {
             _model.Resurrect(energy);

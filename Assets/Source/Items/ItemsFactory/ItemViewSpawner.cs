@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Items.OtherItems;
+using System.Linq;
 
 namespace Items.ItemsFactory
 {
@@ -14,14 +14,14 @@ namespace Items.ItemsFactory
 
         public void Spawn(OtherItem item)
         {
-            /*var exists = _items.Any(itemView => itemView.Name.Trim().Equals(item.ItemType.Trim(), StringComparison.OrdinalIgnoreCase));
+            var exists = _items.Any(itemView => itemView.Name.Trim().Equals(item.name.Trim(), StringComparison.OrdinalIgnoreCase));
 
             if (exists)
             {
-                var itemViewToSpawn = _items.First(iv => iv.Name.Trim().Equals(item.ItemType.Trim(), StringComparison.OrdinalIgnoreCase));
+                var itemViewToSpawn = _items.First(iv => iv.Name.Trim().Equals(item.name.Trim(), StringComparison.OrdinalIgnoreCase));
                 var instance = Instantiate(itemViewToSpawn, _targetPanel);
                 _itemController.AddItem(instance, item);
-            }*/
+            }
         }
     }
 }

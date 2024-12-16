@@ -1,12 +1,9 @@
 using System;
 using Tasks.SO;
-using Tasks.Spawner;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Windows;
-using YG;
 
 namespace Tasks
 {
@@ -21,7 +18,6 @@ namespace Tasks
         [SerializeField] private TMP_Text _amountRewardText;
 
         private float _amountProgress;
-        private float _destroyProgressAmount = -1;
         private Task _task;
         private Slider _amountCompleted;
         private TaskWindow _window;
@@ -84,21 +80,23 @@ namespace Tasks
 
         private void ExecuteTask(float amount, string name)
         {
-            if (_task.TaskType == name && _task.Type != TaskType.RecordDistance)
+            if (_task.TaskType == name)
             {
-                _amountProgress += amount;
+                if (_task.Type != TaskType.RecordDistance)
+                {
+                    _amountProgress += amount;
+                }
+                else
+                {
+                    _amountProgress = amount;
+                }
+
                 UpdateUI();
 
                 if (_amountCompleted.value >= _task.AmountMaxCollect)
+                {
                     CompleteTask();
-            }
-            else if (_task.TaskType == name && _task.Type == TaskType.RecordDistance)
-            {
-                _amountProgress = amount;
-                UpdateUI();
-
-                if (_amountCompleted.value >= _task.AmountMaxCollect)
-                    CompleteTask();
+                }
             }
         }
 

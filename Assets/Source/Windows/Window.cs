@@ -22,7 +22,7 @@ namespace Windows
             _canvasGroup.alpha = 0f;
         }
 
-        public virtual void OpenWithoutSound()
+        public void OpenWithoutSound()
         {
             _canvasGroup.blocksRaycasts = true;
             _canvasGroup.interactable = true;

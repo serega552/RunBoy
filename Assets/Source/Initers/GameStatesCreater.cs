@@ -59,10 +59,10 @@ namespace Initers
             _player = player;
             _playerMover = player.GetComponent<PlayerMoverView>();
 
-            _restartStateGame.AddPlayer(_player,_playerMover);
-            _endStateGame.AddPlayer(_player,_playerMover);
-            _resurrectStateGame.AddPlayer(_player,_playerMover);
-            _startStateGame.AddPlayer(_player,_playerMover);
+            _restartStateGame.AddPlayer(_player, _playerMover);
+            _endStateGame.AddPlayer(_player, _playerMover);
+            _resurrectStateGame.AddPlayer(_player, _playerMover);
+            _startStateGame.AddPlayer(_player, _playerMover);
         }
 
         private void CreateStates()
@@ -79,7 +79,6 @@ namespace Initers
                 _player,
                 _playerMover,
                 _playerResurrect,
-                _endGameScreen,
                 _hudWindow,
                 _leaderboard,
                 _soundSwitcher);

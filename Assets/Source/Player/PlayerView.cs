@@ -23,7 +23,7 @@ namespace Player
         [SerializeField] private EnergyUpgrade _energyUpgrade;
         [SerializeField] private Bank _bank;
         [SerializeField] private SoundSwitcher _soundSwitcher;
-        [SerializeField] private Player _model;
+        [SerializeField] private Player _player;
 
         private Button _energyBoostButton;
         private Button _moneyBoostButton;
@@ -32,7 +32,6 @@ namespace Player
         private float _moneyBoostTime;
 
         public event Action GameEnded;
-        public event Action<float> EnergyChanging;
         public event Action<float, bool> MoneyChanging;
 
         private void Awake()
@@ -60,22 +59,22 @@ namespace Player
 
         public void StartMove()
         {
-            _model.StartGame();
+            _player.StartGame();
         }
 
         public void ResurrectPlayer(float energy)
         {
-            _model.Resurrect(energy);
+            _player.Resurrect(energy);
         }
 
         public float TakeTotalDistance()
         {
-            return _model.TotalDistanceTraveled;
+            return _player.TotalDistanceTraveled;
         }
 
         public void ResetPlayer()
         {
-            _model.ResetGame(transform);
+            _player.ResetGame(transform);
         }
 
         public void EndMove()
@@ -86,12 +85,12 @@ namespace Player
         public void OnEnergyChanged(float energyAmount)
         {
             _soundSwitcher.Play("UseBoost");
-            _model.ChangingEnergy(energyAmount);
+            _player.ChangingEnergy(energyAmount);
         }
 
         public void OnChangeMaxEnergy()
         {
-            _model.ChangeMaxEnergy(_energyUpgrade.Upgrade());
+            _player.ChangeMaxEnergy(_energyUpgrade.Upgrade());
         }
 
         public void SetDistance(float distance)
@@ -143,7 +142,7 @@ namespace Player
         private void UseEnergyBoost()
         {
             if (_energyBoost.TryUse())
-                _model.TurnOnEnergyBoost(_energyBoost.Bonus, _energyBoost.Time);
+                _player.TurnOnEnergyBoost(_energyBoost.Bonus, _energyBoost.Time);
         }
 
         private IEnumerator TimeChanging()

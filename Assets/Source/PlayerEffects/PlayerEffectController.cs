@@ -4,16 +4,6 @@ using UnityEngine;
 
 namespace PlayerEffects
 {
-    public enum PlayerEffectType
-    {
-        ProtectBoost,
-        SpeedBoost,
-        EnergyBoost,
-        EnergyDeboost,
-        CoinBoost,
-        CoinDeboost,
-    }
-
     public class PlayerEffectController : MonoBehaviour
     {
         private readonly int _minCountBoosts = 3;
@@ -28,7 +18,6 @@ namespace PlayerEffects
         private void OnDisable()
         {
             _viewMover.Protected -= ProtectBoostEffect;
-            _view.EnergyChanging -= EnergyBoostEffect;
             _view.MoneyChanging -= CoinBoostEffect;
         }
 
@@ -37,7 +26,6 @@ namespace PlayerEffects
             _view = playerView;
             _viewMover = playerMoverView;
             _viewMover.Protected += ProtectBoostEffect;
-            _view.EnergyChanging += EnergyBoostEffect;
             _view.MoneyChanging += CoinBoostEffect;
 
             for (int i = 0; i < _effects.Count; i++)

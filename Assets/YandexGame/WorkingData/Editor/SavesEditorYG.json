@@ -1,5 +1,5 @@
 {
-    "idSave": 384,
+    "idSave": 388,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -25,12 +25,6 @@
         0
     ],
     "AmountDailyProgreses": [
-        0.0,
-        0.0,
-        0.0,
-        12.0,
-        0.0,
-        6.0,
         0.0
     ],
     "AmountWeeklyProgreses": [

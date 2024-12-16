@@ -40,15 +40,6 @@ namespace ShopSystem
             }
         }
 
-        public override void BuyProduct()
-        {
-            base.BuyProduct();
-            _selectedDance.Unlock();
-            _selecter.AddDance(_selectedDance);
-            _dancesForSale.Remove(_selectedDance);
-            SelectProduct();
-        }
-
         public override void ShowInfoProduct(Product dance)
         {
             _selectedDance = dance.GetComponent<Dance>();
@@ -80,12 +71,6 @@ namespace ShopSystem
                 BankMoney.TryTakeMoney(_selectedDance.Price);
                 BuyProduct();
             }
-        }
-
-        public override void TurnOnModel()
-        {
-            base.TurnOnModel();
-            ModelSkin?.GetComponent<Animator>().Play(_selectedDance.NameDanceAnim);
         }
 
         private void ChooseDance()

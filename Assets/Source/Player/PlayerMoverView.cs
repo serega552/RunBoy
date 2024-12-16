@@ -33,8 +33,6 @@ namespace Player
         private bool _canJump = true;
         private PlayerView _playerView;
 
-        public event Action<float, float> SpeedBoostChanging;
-
         public event Action<bool> Protected;
 
         public event Action Started;
@@ -226,7 +224,7 @@ namespace Player
         private void UseSpeedBoost()
         {
             if (_speedBoost.TryUse())
-                SpeedBoostChanging?.Invoke(_speedBoost.Bonus, _speedBoost.Time);
+               ChangeSpeed(_speedBoost.Bonus, _speedBoost.Time);
         }
     }
 }

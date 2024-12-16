@@ -32,8 +32,6 @@ namespace UI
         private ShopBoosts _shopBoosts;
         private bool _isBanUpgrade = false;
 
-        public int Price => _priceBuyBoost;
-
         private void OnEnable()
         {
             _buyForMoney.onClick.AddListener(Buy);

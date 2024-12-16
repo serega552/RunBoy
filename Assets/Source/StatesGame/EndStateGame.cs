@@ -2,7 +2,6 @@ using System;
 using Audio;
 using Player;
 using UI;
-using UnityEngine;
 using Windows;
 using YG;
 
@@ -11,7 +10,6 @@ namespace StatesGame
     public class EndStateGame
     {
         private readonly Menu _menu;
-        private readonly EndGameScreen _endScreen;
         private readonly PlayerResurrect _playerResurrect;
         private readonly HudWindow _hudWindow;
         private readonly LeaderboardYG _leaderboard;
@@ -25,7 +23,6 @@ namespace StatesGame
             PlayerView player,
             PlayerMoverView playerMover,
             PlayerResurrect playerResurrect,
-            EndGameScreen endScreen,
             HudWindow hudWindow,
             LeaderboardYG leaderboard,
             SoundSwitcher soundSwitcher)
@@ -34,7 +31,6 @@ namespace StatesGame
             _playerMover = playerMover;
             _player = player;
             _playerResurrect = playerResurrect;
-            _endScreen = endScreen;
             _hudWindow = hudWindow;
             _leaderboard = leaderboard;
             _soundSwitcher = soundSwitcher;
@@ -66,8 +62,6 @@ namespace StatesGame
 
         private void End()
         {
-            Debug.Log("End");
-
             _soundSwitcher.Pause("Music");
 
             _playerMover.EndMove();

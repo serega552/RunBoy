@@ -64,6 +64,7 @@ namespace Player
             {
                 _energyTime -= Time.deltaTime;
                 _playerView.SetEnergyTime(_energyTime);
+                TakeEnergy(distanceMoved);
 
                 if (_energyTime > 0)
                 {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using BankSystem;
 using Player;
 using TMPro;
@@ -20,7 +19,6 @@ namespace ShopSystem
         public event Action SKinChanging;
 
         public Bank BankMoney => _bank;
-        public Transform PlaceSkin => _placeSkin;
         public Button BuyButton => _buyButton;
         public Button SelectButton => _selectButton;
         public TMP_Text Description => _description;

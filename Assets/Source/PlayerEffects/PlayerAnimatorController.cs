@@ -58,19 +58,9 @@ namespace PlayerEffects
             _animator.Play(KickState);
         }
 
-        private void Crash(float speed)
-        {
-            _animator.Play(CrashState);
-        }
-
         private void CrashOnCar()
         {
             _animator.Play(CrashOnCarState);
-        }
-
-        private void Somersault()
-        {
-            _animator.Play(FlipState);
         }
 
         private void Lose()

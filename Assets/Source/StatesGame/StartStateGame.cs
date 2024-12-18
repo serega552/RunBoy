@@ -11,7 +11,7 @@ namespace StatesGame
         private readonly HudWindow _hudWindow;
         private readonly SoundSwitcher _soundSwitcher;
 
-        private PlayerView _player;
+        private PlayerView _playerView;
         private PlayerMoverView _playerMover;
 
         public StartStateGame(
@@ -22,7 +22,7 @@ namespace StatesGame
             SoundSwitcher soundSwitcher)
         {
             _menu = menu;
-            _player = player;
+            _playerView = player;
             _playerMover = playerMover;
             _hudWindow = hudWindow;
             _soundSwitcher = soundSwitcher;
@@ -30,7 +30,7 @@ namespace StatesGame
 
         public void AddPlayer(PlayerView player, PlayerMoverView playerMover)
         {
-            _player = player;
+            _playerView = player;
             _playerMover = playerMover;
         }
 
@@ -52,7 +52,7 @@ namespace StatesGame
             _soundSwitcher.Pause("MenuMusic");
 
             _hudWindow.OpenWithoutSound();
-            _player.StartMove();
+            _playerView.StartMove();
             _playerMover.StartMove();
         }
     }

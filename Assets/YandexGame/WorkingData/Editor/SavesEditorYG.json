@@ -1,5 +1,5 @@
 {
-    "idSave": 388,
+    "idSave": 409,
     "isFirstSession": false,
     "language": "ru",
     "promptDone": false,
@@ -25,13 +25,11 @@
         0
     ],
     "AmountDailyProgreses": [
+        0.0,
+        0.0,
         0.0
     ],
     "AmountWeeklyProgreses": [
-        12.0,
-        0.0,
-        6.0,
-        0.0,
         0.0,
         0.0
     ],
@@ -47,7 +45,7 @@
         0.0,
         0.0
     ],
-    "StartWeeklyTime": 10,
-    "StartDailyTime": 10,
+    "StartWeeklyTime": 18,
+    "StartDailyTime": 18,
     "WorldSound": 0.5
 }

@@ -2,7 +2,6 @@ using System;
 using Audio;
 using BankSystem;
 using BoostSystem;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,13 +22,12 @@ namespace Player
         [SerializeField] private EnergyUpgrade _energyUpgrade;
         [SerializeField] private Bank _bank;
         [SerializeField] private SoundSwitcher _soundSwitcher;
+        [SerializeField] private PlayerEnergy _playerEnergy;
         [SerializeField] private Player _player;
 
         private Button _energyBoostButton;
         private Button _moneyBoostButton;
         private Button _energyUpgradeButton;
-        private bool _isMoneyBoost = false;
-        private float _moneyBoostTime;
 
         public event Action GameEnded;
         public event Action<float, bool> MoneyChanging;
@@ -40,41 +38,48 @@ namespace Player
             _energyBoostButton = _energyBoost.GetComponent<Button>();
             _energyUpgradeButton = _energyUpgrade.GetComponent<Button>();
 
+            _player.Init(_moneyBoost, _bank, _energyBoost, _playerEnergy);
             UpdateUI(0);
         }
 
         private void OnEnable()
         {
-            _moneyBoostButton.onClick.AddListener(UseMoneyBoost);
-            _energyBoostButton.onClick.AddListener(UseEnergyBoost);
+            _moneyBoostButton.onClick.AddListener(_player.UseMoneyBoost);
+            _energyBoostButton.onClick.AddListener(_player.UseEnergyBoost);
             _energyUpgradeButton.onClick.AddListener(OnChangeMaxEnergy);
         }
 
         private void OnDisable()
         {
-            _moneyBoostButton.onClick.RemoveListener(UseMoneyBoost);
-            _energyBoostButton.onClick.RemoveListener(UseEnergyBoost);
+            _moneyBoostButton.onClick.RemoveListener(_player.UseMoneyBoost);
+            _energyBoostButton.onClick.RemoveListener(_player.UseEnergyBoost);
             _energyUpgradeButton.onClick.RemoveListener(OnChangeMaxEnergy);
         }
 
         public void StartMove()
         {
-            _player.StartGame();
+            _playerEnergy.StartGame();
         }
 
         public void ResurrectPlayer(float energy)
         {
-            _player.Resurrect(energy);
+            _playerEnergy.Resurrect(energy);
+        }
+
+        public void TryToAddMoney(int count, bool isBoost)
+        {
+            MoneyChanging(count, isBoost);
+            _player.AddMoney(count, isBoost);
         }
 
         public float TakeTotalDistance()
         {
-            return _player.TotalDistanceTraveled;
+            return _playerEnergy.TotalDistanceTraveled;
         }
 
         public void ResetPlayer()
         {
-            _player.ResetGame(transform);
+            _playerEnergy.ResetGame(transform);
         }
 
         public void EndMove()
@@ -85,12 +90,7 @@ namespace Player
         public void OnEnergyChanged(float energyAmount)
         {
             _soundSwitcher.Play("UseBoost");
-            _player.ChangingEnergy(energyAmount);
-        }
-
-        public void OnChangeMaxEnergy()
-        {
-            _player.ChangeMaxEnergy(_energyUpgrade.Upgrade());
+            _playerEnergy.ChangingEnergy(energyAmount);
         }
 
         public void SetDistance(float distance)
@@ -111,52 +111,9 @@ namespace Player
                 _maxEnergy.text = YandexGame.savesData.MaxEnergy.ToString();
         }
 
-        public void AddMoney(int count, bool isBoost)
+        private void OnChangeMaxEnergy()
         {
-            if (_isMoneyBoost || isBoost)
-            {
-                MoneyChanging?.Invoke(count * _moneyBoost.Bonus, isBoost);
-                _bank.AddMoneyForGame(count * Convert.ToInt32(_moneyBoost.Bonus));
-            }
-            else
-            {
-                _bank.AddMoneyForGame(count);
-            }
-        }
-
-        public void SetEnergyTime(float time)
-        {
-            _energyBoost.SetTimeText(time);
-        }
-
-        private void UseMoneyBoost()
-        {
-            if (_moneyBoost.TryUse())
-            {
-                _isMoneyBoost = true;
-                _moneyBoostTime = _moneyBoost.Time;
-                StartCoroutine(TimeChanging());
-            }
-        }
-
-        private void UseEnergyBoost()
-        {
-            if (_energyBoost.TryUse())
-                _player.TurnOnEnergyBoost(_energyBoost.Bonus, _energyBoost.Time);
-        }
-
-        private IEnumerator TimeChanging()
-        {
-            while (_isMoneyBoost)
-            {
-                _moneyBoostTime -= Time.deltaTime;
-                _moneyBoost.SetTimeText(_moneyBoostTime);
-
-                if (_moneyBoostTime <= 0)
-                    _isMoneyBoost = false;
-
-                yield return null;
-            }
+            _playerEnergy.ChangeMaxEnergy(_energyUpgrade.Upgrade());
         }
     }
 }

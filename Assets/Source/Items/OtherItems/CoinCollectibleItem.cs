@@ -8,12 +8,12 @@ namespace Items.OtherItems
 
         public override void Boost()
         {
-            PlayerView.AddMoney(_boostCount, _isBoost);
+            PlayerView.TryToAddMoney(_boostCount, _isBoost);
         }
 
         public override void DeBoost()
         {
-            PlayerView.AddMoney(_deBoostCount, _isBoost);
+            PlayerView.TryToAddMoney(_deBoostCount, _isBoost);
         }
     }
 }

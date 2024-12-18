@@ -1,10 +1,12 @@
+using BoostSystem;
 using UnityEngine;
 using YG;
 
 namespace Player
 {
-    public class Player : MonoBehaviour
+    public class PlayerEnergy : MonoBehaviour
     {
+        [SerializeField] private Player _player;
         [SerializeField] private PlayerView _playerView;
 
         private Vector3 _lastPosition;
@@ -12,6 +14,7 @@ namespace Player
         private float _energyBonus;
         private float _energyTime;
         private bool _isEnergyBoost = false;
+        private EnergyBoost _energyBoost;
 
         public float TotalDistanceTraveled { get; private set; }
         public float MaxEnergy { get; private set; }
@@ -19,7 +22,7 @@ namespace Player
 
         private void Update()
         {
-            AddEnergy(_playerView.transform);
+            AddEnergy(_player.transform);
         }
 
         public void Awake()
@@ -38,7 +41,7 @@ namespace Player
             CurrentEnergy = MaxEnergy;
             _isEnergyGone = false;
             _isEnergyBoost = false;
-            _playerView.SetEnergyTime(0);
+            SetEnergyTime(0);
         }
 
         public void Resurrect(float energy)
@@ -63,7 +66,7 @@ namespace Player
             else if (_isEnergyBoost)
             {
                 _energyTime -= Time.deltaTime;
-                _playerView.SetEnergyTime(_energyTime);
+                SetEnergyTime(_energyTime);
                 TakeEnergy(distanceMoved);
 
                 if (_energyTime > 0)
@@ -76,6 +79,11 @@ namespace Player
                     _isEnergyBoost = false;
                 }
             }
+        }
+
+        public void SetEnergyTime(float time)
+        {
+            _energyBoost.SetTimeText(time);
         }
 
         public void TurnOnEnergyBoost(float bonus, float time)

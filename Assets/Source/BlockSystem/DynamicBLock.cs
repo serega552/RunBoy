@@ -54,7 +54,7 @@ namespace BlockSystem
 
         private void Robbery(PlayerView playerView)
         {
-            playerView.AddMoney(_reward, false);
+            playerView.TryToAddMoney(_reward, false);
             Invoke(nameof(Destroy), 1f);
         }
 
